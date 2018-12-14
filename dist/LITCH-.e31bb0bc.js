@@ -30960,9 +30960,30 @@ class Panel {
 
   buildMarkUp(data) {
     let html = `
-            <h2>${data.properties.Project_Na}</h2>
-            <p><strong>Address:</strong> ${data.properties.Project_Ad}</p>
-            <p><strong>Elegibility:</strong> ${data.properties.Eligibilit}</p>
+            <h2>${data.properties.Project_Name}</h2>
+            <important>
+            <p><strong>Elegibility:</strong> ${data.properties.Target_Population}</p>
+            </important>
+            <section class="group">
+            <span class="header">Property</span>
+            <p><strong>Address:</strong> ${data.properties.Project_Address}</p>
+            <p><strong>Neighborhood:</strong> ${data.properties.Neighborhood}</p>
+            <p><strong>Structure:</strong> ${data.properties.Structure}</p>
+            </section>
+            <section class="group">
+            <span class="header">Units</span>
+            <p><strong>Affordable:</strong> ${data.properties.Affordable_Units}</p>
+            <p><strong>Total:</strong> ${data.properties.Total_Units}</p>
+            </section>
+            <section class="group">
+            <span class="header">Sizes</span>
+            <p><strong>Studio:</strong> ${data.properties.F0BR}</p>
+            <p><strong>1 Bedroom:</strong> ${data.properties.F1BR}</p>
+            <p><strong>2 Bedroom:</strong> ${data.properties.F2BR}</p>
+            <p><strong>3 Bedroom:</strong> ${data.properties.F3BR}</p>
+            <p><strong>4 Bedroom:</strong> ${data.properties.F4BR}</p>
+            <p><strong>5 Bedroom:</strong> ${data.properties.F5BR}</p>
+            </section>
         `;
     return html;
   }
@@ -31005,7 +31026,7 @@ class Controller {
       sources: [{
         id: "litch-locations",
         type: "geojson",
-        data: 'http://gis.detroitmi.gov/arcgis/rest/services/DoIT/LITCH/MapServer/0/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson'
+        data: 'https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/181207_MF_Regulated_Data/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token='
       }, {
         id: "single-point",
         type: "geojson",
@@ -31070,7 +31091,7 @@ class Controller {
     switch (ev) {
       case 'v-sign-up':
         document.querySelector('#user-type-section').className = 'hidden';
-        document.querySelector('main').className = '';
+        document.querySelector('section.application').className = 'application';
         break;
 
       default:
@@ -31207,7 +31228,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65441" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65492" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

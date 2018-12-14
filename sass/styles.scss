@@ -150,73 +150,6 @@ img{width: 100%;}
 		}
 	}
 }
-#drill-down-overlay.active{
-  position: absolute;
-	z-index: 5;
-	height: 100vh;
-	width: 100vw;
-	padding: 1em;
-	background-color: rgba($white, .5);
-	display: flex;
-
-	article{
-
-		div{
-			padding: .5em;
-			background-color: $white;
-			color: $color-5;
-      max-height: 80vh;
-      overflow-y: scroll;
-
-      .hydrant-title{
-        width: 100%;
-        background-color: $color-1;
-        padding: 0;
-        color: $white;
-        display: flex;
-
-        article{
-          width: 33.3334%;
-          padding: 1em;
-          font-weight: bold;
-        }
-      }
-      .hydrant-row:nth-child(even){
-        background-color: $color-2;
-      }
-      .hydrant-row{
-        display: flex;
-        border-bottom: 1px solid $color-1;
-
-        article{
-          width: 33.3334%;
-          padding: 1em;
-        }
-      }
-		}
-
-		.close{
-			position: absolute;
-			top: .5em;
-			right: .5em;
-			font-weight: bold;
-			color: $white;
-			border: 2px solid $white;
-			padding: .25em .5em;
-			border-radius: 50%;
-			cursor: pointer;
-		}
-	}
-}
-#drill-down-overlay.active > article{
-  margin: auto;
-  position: relative;
-  width: 80%;
-  max-width: 100%;
-  background-color: $color-5;
-  padding: 4em 2em;
-  transition: all .2s ease-in-out;
-}
 #alert-overlay.active{
 	position: absolute;
 	z-index: 5;
@@ -254,46 +187,6 @@ img{width: 100%;}
 		}
 	}
 }
-
-header{
-	position: fixed;
-	z-index: 3;
-	background: $color-1;
-	width: 100%;
-	display: flex;
-	height: 5em;
-	box-shadow: 0px 2px 5px 0px rgba($color-1, .5);
-
-	h1{
-		margin: auto;
-		text-align: center;
-		color: $color-2;
-	}
-}
-header section{
-	display: block;
-}
-.filter{
-	flex: 1;
-	display: flex;
-}
-.filter article{
-	margin: auto;
-}
-.filter label{
-	color: $color-2;
-	font-weight: bold;
-}
-.filter input[type="text"]{
-	font-family: 'Montserrat', sans-serif; font-weight: lighter;
-	color: $white;
-	background-color: rgba($color-2, .2);
-	border: none;
-	padding: .5em 1em;
-}
-#logo{
-	display: none;
-}
 .search{
 	width: 3em;
 	padding: .5em;
@@ -313,52 +206,8 @@ ul {
   &:after { clear: both; }
 }
 
-.title {
-  padding: 50px 0;
-  font-size: 24px;
-  text-align: center;
-}
-
-.breadcrumbs {
-	width: 100%;
-}
-
-.inner{
-	width: calc(100% - 1em);
-}
-
-.breadcrumbs ul {
-	display: flex;
-}
-
-.breadcrumbs li {
-  float: left;
-	flex: 1;
-  max-width: 30em;
-}
-
-.breadcrumbs a {
-  position: relative;
-  display: block;
-  padding: 20px;
-  padding-right: 0 !important; /* important overrides media queries */
-  font-size: 13px;
-  font-weight: bold;
-  text-align: center;
-  color: $color-1;
-  cursor: pointer;
-}
-
 // ====================== mobile end ========================
 @media all and (min-width: 401px) {
-	#menu,.menu,.nav{
-		display: none;
-	}
-	
-	#logo{
-		cursor: pointer;
-		width: 5em;
-	}
 
 	button{
 		border: none;
@@ -369,73 +218,6 @@ ul {
 		cursor: pointer;
 		transition: all .2s ease-in-out;
 	}
-	.filter button:hover{
-		padding: 1.15em;
-		box-shadow: -2px 2px 10px 0px rgba($color-2, 0.5);
-		transition: all .2s ease-in-out;
-	}
-	.breadcrumbs a:hover {
-	  background: $color-2;
-	}
-
-	.breadcrumbs a.active {
-	  color: #777;
-	  background-color: #fafafa;
-	}
-
-	.breadcrumbs a span:first-child {
-	  display: inline-block;
-	  width: 22px;
-	  height: 22px;
-	  padding: 1px;
-	  margin-right: 5px;
-	  border: 2px solid $color-1;
-	  border-radius: 50%;
-	  background-color: #fff;
-	}
-
-	.breadcrumbs a.active span:first-child {
-	  color: #fff;
-	  border-color: #777;
-	  background-color: #777;
-	}
-
-	.breadcrumbs a:before,
-	.breadcrumbs a:after {
-	  content: '';
-	  position: absolute;
-	  top: 0;
-	  left: 100%;
-	  z-index: 1;
-	  display: block;
-	  width: 0;
-	  height: 0;
-	  border-top: 32px solid transparent;
-	  border-bottom: 32px solid transparent;
-	  border-left: 16px solid transparent;
-	}
-
-	.breadcrumbs a:before {
-	  margin-left: 1px;
-	  border-left-color: $color-1;
-	}
-
-	.breadcrumbs a:after {
-	  border-left-color: $white;
-	}
-
-	.breadcrumbs a:hover:after {
-	  border-left-color: $color-2;
-	}
-
-	.breadcrumbs a.active:after {
-	  border-left-color: #fafafa;
-	}
-
-	// .breadcrumbs li:last-child a:before,
-	// .breadcrumbs li:last-child a:after {
-	//   display: none;
-	// }
 }
 // ======================= header end =====================
 // ======================== main ==========================
@@ -444,12 +226,12 @@ ul {
 	margin: 0 auto;
 }
 
-main.hidden{
+section.application.hidden{
   top: 100vh;
   transition: all $base-duration ease;
 }
 
-main {
+section.application {
 	padding-top: 5em;
 	position: relative;
 	display: flex;
@@ -466,6 +248,30 @@ main {
 		width: 35em;
 		padding: 0 1em;
 		transition: all .2s ease-in-out;
+		margin-right: 1em;
+		overflow-y: auto;
+
+		important{
+			strong{
+				background-color: $color-3;
+				color: $color-5;
+				padding: .1em;
+			}
+		}
+
+		.group{
+			position: relative;
+			padding: .5em;
+			border: .1em solid $color-1;
+			margin-bottom: 1em;
+
+			span.header{
+				position: absolute;
+				padding: .1em;
+				background-color: lighten( $color-5, 65% );
+				top: -.75em;
+			}
+		}
 	}
 
   .data-panel{
@@ -485,145 +291,6 @@ main {
 		height: 3.5em;
 		border-radius: 50%;
 	}
-
-	.top-numbers{
-		display: flex;
-    margin-top: 1em;
-		margin-bottom: 1em;
-
-		article{
-			flex: 1;
-			display: flex;
-			height: 20vh;
-			background-color: $color-1;
-			color: $color-2;
-		}
-
-		div{
-			margin: auto;
-			text-align: center;
-			font-size: 1.5em;
-		}
-
-		span{
-			font-size: 2em;
-		}
-	}
-
-  .submit-form{
-    height: calc(100vh - 8em);
-    overflow-y: auto;
-    display: flex;
-
-    article{
-      margin: auto;
-      width: 30em;
-
-      label{
-        display: block;
-        margin-bottom: 1em;
-        font-weight: bold;
-
-        input{
-          width: 100%;
-          background-color: $color-2;
-          padding: 1em;
-          border: none;
-          color: $color-1;
-          font-weight: bold;
-        }
-      }
-
-			.patrol-info{
-				h3{
-					text-align: center;
-					text-transform: uppercase;
-				}
-				p{
-					text-align: center;
-				}
-			}
-		}
-    button{
-      width: 100%;
-      font-weight: bold;
-      font-size: 1.25em;
-      transition: all .2s ease-in-out;
-    }
-    button:hover{
-      padding: 1.25em;
-      transition: all .2s ease-in-out;
-    }
-  }
-  #hours-selection{
-    display: flex;
-    flex-wrap: wrap;
-
-    p{
-      width: 50%;
-      padding: .5em;
-      margin: 0;
-    }
-  }
-
-	.tabular-data{
-		overflow-y: auto;
-		height: calc(80vh - 13em);
-	}
-
-	.tabular-titles{
-		display: flex;
-
-		div{
-			flex: 1;
-			background-color: $color-1;
-			padding: 1em;
-			color: $color-2;
-			font-weight: bold;
-		}
-	}
-
-	.tabular-body{
-		.tabular-row:nth-child(even){
-			background-color:$color-2;
-		}
-    .tabular-row{
-      .not-inspected{
-        cursor: pointer;
-        transition: all .2s ease-in-out;
-      }
-      .not-inspected:hover{
-        background-color: $color-1;
-        color: $color-2;
-        transition: all .2s ease-in-out;
-      }
-    }
-	}
-  .companies-snapshots{
-    display: none;
-  }
-  .companies-snapshots.active{
-    display: block;
-  }
-  .blocks-body{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-
-    .block{
-      width: 33.3334%;
-      display: flex;
-      padding: 2em;
-
-      article{
-        margin: auto;
-        text-align: center;
-      }
-    }
-    .block:nth-child(even){
-      background-color: $color-2;
-    }
-  }
   .loading-box{
     text-align: center;
     font-size: 2em;
@@ -648,151 +315,10 @@ main {
     66% { opacity: 1}
     100% { opacity: 0}
   }
-	.snap{
-		margin-bottom: 1em;
-
-		label{
-			display: flex;
-      position: relative;
-			width: 100%;
-			cursor: pointer;
-
-			span{
-				padding: .5em;
-        width: 3em;
-				font-weight: bold;
-			}
-		}
-	}
-  [class^="tooltip"] {
-    position: relative;
-    &:after {
-      opacity: 0;
-      visibility: hidden;
-      position: absolute;
-      content: attr(data-tooltip);
-      padding: 6px 10px;
-      top: 1.4em;
-      left: 50%;
-      transform: translateX(-50%) translateY(-2px);
-      background: grey;
-      color: white;
-      white-space: nowrap;
-      z-index: 2;
-      border-radius: 2px;
-      transition: opacity 0.2s $cubic, transform 0.2s $cubic;
-    }
-    &:hover {
-      &:after {
-        display: block;
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(0);
-      }
-    }
-  }
-  .tooltip--triangle {
-    &:before {
-      content: '';
-      width: 0;
-      height: 0;
-      border-left: solid 5px transparent;
-      border-right: solid 5px transparent;
-      border-bottom: solid 5px grey;
-      opacity: 0;
-      visibility: hidden;
-      position: absolute;
-      transform: translateX(-50%) translateY(-2px);
-      top: 1.1em;
-      left: 50%;
-      transition: opacity 0.2s $cubic, transform 0.2s $cubic;
-      z-index: 3;
-    }
-    &:hover {
-      &:before {
-        display: block;
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(0);
-      }
-    }
-  }
-	.progress {
-		flex: 1;
-	  padding: 4px;
-	  background: rgba(0, 0, 0, 0.25);
-	  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.08);
-	  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.08);
-	}
-
-	.progress-bar {
-	  height: 1.5em;
-		background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
-	  background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
-	  background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
-	  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
-	  -webkit-transition: 0.4s linear;
-	  -moz-transition: 0.4s linear;
-	  -o-transition: 0.4s linear;
-	  transition: 0.4s linear;
-	  -webkit-transition-property: width, background-color;
-	  -moz-transition-property: width, background-color;
-	  -o-transition-property: width, background-color;
-	  transition-property: width, background-color;
-	  -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25), inset 0 1px rgba(255, 255, 255, 0.1);
-	  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25), inset 0 1px rgba(255, 255, 255, 0.1);
-
-		.percentage{
-			padding: .25em 0 0 .25em;
-		}
-	}
-
-	/*
-	 * Note: using adjacent or general sibling selectors combined with
-	 *       pseudo classes doesn't work in Safari 5.0 and Chrome 12.
-	 *       See this article for more info and a potential fix:
-	 *       https://css-tricks.com/webkit-sibling-bug/
-	 */
-
-	.progress.zero > .progress-bar {
-	  width: 5%;
-	  background-color: #f63a0f;
-	}
-
-	.progress.twenty-five > .progress-bar {
-	  width: 25%;
-	  background-color: #f27011;
-	}
-
-	.progress.fifty > .progress-bar {
-	  width: 50%;
-	  background-color: #f2b01e;
-	}
-
-	.progress.seventy-five > .progress-bar {
-	  width: 75%;
-	  background-color: #f2d31b;
-	}
-
-	.progress.hundred > .progress-bar {
-	  width: 100%;
-	  background-color: #86e01e;
-	}
-
-	.tabular-row{
-		display: flex;
-		border-bottom: 1px solid $color-1;
-
-		div{
-			padding: 1em;
-			flex: 1;
-		}
-	}
 	.map-panel{
 		display: block;
     position: relative;
 		flex: 1;
-		padding: 1em;
 
 		#geocoder{
 			position: absolute;
