@@ -30,8 +30,8 @@ export default class Panel {
             <p><strong>Total:</strong> ${data.properties.Total_Units}</p>
             </section>
             <section class="group">
-            <span class="header">Sizes</span>
-            <p><strong>Studio:</strong> ${data.properties.F0BR}</p>
+            <span class="header">Available Sizes</span>
+            ${data.properties.F0BR }<p><strong>Studio:</strong> ${data.properties.F0BR}</p>
             <p><strong>1 Bedroom:</strong> ${data.properties.F1BR}</p>
             <p><strong>2 Bedroom:</strong> ${data.properties.F2BR}</p>
             <p><strong>3 Bedroom:</strong> ${data.properties.F3BR}</p>
