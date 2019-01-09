@@ -8,62 +8,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
   <!--build:css css/styles.min.css-->
   <link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
-  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />
+  <link href="./node_modules/mapbox-gl/dist/mapbox-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css" type="text/css" />
   <link href="sass/styles.scss" rel="stylesheet" />
   <!--endbuild-->
 </head>
 <body>
-  <section id="user-type-section" class="active">
-    <article class="user-type-container">
-      <div class="">
-        <article class="user-type">
-          <h2>Welcome to the LITCH Map</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <article class="user-type-btns">
-            <button type="button" name="button" data-btn-type="v-sign-up">START</button>
+  <section id="app-container">
+    <section id="user-type-section" class="active">
+      <article class="user-type-container">
+        <div class="">
+          <article class="user-type">
+            <h4>Welcome to the City of Detroit Affordable Housing Map</h4>
+            <p>The map below shows regulated affordable housing in Detroit. You can apply for these units and find out about specific eligibility requirements and availability by contacting the property manager directly.</p>
+            <p><small>Properties may or may not have units available, and rents may vary. Property management contact information is continuously updated, as management may change. If you discover any information is not up to date, please submit a note using our <a href="https://app.smartsheet.com/b/form/1cc29c45f4694a7a97315dde550db40c" target="_blank">online form.</a></small></p>
+            <article class="user-type-btns">
+              <button type="button" name="button" data-btn-type="v-sign-up">START</button>
+            </article>
           </article>
-        </article>
-      </div>
-    </article>
-  </section>
-  <section id="initial-loader-overlay" class="">
-    <article>
-      <div>
-        <div class="loader">
-          <div class="loader__bar"></div>
-          <div class="loader__bar"></div>
-          <div class="loader__bar"></div>
-          <div class="loader__bar"></div>
-          <div class="loader__bar"></div>
-          <div class="loader__ball"></div>
         </div>
-        <p>LOADING</p>
-      </div>
-    </article>
-  </section>
-  <section id="alert-overlay" class="">
-    <article>
-      <span class="close">x</span>
-      <div></div>
-    </article>
-  </section>
-  <section id="drill-down-overlay" class="">
-    <article>
-      <span class="close">x</span>
-      <div></div>
-    </article>
-  </section>
-  <section class="application hidden">
-    <section class="data-panel">
-      <button id="close-panel-btn">x</button>
-      <section class="content-section"></section>
+      </article>
     </section>
-    <section class="map-panel">
-      <article id="map"></article>
-      <article id="geocoder"></article>
+    <section id="initial-loader-overlay" class="">
+      <article>
+        <div>
+          <div class="loader">
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__ball"></div>
+          </div>
+          <p>LOADING</p>
+        </div>
+      </article>
+    </section>
+    <section id="alert-overlay" class="">
+      <article>
+        <span class="close">x</span>
+        <div></div>
+      </article>
+    </section>
+    <section id="drill-down-overlay" class="">
+      <article>
+        <span class="close">x</span>
+        <div></div>
+      </article>
+    </section>
+    <section class="application hidden">
+      <section class="data-panel">
+        <button id="close-panel-btn">x</button>
+        <section class="content-section"></section>
+      </section>
+      <section class="map-panel">
+        <article id="map"></article>
+        <article id="geocoder"></article>
+      </section>
     </section>
   </section>
+  
   <script src="index.js"></script>
 </body>
 </html>
