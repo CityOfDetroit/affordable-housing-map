@@ -14,6 +14,13 @@ form .logic-section {
 form .logic-section.active {
   display: block;
 }
+form #submit-btn {
+  margin-right: 2em;
+}
+form #cancel-btn {
+  background-color: #CF3234;
+  color: #fff;
+}
 
 [type=radio]:checked,
 [type=radio]:not(:checked) {
@@ -25,6 +32,7 @@ form .logic-section.active {
 [type=radio]:not(:checked) + label {
   position: relative;
   padding-left: 28px;
+  padding-top: 0.4em;
   cursor: pointer;
   line-height: 20px;
   display: inline-block;
@@ -502,7 +510,7 @@ section.application .data-panel {
   padding: 0;
   transition: all 0.2s ease-in-out;
 }
-section.application .close-panel-btn {
+section.application .close-btn {
   position: absolute;
   top: 1em;
   right: 1em;
@@ -565,35 +573,31 @@ section.application .dot-3 {
 section.application .map-panel {
   display: block;
   position: relative;
+  overflow: hidden;
   flex: 1;
 }
 section.application .map-panel .calculator, section.application .map-panel .filters {
-  display: none;
-}
-section.application .map-panel .filters.active {
   display: block;
   position: absolute;
   top: 0;
-  left: 0;
+  left: -26em;
   width: 25em;
   height: 100%;
   padding: 1em;
   background-color: #eaeaea;
   box-shadow: -2px 2px 10px 1px rgba(0, 69, 68, 0.5);
+  transition: all 0.2s ease-in-out;
+}
+section.application .map-panel .filters.active {
+  left: 0;
+  transition: all 0.2s ease-in-out;
 }
 section.application .map-panel .filters.active h2 {
   margin: 0;
 }
 section.application .map-panel .calculator.active {
-  display: block;
-  position: absolute;
-  top: 0;
   left: 0;
-  width: 25em;
-  height: 100%;
-  padding: 1em;
-  background-color: #eaeaea;
-  box-shadow: -2px 2px 10px 1px rgba(0, 69, 68, 0.5);
+  transition: all 0.2s ease-in-out;
 }
 section.application .map-panel #geocoder {
   position: absolute;
@@ -607,8 +611,9 @@ section.application .map-panel #map {
 }
 section.application .map-panel #filters {
   position: absolute;
-  bottom: 4em;
-  right: 3em;
+  bottom: 2em;
+  right: 2em;
+  font-size: 1em;
 }
 section.application .map-panel #legend.active {
   display: block;

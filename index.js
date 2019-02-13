@@ -40,6 +40,15 @@ import Controller from './components/controller.class';
     controller.panel.clearPanel();
     document.querySelector('.data-panel.active').className = 'data-panel';
   });
+  document.getElementById('close-filters-btn').addEventListener('click', function () {
+    document.querySelector('.filters.active').className = 'filters';
+  });
+  document.getElementById('calculator-btn').addEventListener('click', function () {
+    document.querySelector('.calculator').className = 'calculator active';
+  });
+  document.getElementById('filters').addEventListener('click', function () {
+    document.querySelector('.filters').className = 'filters active';
+  });
   const startingBtns = document.querySelectorAll('#user-type-section button');
   startingBtns.forEach(function (btn) {
     btn.addEventListener('click', function (ev) {

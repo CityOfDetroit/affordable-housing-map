@@ -59,17 +59,14 @@
     </section>
     <section class="application hidden">
       <section class="data-panel">
-        <button class="close-panel-btn" id="close-panel-btn">x</button>
+        <button class="close-btn" id="close-panel-btn">x</button>
         <section class="content-section"></section>
       </section>
       <section class="map-panel">
         <article id="map"></article>
         <article id="geocoder"></article>
-        <section class="calculator active">
-          <article id="calc-box"></article>
-        </section>
         <section class="filters">
-          <button class="close-panel-btn">x</button>
+          <button id="close-filters-btn" class="close-btn">x</button>
           <h2>Filters</h2>
           <article>
             <label for="neighborhood">Neighborhood:</label>
@@ -83,6 +80,7 @@
           <article>
             <label for="population">Population:</label>
             <select id="population">
+              <option value="" selected>------</option>
               <option value="elderly">Elderly</option>
               <option value="family">Familiy</option>
               <option value="homeless">Homeless</option>
@@ -92,6 +90,7 @@
           <article>
             <label for="rooms">Rooms:</label>
             <select id="rooms">
+              <option value="" selected>-----</option>
               <option value="1-rooms">1 Room</option>
               <option value="2-rooms">2 Rooms</option>
               <option value="3-rooms">3 Rooms</option>
@@ -100,11 +99,14 @@
             </select>
           </article>
           <article>
-            <button>Filter by income <i class="fas fa-hand-holding-usd"></i></button>
+            <button id="calculator-btn">Income Filter | <span>OFF</span></button>
           </article>
           <article>
-            <button>Reset <i class="fas fa-broom"></i></button>
+            <button id="filter-reset-btn">Reset <i class="fas fa-broom"></i></button>
           </article>
+        </section>
+        <section class="calculator">
+          <article id="calc-box"></article>
         </section>
         <button id="filters">Filters <i class="fas fa-sliders-h"></i></button>
       </section>

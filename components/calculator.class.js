@@ -232,11 +232,18 @@ export default class Calculator {
 
   submit(ev, _calculator){
     ev.preventDefault();
-    _calculator.computeIncomeRange(_calculator);
+    console.log(ev);
+    (ev.explicitOriginalTarget.id == 'cancel-btn') ? _calculator.cancelIncomeFilter(_calculator) : _calculator.computeIncomeRange(_calculator);
   }
 
   updateForm(type, value, _calculator){
     console.log(value);
+  }
+
+  cancelIncomeFilter(_calculator){
+    document.querySelector('.calculator.active').className = 'calculator';
+    document.querySelector('#calculator-btn').className = 'off';
+    document.querySelector('#calculator-btn span').innerText = 'OFF';
   }
 
   computeIncomeRange(_calculator){
@@ -308,10 +315,13 @@ export default class Calculator {
             AMI = 120;
             break;
     }
-    document.getElementById('results').innerHTML = `
-    <p><strong>Annual Adjusted Gross Income:</strong> ${annualAdjustedGrossIncome}</p>
-    <p><strong>Monthly Adjusted Gross Income:</strong> ${monthlyAdjustedGrossIncome}</p>
-    <p><strong>%AMI:</strong> ${AMI}</p>
-    `;
+    // document.getElementById('results').innerHTML = `
+    // <p><strong>Annual Adjusted Gross Income:</strong> ${annualAdjustedGrossIncome}</p>
+    // <p><strong>Monthly Adjusted Gross Income:</strong> ${monthlyAdjustedGrossIncome}</p>
+    // <p><strong>%AMI:</strong> ${AMI}</p>
+    // `;
+    document.querySelector('.calculator.active').className = 'calculator';
+    document.querySelector('#calculator-btn').className = 'on';
+    document.querySelector('#calculator-btn span').innerText = 'ON';
   }
 }
