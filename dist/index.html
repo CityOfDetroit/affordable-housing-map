@@ -1,1 +1,115 @@
-<!DOCTYPE html><html> <head> <meta charset="utf-8"> <title>LITCH | City of Detroit</title> <meta name="description" content="Application to help track citizen radio patrols in the City of Detroit"> <meta name="author" content="Edgar Montes"> <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">  <link rel="shortcut icon" type="image/png" href="favicon.61b2b4ba.ico"> <link href="mapbox-gl.d245035a.css" rel="stylesheet"> <link rel="stylesheet" href="mapbox-gl-geocoder.d13fbab6.css" type="text/css"> <link href="styles.53833247.css" rel="stylesheet">  </head> <body> <section id="app-container"> <section id="user-type-section" class="active"> <article class="user-type-container"> <div> <article class="user-type"> <h4>Welcome to the City of Detroit Affordable Housing Map</h4> <p>The map below shows regulated affordable housing in Detroit. You can apply for these units and find out about specific eligibility requirements and availability by contacting the property manager directly.</p> <p><small>Properties may or may not have units available, and rents may vary. Property management contact information is continuously updated, as management may change. If you discover any information is not up to date, please submit a note using our <a href="https://app.smartsheet.com/b/form/1cc29c45f4694a7a97315dde550db40c" target="_blank">online form.</a></small></p> <article class="user-type-btns"> <button type="button" name="button" data-btn-type="v-sign-up">START</button> </article> </article> </div> </article> </section> <section id="initial-loader-overlay"> <article> <div> <div class="loader"> <div class="loader__bar"></div> <div class="loader__bar"></div> <div class="loader__bar"></div> <div class="loader__bar"></div> <div class="loader__bar"></div> <div class="loader__ball"></div> </div> <p>LOADING</p> </div> </article> </section> <section id="alert-overlay"> <article> <span class="close">x</span> <div></div> </article> </section> <section id="drill-down-overlay"> <article> <span class="close">x</span> <div></div> </article> </section> <section class="application hidden"> <section class="data-panel"> <button id="close-panel-btn">x</button> <section class="content-section"></section> </section> <section class="map-panel"> <article id="map"></article> <article id="geocoder"></article> </section> </section> </section> <script src="LITCH-.f61c8c52.js"></script> </body> </html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>LITCH | City of Detroit</title>
+  <meta name="description" content="Application to help track citizen radio patrols in the City of Detroit">
+  <meta name="author" content="Edgar Montes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <!--build:css css/styles.min.css-->
+  <link rel="shortcut icon" type="image/png" href="/favicon.fc7b9a6e.ico">
+  <link href="/mapbox-gl.d48860d6.css" rel="stylesheet">
+  <link rel="stylesheet" href="/mapbox-gl-geocoder.0bed1700.css" type="text/css">
+  <link rel="stylesheet" href="/all.min.d92a794a.css" type="text/css">
+  <link href="/styles.8206c151.css" rel="stylesheet">
+  <!--endbuild-->
+<script src="/mapbox-gl.d48860d6.js"></script><script src="/mapbox-gl-geocoder.0bed1700.js"></script><script src="/all.min.d92a794a.js"></script><script src="/styles.8206c151.js"></script></head>
+<body>
+  <section id="app-container">
+    <section id="user-type-section" class="active">
+      <article class="user-type-container">
+        <div class="">
+          <article class="user-type">
+            <h4>Welcome to the City of Detroit Affordable Housing Map</h4>
+            <p>The map below shows regulated affordable housing in Detroit. You can apply for these units and find out about specific eligibility requirements and availability by contacting the property manager directly.</p>
+            <p><small>Properties may or may not have units available, and rents may vary. Property management contact information is continuously updated, as management may change. If you discover any information is not up to date, please submit a note using our <a href="https://app.smartsheet.com/b/form/1cc29c45f4694a7a97315dde550db40c" target="_blank">online form.</a></small></p>
+            <article class="user-type-btns">
+              <button type="button" name="button" data-btn-type="v-sign-up">START</button>
+            </article>
+          </article>
+        </div>
+      </article>
+    </section>
+    <section id="initial-loader-overlay" class="">
+      <article>
+        <div>
+          <div class="loader">
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__bar"></div>
+            <div class="loader__ball"></div>
+          </div>
+          <p>LOADING</p>
+        </div>
+      </article>
+    </section>
+    <section id="alert-overlay" class="">
+      <article>
+        <span class="close">x</span>
+        <div></div>
+      </article>
+    </section>
+    <section id="drill-down-overlay" class="">
+      <article>
+        <span class="close">x</span>
+        <div></div>
+      </article>
+    </section>
+    <section class="application hidden">
+      <section class="data-panel">
+        <button class="close-panel-btn" id="close-panel-btn">x</button>
+        <section class="content-section"></section>
+      </section>
+      <section class="map-panel">
+        <article id="map"></article>
+        <article id="geocoder"></article>
+        <section class="calculator active">
+          <article id="calc-box"></article>
+        </section>
+        <section class="filters">
+          <button class="close-panel-btn">x</button>
+          <h2>Filters</h2>
+          <article>
+            <label for="neighborhood">Neighborhood:</label>
+            <input id="neighborhood" list="neighborhoods">
+            <datalist id="neighborhoods">
+              <option value="Southwest">
+              </option><option value="Corktown">
+              </option><option value="Downtown">
+            </option></datalist>
+          </article>
+          <article>
+            <label for="population">Population:</label>
+            <select id="population">
+              <option value="elderly">Elderly</option>
+              <option value="family">Familiy</option>
+              <option value="homeless">Homeless</option>
+              <option value="veterans">Veterans</option>
+            </select>
+          </article>
+          <article>
+            <label for="rooms">Rooms:</label>
+            <select id="rooms">
+              <option value="1-rooms">1 Room</option>
+              <option value="2-rooms">2 Rooms</option>
+              <option value="3-rooms">3 Rooms</option>
+              <option value="4-rooms">4 Rooms</option>
+              <option value="5-rooms">5 Rooms</option>
+            </select>
+          </article>
+          <article>
+            <button>Filter by income <i class="fas fa-hand-holding-usd"></i></button>
+          </article>
+          <article>
+            <button>Reset <i class="fas fa-broom"></i></button>
+          </article>
+        </section>
+        <button id="filters">Filters <i class="fas fa-sliders-h"></i></button>
+      </section>
+    </section>
+  </section>
+  <script src="/LITCH-.e31bb0bc.js"></script>
+</body>
+</html>

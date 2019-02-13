@@ -10,6 +10,7 @@
   <link rel="shortcut icon" type="image/png" href="img/favicon.ico"/>
   <link href="./node_modules/mapbox-gl/dist/mapbox-gl.css" rel="stylesheet" />
   <link rel="stylesheet" href="./node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css" type="text/css" />
+  <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" />
   <link href="sass/styles.scss" rel="stylesheet" />
   <!--endbuild-->
 </head>
@@ -58,16 +59,57 @@
     </section>
     <section class="application hidden">
       <section class="data-panel">
-        <button id="close-panel-btn">x</button>
+        <button class="close-panel-btn" id="close-panel-btn">x</button>
         <section class="content-section"></section>
       </section>
       <section class="map-panel">
         <article id="map"></article>
         <article id="geocoder"></article>
+        <section class="calculator active">
+          <article id="calc-box"></article>
+        </section>
+        <section class="filters">
+          <button class="close-panel-btn">x</button>
+          <h2>Filters</h2>
+          <article>
+            <label for="neighborhood">Neighborhood:</label>
+            <input id="neighborhood" list="neighborhoods">
+            <datalist id="neighborhoods">
+              <option value="Southwest">
+              <option value="Corktown">
+              <option value="Downtown">
+            </datalist>
+          </article>
+          <article>
+            <label for="population">Population:</label>
+            <select id="population">
+              <option value="elderly">Elderly</option>
+              <option value="family">Familiy</option>
+              <option value="homeless">Homeless</option>
+              <option value="veterans">Veterans</option>
+            </select>
+          </article>
+          <article>
+            <label for="rooms">Rooms:</label>
+            <select id="rooms">
+              <option value="1-rooms">1 Room</option>
+              <option value="2-rooms">2 Rooms</option>
+              <option value="3-rooms">3 Rooms</option>
+              <option value="4-rooms">4 Rooms</option>
+              <option value="5-rooms">5 Rooms</option>
+            </select>
+          </article>
+          <article>
+            <button>Filter by income <i class="fas fa-hand-holding-usd"></i></button>
+          </article>
+          <article>
+            <button>Reset <i class="fas fa-broom"></i></button>
+          </article>
+        </section>
+        <button id="filters">Filters <i class="fas fa-sliders-h"></i></button>
       </section>
     </section>
   </section>
-  
   <script src="index.js"></script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+@import "calculator.scss";
 @import "radio.scss";
 @import "loader.scss";
 $base-duration: 500ms;
@@ -226,7 +227,7 @@ section.application {
 		display: block;
     max-width: 100%;
 		width: 35em;
-		padding: 0 1em;
+		padding: 1em;
 		transition: all .2s ease-in-out;
 		margin-right: 1em;
 		overflow-y: auto;
@@ -282,13 +283,15 @@ section.application {
 		transition: all .2s ease-in-out;
 	}
 
-	#close-panel-btn{
+	.close-panel-btn{
 		position: absolute;
-		top: 2em;
+		top: 1em;
 		right: 1em;
-		width: 3.5em;
-		height: 3.5em;
+		width: 2.5em;
+		height: 2.5em;
+		font-size: 1.25em;
 		border-radius: 50%;
+		padding: 0 .5em .2em .5em;
 	}
   .loading-box{
     text-align: center;
@@ -319,6 +322,38 @@ section.application {
     position: relative;
 		flex: 1;
 
+		.calculator, .filters{
+			display: none;
+		}
+
+		.filters.active{
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 25em;
+			height: 100%;
+			padding: 1em;
+			background-color: #eaeaea;
+			box-shadow: -2px 2px 10px 1px rgba(0, 69, 68, 0.5);
+
+			h2{
+				margin: 0;
+			}
+		}
+
+		.calculator.active{
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 25em;
+			height: 100%;
+			padding: 1em;
+			background-color: #eaeaea;
+			box-shadow: -2px 2px 10px 1px rgba(0, 69, 68, 0.5);
+		}
+
 		#geocoder{
 			position: absolute;
 			top: 2em;
@@ -330,6 +365,13 @@ section.application {
 			height: 100%;
 			box-shadow: -2px 2px 10px 1px rgba($color-1, 0.5);
 		}
+
+		#filters{
+			position: absolute;
+			bottom: 4em;
+			right: 3em;
+		}
+
     #legend.active{
       display: block;
       position: absolute;

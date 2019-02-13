@@ -15,23 +15,19 @@ import Controller from './components/controller.class';
     }
     this.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
   });
-  // controller.map.map.on('mouseleave', 'radio-patrols-fill', function () {
-  //   this.setFilter('radio-patrols-hover', ['==', 'FID', '']);
-  // });
   controller.map.map.on('click', function (e, parent = this) {
     const features = this.queryRenderedFeatures(e.point, {
       layers: ['litch-locations-points']
     });
     // console.log(e.point);
     if (features.length) {
+      console.log(features[0]);
       controller.updatePanel(features[0], controller);
-    } else {
-
-    }
-    document.querySelector('.data-panel').className = 'data-panel active';
+      document.querySelector('.data-panel').className = 'data-panel active';
+    } 
   });
   controller.map.geocoder.on('result', function (ev) {
-    console.log(ev);
+    // console.log(ev);
     if(controller.geocoderOff){
       controller.geocoderOff = false;
       controller.geoResults(ev, controller);
@@ -53,5 +49,4 @@ import Controller from './components/controller.class';
   const reloadPage = function reloadPage() {
     window.location.reload(true);
   };
-  document.getElementById('logo').addEventListener('click', reloadPage);
 })(window);
