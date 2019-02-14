@@ -49,6 +49,15 @@ import Controller from './components/controller.class';
   document.getElementById('filters').addEventListener('click', function () {
     document.querySelector('.filters').className = 'filters active';
   });
+  document.getElementById('filter-reset-btn').addEventListener('click', function (ev) {
+    controller.filterMap(ev, controller);
+  });
+  const intFilters = document.querySelectorAll('.interactive-filters');
+  intFilters.forEach(function (btn) {
+    btn.addEventListener('change', function (ev) {
+      controller.filterMap(ev, controller);
+    });
+  });
   const startingBtns = document.querySelectorAll('#user-type-section button');
   startingBtns.forEach(function (btn) {
     btn.addEventListener('click', function (ev) {

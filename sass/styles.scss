@@ -341,7 +341,29 @@ section.application {
 			transition: all .2s ease-in-out;
 
 			h2{
-				margin: 0;
+				border-bottom: solid $color-3;
+				color: $color-1;
+				padding: 0 0 .5em 0;
+				margin-bottom: 1em;
+			}
+
+			article{
+				margin-bottom: 1em;
+			}
+
+			#calculator-btn.off{
+				background-color: transparent;
+				border: solid;
+			}
+
+			#calculator-btn.on{
+				background-color: $color-2;
+				border: none;
+			}
+
+			#filter-reset-btn{
+				background-color: $color-4;
+				color: $white;
 			}
 		}
 

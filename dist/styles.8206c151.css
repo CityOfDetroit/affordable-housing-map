@@ -593,7 +593,25 @@ section.application .map-panel .filters.active {
   transition: all 0.2s ease-in-out;
 }
 section.application .map-panel .filters.active h2 {
-  margin: 0;
+  border-bottom: solid #E48F22;
+  color: #004544;
+  padding: 0 0 0.5em 0;
+  margin-bottom: 1em;
+}
+section.application .map-panel .filters.active article {
+  margin-bottom: 1em;
+}
+section.application .map-panel .filters.active #calculator-btn.off {
+  background-color: transparent;
+  border: solid;
+}
+section.application .map-panel .filters.active #calculator-btn.on {
+  background-color: #9fd5b3;
+  border: none;
+}
+section.application .map-panel .filters.active #filter-reset-btn {
+  background-color: #CF3234;
+  color: #fff;
 }
 section.application .map-panel .calculator.active {
   left: 0;

@@ -2,7 +2,7 @@
 export default class Calculator {
   constructor(container, controller) {
     this.form = null;
-    this.controller = controller;
+    this._controller = controller;
     this.init(document.getElementById(container), this);
   }
   
@@ -204,6 +204,20 @@ export default class Calculator {
     peopleHousehold.appendChild(peopleHouseholdLabel);
     peopleHousehold.appendChild(peopleHouseholdValue);
 
+    // Create bedrooms section elemets
+    let bedrooms = document.createElement('section');
+    let bedroomsValue = document.createElement('input');
+    let bedroomsLabel = document.createElement('label');
+    // Add attributes to elements
+    bedroomsValue.type = 'number';
+    bedroomsValue.setAttribute('id', 'bedrooms');
+    bedroomsValue.value = 0;
+    bedroomsLabel.setAttribute('for', 'bedrooms'); 
+    bedroomsLabel.innerText = 'Number of bedrooms:'; 
+    // Build DOM for bedrooms section
+    bedrooms.appendChild(bedroomsLabel);
+    bedrooms.appendChild(bedroomsValue);
+
     let buttonGroup = document.createElement('article');
     let submit = document.createElement('button');
     submit.innerText = 'CALCULATE';
@@ -223,6 +237,7 @@ export default class Calculator {
     _calculator.form.appendChild(childExp);
     _calculator.form.appendChild(medicalExp);
     _calculator.form.appendChild(peopleHousehold);
+    _calculator.form.appendChild(bedrooms);
     _calculator.form.appendChild(buttonGroup);
     _calculator.form.addEventListener('submit', (ev) => {
         this.submit(ev, _calculator);
@@ -233,21 +248,21 @@ export default class Calculator {
   submit(ev, _calculator){
     ev.preventDefault();
     console.log(ev);
-    (ev.explicitOriginalTarget.id == 'cancel-btn') ? _calculator.cancelIncomeFilter(_calculator) : _calculator.computeIncomeRange(_calculator);
+    (ev.explicitOriginalTarget.id == 'cancel-btn') ? _calculator.cancelIncomeFilter() : _calculator.computeIncomeRange(_calculator);
   }
 
   updateForm(type, value, _calculator){
     console.log(value);
   }
 
-  cancelIncomeFilter(_calculator){
+  cancelIncomeFilter(){
     document.querySelector('.calculator.active').className = 'calculator';
     document.querySelector('#calculator-btn').className = 'off';
     document.querySelector('#calculator-btn span').innerText = 'OFF';
   }
 
   computeIncomeRange(_calculator){
-    console.log(_calculator.form);
+    console.log(_calculator._controller);
     let AMI = 0;
     let income = 0;
     let addIncome = _calculator.form[6].valueAsNumber;
@@ -267,52 +282,64 @@ export default class Calculator {
     let annualAdjustedGrossIncome = (income + (12 * addIncome) - (480 * dependents) - seniorDeduction - childcare - medical);
     let monthlyAdjustedGrossIncome = (income - (480 * dependents) - seniorDeduction - childcare - medical)/12 + addIncome;
     switch (true) {
-        case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome < 17725:
+        case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 14180:
             AMI = 20;
+            _calculator._controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
             break;
 
-        case annualAdjustedGrossIncome >= 17725  && annualAdjustedGrossIncome < 21270:
+        case annualAdjustedGrossIncome > 14180  && annualAdjustedGrossIncome <= 17725:
             AMI = 25;
+            _calculator._controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
             break;
 
-        case annualAdjustedGrossIncome >= 21270  && annualAdjustedGrossIncome < 24815:
+        case annualAdjustedGrossIncome > 17725  && annualAdjustedGrossIncome <= 21270:
             AMI = 30;
+            _calculator._controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
             break;
 
-        case annualAdjustedGrossIncome >= 24815  && annualAdjustedGrossIncome < 28360:
+        case annualAdjustedGrossIncome > 21270  && annualAdjustedGrossIncome <= 28815:
             AMI = 35;
+            _calculator._controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
             break;
         
-        case annualAdjustedGrossIncome >= 28360  && annualAdjustedGrossIncome < 31905:
+        case annualAdjustedGrossIncome > 24815  && annualAdjustedGrossIncome <= 28360:
             AMI = 40;
+            _calculator._controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
             break;
 
-        case annualAdjustedGrossIncome >= 31905  && annualAdjustedGrossIncome < 35450:
+        case annualAdjustedGrossIncome > 28360  && annualAdjustedGrossIncome <= 31905:
             AMI = 45;
+            _calculator._controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
             break;
 
-        case annualAdjustedGrossIncome >= 35450  && annualAdjustedGrossIncome < 38995:
+        case annualAdjustedGrossIncome > 31905  && annualAdjustedGrossIncome <= 35450:
             AMI = 50;
+            _calculator._controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
             break;
 
-        case annualAdjustedGrossIncome >= 38995  && annualAdjustedGrossIncome < 42540:
+        case annualAdjustedGrossIncome > 35450  && annualAdjustedGrossIncome <= 38995:
             AMI = 55;
+            _calculator._controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
             break;
 
-        case annualAdjustedGrossIncome >= 42540  && annualAdjustedGrossIncome < 56720:
+        case annualAdjustedGrossIncome > 38995  && annualAdjustedGrossIncome <= 42540:
             AMI = 60;
+            _calculator._controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
             break;
 
-        case annualAdjustedGrossIncome >= 56720  && annualAdjustedGrossIncome < 70900:
+        case annualAdjustedGrossIncome > 42540  && annualAdjustedGrossIncome <= 56720:
             AMI = 80;
+            _calculator._controller.filters.incomeBucket = 'Affordable_at_80_Pct_AMI';
             break;
 
-        case annualAdjustedGrossIncome >= 70900  && annualAdjustedGrossIncome < 85080:
+        case annualAdjustedGrossIncome > 56720  && annualAdjustedGrossIncome <= 70900:
             AMI = 100
+            _calculator._controller.filters.incomeBucket = 'Too High';
             break;
     
         default:
             AMI = 120;
+            _calculator._controller.filters.incomeBucket = 'Too High';
             break;
     }
     // document.getElementById('results').innerHTML = `
@@ -320,6 +347,7 @@ export default class Calculator {
     // <p><strong>Monthly Adjusted Gross Income:</strong> ${monthlyAdjustedGrossIncome}</p>
     // <p><strong>%AMI:</strong> ${AMI}</p>
     // `;
+    _calculator._controller.updateMap(_calculator._controller);
     document.querySelector('.calculator.active').className = 'calculator';
     document.querySelector('#calculator-btn').className = 'on';
     document.querySelector('#calculator-btn span').innerText = 'ON';

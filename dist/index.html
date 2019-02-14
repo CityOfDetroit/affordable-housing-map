@@ -70,7 +70,7 @@
           <h2>Filters</h2>
           <article>
             <label for="neighborhood">Neighborhood:</label>
-            <input id="neighborhood" list="neighborhoods">
+            <input id="neighborhood" list="neighborhoods" class="interactive-filters">
             <datalist id="neighborhoods">
               <option value="Southwest">
               </option><option value="Corktown">
@@ -79,30 +79,31 @@
           </article>
           <article>
             <label for="population">Population:</label>
-            <select id="population">
-              <option value="" selected="">------</option>
-              <option value="elderly">Elderly</option>
-              <option value="family">Familiy</option>
-              <option value="homeless">Homeless</option>
-              <option value="veterans">Veterans</option>
+            <select id="population" class="interactive-filters">
+              <option value="null" selected="">--------</option>
+              <option value="Elderly">Elderly</option>
+              <option value="Family">Familiy</option>
+              <option value="Special_Needs_or_Disabled">Special Need or Disabled</option>
+              <option value="Homeless">Homeless</option>
+              <option value="Veterans">Veterans</option>
             </select>
           </article>
-          <article>
-            <label for="rooms">Rooms:</label>
-            <select id="rooms">
-              <option value="" selected="">-----</option>
-              <option value="1-rooms">1 Room</option>
-              <option value="2-rooms">2 Rooms</option>
-              <option value="3-rooms">3 Rooms</option>
-              <option value="4-rooms">4 Rooms</option>
-              <option value="5-rooms">5 Rooms</option>
+          <!-- <article>
+            <label for="rooms">Bedrooms:</label>
+            <select id="rooms" class="interactive-filters">
+              <option value="" selected>-------</option>
+              <option value="1-rooms">1 Bedroom</option>
+              <option value="2-rooms">2 Bedrooms</option>
+              <option value="3-rooms">3 Bedrooms</option>
+              <option value="4-rooms">4 Bedrooms</option>
+              <option value="5-rooms">5 Bedrooms</option>
             </select>
+          </article> -->
+          <article>
+            <button id="calculator-btn" class="off">Income Filter | <span>OFF</span></button>
           </article>
           <article>
-            <button id="calculator-btn">Income Filter | <span>OFF</span></button>
-          </article>
-          <article>
-            <button id="filter-reset-btn">Reset <i class="fas fa-broom"></i></button>
+            <button id="filter-reset-btn"><i class="fas fa-broom"></i> Reset</button>
           </article>
         </section>
         <section class="calculator">
