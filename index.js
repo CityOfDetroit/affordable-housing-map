@@ -64,7 +64,4 @@ import Controller from './components/controller.class';
       controller.initialForm(ev.target.attributes[2].nodeValue, controller);
     });
   });
-  const reloadPage = function reloadPage() {
-    window.location.reload(true);
-  };
 })(window);

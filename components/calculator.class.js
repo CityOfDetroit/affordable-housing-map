@@ -2,7 +2,7 @@
 export default class Calculator {
   constructor(container, controller) {
     this.form = null;
-    this._controller = controller;
+    this.controller = controller;
     this.init(document.getElementById(container), this);
   }
   
@@ -79,7 +79,7 @@ export default class Calculator {
     let hoursPerWeek = document.createElement('input');
     let hoursPerWeekLabel = document.createElement('label');
     // Add attributes to elements
-    hourly.className = 'logic-section salary active';
+    hourly.className = 'logic-section hourly';
     hourlyWage.type = 'number';
     hourlyWage.setAttribute('id', 'hourly-wage');
     hourlyWage.setAttribute('step', '.01');
@@ -247,22 +247,42 @@ export default class Calculator {
 
   submit(ev, _calculator){
     ev.preventDefault();
-    console.log(ev);
-    (ev.explicitOriginalTarget.id == 'cancel-btn') ? _calculator.cancelIncomeFilter() : _calculator.computeIncomeRange(_calculator);
+    document.getElementById('initial-loader-overlay').className = 'active';
+    (ev.explicitOriginalTarget.id == 'cancel-btn') ? _calculator.cancelIncomeFilter(_calculator) : _calculator.computeIncomeRange(_calculator);
   }
 
   updateForm(type, value, _calculator){
-    console.log(value);
+    if(value.originalTarget.tagName == 'LABEL'){
+        if(value.originalTarget.htmlFor == 'salary'){
+            document.querySelector('.logic-section.salary').className = 'logic-section salary active';
+            document.querySelector('.logic-section.hourly').className = 'logic-section hourly';
+        }else{
+            document.querySelector('.logic-section.hourly').className = 'logic-section hourly active';
+            document.querySelector('.logic-section.salary').className = 'logic-section salary';
+        }
+    }else{
+        if(value.originalTarget.id == 'salary'){
+            document.querySelector('.logic-section.salary').className = 'logic-section salary active';
+            document.querySelector('.logic-section.hourly').className = 'logic-section hourly';
+        }else{  
+            document.querySelector('.logic-section.hourly').className = 'logic-section hourly active';
+            document.querySelector('.logic-section.salary').className = 'logic-section salary';
+        }
+    }
   }
 
-  cancelIncomeFilter(){
+  cancelIncomeFilter(_calculator){
+    _calculator.controller.filters.incomeBucket = null;
+    _calculator.controller.filters.bedrooms = null;
+    _calculator.form.reset();
+    _calculator.controller.updateMap(_calculator.controller);
     document.querySelector('.calculator.active').className = 'calculator';
     document.querySelector('#calculator-btn').className = 'off';
     document.querySelector('#calculator-btn span').innerText = 'OFF';
   }
 
   computeIncomeRange(_calculator){
-    console.log(_calculator._controller);
+    console.log(_calculator.controller);
     let AMI = 0;
     let income = 0;
     let addIncome = _calculator.form[6].valueAsNumber;
@@ -281,75 +301,88 @@ export default class Calculator {
     (_calculator.form[9].checked) ? seniorDeduction = 0 : seniorDeduction = 400;
     let annualAdjustedGrossIncome = (income + (12 * addIncome) - (480 * dependents) - seniorDeduction - childcare - medical);
     let monthlyAdjustedGrossIncome = (income - (480 * dependents) - seniorDeduction - childcare - medical)/12 + addIncome;
+    console.log(isNaN(income));
     switch (true) {
         case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 14180:
             AMI = 20;
-            _calculator._controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+            _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
             break;
 
         case annualAdjustedGrossIncome > 14180  && annualAdjustedGrossIncome <= 17725:
             AMI = 25;
-            _calculator._controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+            _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
             break;
 
         case annualAdjustedGrossIncome > 17725  && annualAdjustedGrossIncome <= 21270:
             AMI = 30;
-            _calculator._controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+            _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
             break;
 
         case annualAdjustedGrossIncome > 21270  && annualAdjustedGrossIncome <= 28815:
             AMI = 35;
-            _calculator._controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+            _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
             break;
         
         case annualAdjustedGrossIncome > 24815  && annualAdjustedGrossIncome <= 28360:
             AMI = 40;
-            _calculator._controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+            _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
             break;
 
         case annualAdjustedGrossIncome > 28360  && annualAdjustedGrossIncome <= 31905:
             AMI = 45;
-            _calculator._controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+            _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
             break;
 
         case annualAdjustedGrossIncome > 31905  && annualAdjustedGrossIncome <= 35450:
             AMI = 50;
-            _calculator._controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+            _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
             break;
 
         case annualAdjustedGrossIncome > 35450  && annualAdjustedGrossIncome <= 38995:
             AMI = 55;
-            _calculator._controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+            _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
             break;
 
         case annualAdjustedGrossIncome > 38995  && annualAdjustedGrossIncome <= 42540:
             AMI = 60;
-            _calculator._controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+            _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
             break;
 
         case annualAdjustedGrossIncome > 42540  && annualAdjustedGrossIncome <= 56720:
             AMI = 80;
-            _calculator._controller.filters.incomeBucket = 'Affordable_at_80_Pct_AMI';
+            _calculator.controller.filters.incomeBucket = 'Affordable_at_80_Pct_AMI';
             break;
 
         case annualAdjustedGrossIncome > 56720  && annualAdjustedGrossIncome <= 70900:
+            console.log('100');
             AMI = 100
-            _calculator._controller.filters.incomeBucket = 'Too High';
+            _calculator.controller.filters.incomeBucket = 'Too_High';
             break;
     
         default:
-            AMI = 120;
-            _calculator._controller.filters.incomeBucket = 'Too High';
+            if(!isNaN(income)){
+                AMI = 120;
+                _calculator.controller.filters.incomeBucket = 'Too_High';
+            }
             break;
+    }
+    (isNaN(_calculator.form[12].valueAsNumber)) ? _calculator.controller.filters.bedrooms = null : _calculator.controller.filters.bedrooms = _calculator.form[12].valueAsNumber;
+    if(isNaN(income)){
+        _calculator.controller.updateMap(_calculator.controller);
+        document.querySelector('.calculator.active').className = 'calculator';
+        document.querySelector('#calculator-btn').className = 'off';
+        document.querySelector('#calculator-btn span').innerText = 'OFF';
+    }else{
+        _calculator.controller.updateMap(_calculator.controller);
+        document.querySelector('.calculator.active').className = 'calculator';
+        document.querySelector('#calculator-btn').className = 'on';
+        document.querySelector('#calculator-btn span').innerText = 'ON';
     }
     // document.getElementById('results').innerHTML = `
     // <p><strong>Annual Adjusted Gross Income:</strong> ${annualAdjustedGrossIncome}</p>
     // <p><strong>Monthly Adjusted Gross Income:</strong> ${monthlyAdjustedGrossIncome}</p>
     // <p><strong>%AMI:</strong> ${AMI}</p>
     // `;
-    _calculator._controller.updateMap(_calculator._controller);
-    document.querySelector('.calculator.active').className = 'calculator';
-    document.querySelector('#calculator-btn').className = 'on';
-    document.querySelector('#calculator-btn span').innerText = 'ON';
+    
   }
 }

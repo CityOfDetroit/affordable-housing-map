@@ -8,12 +8,16 @@ $white: #fff;
 form{
     padding: 1em;
 
-    ul{
-        list-style: none;
-        display: flex;
-        
-        li{
-            padding: .25em 1em;
+    fieldset{
+        ul{
+            list-style: none;
+            display: flex;
+            padding: 0;
+            margin: 0;
+            
+            li{
+                padding: .25em 1em;
+            }
         }
     }
     
@@ -26,6 +30,18 @@ form{
 
     #submit-btn{
         margin-right: 2em;
+    }
+    section, fieldset{
+        margin-bottom: 1em;
+    }
+    
+    section{
+        display: flex;
+
+        input{
+            width: 5em;
+            margin-left: .5em;
+        }
     }
 
     #cancel-btn{

@@ -232,6 +232,10 @@ section.application {
 		margin-right: 1em;
 		overflow-y: auto;
 
+		h4{
+			border-bottom: solid #E48F22;
+		}
+
 		important{
 			strong{
 				background-color: $color-3;
@@ -340,7 +344,7 @@ section.application {
 			left: 0;
 			transition: all .2s ease-in-out;
 
-			h2{
+			h4{
 				border-bottom: solid $color-3;
 				color: $color-1;
 				padding: 0 0 .5em 0;

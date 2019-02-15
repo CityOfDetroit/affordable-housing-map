@@ -16,7 +16,7 @@ export default class Controller {
       'incomeBucket': null
     };
     this.neighborhoods = {};
-    this.calculator = new Calculator('calc-box');
+    this.calculator = new Calculator('calc-box',this);
     this.map = new Map({
       styleURL: 'mapbox://styles/mapbox',
       mapContainer: 'map',
@@ -144,14 +144,16 @@ export default class Controller {
     .then(function(data) {
       console.log(data);
       _controller.map.map.getSource('litch-locations').setData(data);
+      document.getElementById('initial-loader-overlay').className = '';
     });
   }
 
   filterMap(ev, _controller){
     console.log(ev);
+    document.getElementById('initial-loader-overlay').className = 'active';
     switch (ev.explicitOriginalTarget.id) {
       case 'population':
-        (ev.explicitOriginalTarget.value != null) ? _controller.filters.population = ev.explicitOriginalTarget.value : _controller.filters.population = null;
+        (ev.explicitOriginalTarget.value != 'null') ? _controller.filters.population = ev.explicitOriginalTarget.value : _controller.filters.population = null;
         break;
 
       case 'neighborhood':
