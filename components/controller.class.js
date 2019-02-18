@@ -151,13 +151,13 @@ export default class Controller {
   filterMap(ev, _controller){
     console.log(ev);
     document.getElementById('initial-loader-overlay').className = 'active';
-    switch (ev.explicitOriginalTarget.id) {
+    switch (ev.target.id) {
       case 'population':
-        (ev.explicitOriginalTarget.value != 'null') ? _controller.filters.population = ev.explicitOriginalTarget.value : _controller.filters.population = null;
+        (ev.target.value != 'null') ? _controller.filters.population = ev.target.value : _controller.filters.population = null;
         break;
 
       case 'neighborhood':
-        (ev.explicitOriginalTarget.value != '') ? _controller.filters.neighborhood = _controller.neighborhoods[ev.explicitOriginalTarget.value] : _controller.filters.neighborhood = null;
+        (ev.target.value != '') ? _controller.filters.neighborhood = _controller.neighborhoods[ev.target.value] : _controller.filters.neighborhood = null;
         break;
     
       default:

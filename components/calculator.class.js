@@ -248,7 +248,7 @@ export default class Calculator {
   submit(ev, _calculator){
     ev.preventDefault();
     document.getElementById('initial-loader-overlay').className = 'active';
-    (ev.explicitOriginalTarget.id == 'cancel-btn') ? _calculator.cancelIncomeFilter(_calculator) : _calculator.computeIncomeRange(_calculator);
+    (ev.target.id == 'cancel-btn') ? _calculator.cancelIncomeFilter(_calculator) : _calculator.computeIncomeRange(_calculator);
   }
 
   updateForm(type, value, _calculator){
