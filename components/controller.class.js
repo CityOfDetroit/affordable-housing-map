@@ -109,13 +109,13 @@ export default class Controller {
         if(_controller.filters.incomeBucket == null){
           where = '1%3D1';
         }else{
-          where = `${_controller.filters.incomeBucket}<>null`;
+          where = `${_controller.filters.incomeBucket}='Y'`;
         }
       }else{
         if(_controller.filters.incomeBucket == null){
           where = `${_controller.filters.bedrooms}<>null`;
         }else{
-          where = `${_controller.filters.bedrooms}<>null AND ${_controller.filters.incomeBucket}<>null`;
+          where = `${_controller.filters.bedrooms}<>null AND ${_controller.filters.incomeBucket}='Y'`;
         }
       }
     }else{
@@ -123,13 +123,13 @@ export default class Controller {
         if(_controller.filters.incomeBucket == null){
           where = `${_controller.filters.population}<>null`;
         }else{
-          where = `${_controller.filters.population}<>null AND ${_controller.filters.incomeBucket}<>null`;
+          where = `${_controller.filters.population}<>null AND ${_controller.filters.incomeBucket}='Y'`;
         }
       }else{
         if(_controller.filters.incomeBucket == null){
           where = `${_controller.filters.population}<>null AND ${_controller.filters.bedrooms}<>null`;
         }else{
-          where = `${_controller.filters.population}<>null AND ${_controller.filters.bedrooms}<>null AND ${_controller.filters.incomeBucket}<>null`;
+          where = `${_controller.filters.population}<>null AND ${_controller.filters.bedrooms}<>null AND ${_controller.filters.incomeBucket}='Y'`;
         }
       }
     }

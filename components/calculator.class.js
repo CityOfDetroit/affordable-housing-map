@@ -108,7 +108,7 @@ export default class Calculator {
     addIncomeValue.setAttribute('id', 'add-income');
     addIncomeValue.value = 0;
     addIncomeLabel.setAttribute('for', 'add-income'); 
-    addIncomeLabel.innerText = 'Additional Income:'; 
+    addIncomeLabel.innerText = 'Additional Monthly Income:'; 
     // Build DOM for add-income section
     addIncome.appendChild(addIncomeLabel);
     addIncome.appendChild(addIncomeValue);
@@ -200,18 +200,20 @@ export default class Calculator {
     peopleHouseholdValue.value = 0;
     peopleHouseholdLabel.setAttribute('for', 'people-household'); 
     peopleHouseholdLabel.innerText = 'How many people are in your household?'; 
+    peopleHouseholdValue.addEventListener('change', (ev)=>{
+        this.updateForm('household', ev, _calculator);
+    });
     // Build DOM for people-household section
     peopleHousehold.appendChild(peopleHouseholdLabel);
     peopleHousehold.appendChild(peopleHouseholdValue);
 
     // Create bedrooms section elemets
     let bedrooms = document.createElement('section');
-    let bedroomsValue = document.createElement('input');
+    let bedroomsValue = document.createElement('select');
     let bedroomsLabel = document.createElement('label');
+
     // Add attributes to elements
-    bedroomsValue.type = 'number';
     bedroomsValue.setAttribute('id', 'bedrooms');
-    bedroomsValue.value = 0;
     bedroomsLabel.setAttribute('for', 'bedrooms'); 
     bedroomsLabel.innerText = 'Number of bedrooms:'; 
     // Build DOM for bedrooms section
@@ -252,22 +254,56 @@ export default class Calculator {
   }
 
   updateForm(type, value, _calculator){
-    if(value.originalTarget.tagName == 'LABEL'){
-        if(value.originalTarget.htmlFor == 'salary'){
-            document.querySelector('.logic-section.salary').className = 'logic-section salary active';
-            document.querySelector('.logic-section.hourly').className = 'logic-section hourly';
-        }else{
-            document.querySelector('.logic-section.hourly').className = 'logic-section hourly active';
-            document.querySelector('.logic-section.salary').className = 'logic-section salary';
-        }
-    }else{
-        if(value.originalTarget.id == 'salary'){
-            document.querySelector('.logic-section.salary').className = 'logic-section salary active';
-            document.querySelector('.logic-section.hourly').className = 'logic-section hourly';
-        }else{  
-            document.querySelector('.logic-section.hourly').className = 'logic-section hourly active';
-            document.querySelector('.logic-section.salary').className = 'logic-section salary';
-        }
+    _calculator.form[14].length = 0;
+    let bedroom0 = document.createElement('option');
+    let bedroom1 = document.createElement('option');
+    let bedroom2 = document.createElement('option');
+    let bedroom3 = document.createElement('option');
+    let bedroom4 = document.createElement('option');
+    let bedroom5 = document.createElement('option');
+    bedroom0.value = '0BR';
+    bedroom0.text = 'Studio';
+    bedroom1.value = '1BR';
+    bedroom1.text = '1 - bedroom';
+    bedroom2.value = '2BR';
+    bedroom2.text = '2 - bedroom';
+    bedroom3.value = '3BR';
+    bedroom3.text = '3 - bedroom';
+    bedroom4.value = '4BR';
+    bedroom4.text = '4 - bedroom';
+    bedroom5.value = '5BR';
+    bedroom5.text = '5 - bedroom';
+    switch(type){
+        case 'household':
+            if((value.target.value >= 0 && value.target.value <= 2) || value.target.value == null){
+                _calculator.form[14].add(bedroom0, null);
+                _calculator.form[14].add(bedroom1, null);
+            }
+            (value.target.value >= 0 && value.target.value <= 4)  ? _calculator.form[14].add(bedroom2, null) : 0;
+            (value.target.value >= 2 && value.target.value <= 6)  ? _calculator.form[14].add(bedroom3, null) : 0;
+            (value.target.value >= 3 && value.target.value <= 8)  ? _calculator.form[14].add(bedroom4, null) : 0;
+            (value.target.value >= 5 && value.target.value <= 10) ? _calculator.form[14].add(bedroom5, null) : 0;
+        break;
+
+        default:
+            if(value.originalTarget.tagName == 'LABEL'){
+                if(value.originalTarget.htmlFor == 'salary'){
+                    document.querySelector('.logic-section.salary').className = 'logic-section salary active';
+                    document.querySelector('.logic-section.hourly').className = 'logic-section hourly';
+                }else{
+                    document.querySelector('.logic-section.hourly').className = 'logic-section hourly active';
+                    document.querySelector('.logic-section.salary').className = 'logic-section salary';
+                }
+            }else{
+                if(value.originalTarget.id == 'salary'){
+                    document.querySelector('.logic-section.salary').className = 'logic-section salary active';
+                    document.querySelector('.logic-section.hourly').className = 'logic-section hourly';
+                }else{  
+                    document.querySelector('.logic-section.hourly').className = 'logic-section hourly active';
+                    document.querySelector('.logic-section.salary').className = 'logic-section salary';
+                }
+            }
+        break;
     }
   }
 
@@ -291,6 +327,7 @@ export default class Calculator {
     let childcare = _calculator.form[11].valueAsNumber;
     let medical = _calculator.form[12].valueAsNumber;
     let householdSize = _calculator.form[13].valueAsNumber;
+    let bedrooms = _calculator.form[14].value;
     if(_calculator.form[1].checked){
         income = _calculator.form[3].valueAsNumber;
     }else{
@@ -302,70 +339,408 @@ export default class Calculator {
     let annualAdjustedGrossIncome = (income + (12 * addIncome) - (480 * dependents) - seniorDeduction - childcare - medical);
     let monthlyAdjustedGrossIncome = (income - (480 * dependents) - seniorDeduction - childcare - medical)/12 + addIncome;
     console.log(isNaN(income));
-    switch (true) {
-        case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 14180:
-            AMI = 20;
-            _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
-            break;
-
-        case annualAdjustedGrossIncome > 14180  && annualAdjustedGrossIncome <= 17725:
-            AMI = 25;
-            _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
-            break;
-
-        case annualAdjustedGrossIncome > 17725  && annualAdjustedGrossIncome <= 21270:
-            AMI = 30;
-            _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
-            break;
-
-        case annualAdjustedGrossIncome > 21270  && annualAdjustedGrossIncome <= 28815:
-            AMI = 35;
-            _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
-            break;
+    switch (bedrooms) {
+        case '0BR':
+            switch (true) {
+                case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 9940:
+                    AMI = 20;
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
         
-        case annualAdjustedGrossIncome > 24815  && annualAdjustedGrossIncome <= 28360:
-            AMI = 40;
-            _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
-            break;
+                case annualAdjustedGrossIncome > 9940  && annualAdjustedGrossIncome <= 12425:
+                    AMI = 25
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
 
-        case annualAdjustedGrossIncome > 28360  && annualAdjustedGrossIncome <= 31905:
-            AMI = 45;
-            _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
-            break;
+                case annualAdjustedGrossIncome > 12425  && annualAdjustedGrossIncome <= 14910:
+                    AMI = 30
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
 
-        case annualAdjustedGrossIncome > 31905  && annualAdjustedGrossIncome <= 35450:
-            AMI = 50;
-            _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
-            break;
+                case annualAdjustedGrossIncome > 14910  && annualAdjustedGrossIncome <= 17395:
+                    AMI = 35
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
 
-        case annualAdjustedGrossIncome > 35450  && annualAdjustedGrossIncome <= 38995:
-            AMI = 55;
-            _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
-            break;
+                case annualAdjustedGrossIncome > 17395  && annualAdjustedGrossIncome <= 19880:
+                    AMI = 40
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
 
-        case annualAdjustedGrossIncome > 38995  && annualAdjustedGrossIncome <= 42540:
-            AMI = 60;
-            _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
-            break;
+                case annualAdjustedGrossIncome > 19880  && annualAdjustedGrossIncome <= 22365:
+                    AMI = 45
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
 
-        case annualAdjustedGrossIncome > 42540  && annualAdjustedGrossIncome <= 56720:
-            AMI = 80;
-            _calculator.controller.filters.incomeBucket = 'Affordable_at_80_Pct_AMI';
-            break;
+                case annualAdjustedGrossIncome > 22365  && annualAdjustedGrossIncome <= 24850:
+                    AMI = 50
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
 
-        case annualAdjustedGrossIncome > 56720  && annualAdjustedGrossIncome <= 70900:
-            console.log('100');
-            AMI = 100
-            _calculator.controller.filters.incomeBucket = 'Too_High';
-            break;
-    
-        default:
-            if(!isNaN(income)){
-                AMI = 120;
-                _calculator.controller.filters.incomeBucket = 'Too_High';
+                case annualAdjustedGrossIncome > 24850  && annualAdjustedGrossIncome <= 27335:
+                    AMI = 55
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 27335  && annualAdjustedGrossIncome <= 29820:
+                    AMI = 60
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 29820  && annualAdjustedGrossIncome <= 39760:
+                    AMI = 80
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_80_Pct_AMI';
+                    break;
+                    
+                case annualAdjustedGrossIncome > 39760  && annualAdjustedGrossIncome <= 49700:
+                    AMI = 100
+                    _calculator.controller.filters.incomeBucket = 'Too_High';
+                    break;
+            
+                default:
+                    if(!isNaN(income)){
+                        AMI = 120;
+                        _calculator.controller.filters.incomeBucket = 'Too_High';
+                    }
+                    break;
             }
             break;
+
+        case '1BR':
+            switch (true) {
+                case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 10650:
+                    AMI = 20;
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+        
+                case annualAdjustedGrossIncome > 10650  && annualAdjustedGrossIncome <= 13313:
+                    AMI = 25
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 13313  && annualAdjustedGrossIncome <= 15975:
+                    AMI = 30
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 15975  && annualAdjustedGrossIncome <= 18638:
+                    AMI = 35
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 18638  && annualAdjustedGrossIncome <= 21300:
+                    AMI = 40
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 21300  && annualAdjustedGrossIncome <= 23963:
+                    AMI = 45
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 23963  && annualAdjustedGrossIncome <= 26625:
+                    AMI = 50
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 26625  && annualAdjustedGrossIncome <= 29288:
+                    AMI = 55
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 29288  && annualAdjustedGrossIncome <= 31950:
+                    AMI = 60
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 31950  && annualAdjustedGrossIncome <= 42600:
+                    AMI = 80
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_80_Pct_AMI';
+                    break;
+                    
+                case annualAdjustedGrossIncome > 42600  && annualAdjustedGrossIncome <= 53250:
+                    AMI = 100
+                    _calculator.controller.filters.incomeBucket = 'Too_High';
+                    break;
+            
+                default:
+                    if(!isNaN(income)){
+                        AMI = 120;
+                        _calculator.controller.filters.incomeBucket = 'Too_High';
+                    }
+                    break;
+            }
+        break;
+
+        case '2BR':
+            switch (true) {
+                case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 12780:
+                    AMI = 20;
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+        
+                case annualAdjustedGrossIncome > 12780  && annualAdjustedGrossIncome <= 15975:
+                    AMI = 25
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 15975  && annualAdjustedGrossIncome <= 19170:
+                    AMI = 30
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 19170  && annualAdjustedGrossIncome <= 22365:
+                    AMI = 35
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 22365  && annualAdjustedGrossIncome <= 25560:
+                    AMI = 40
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 25560  && annualAdjustedGrossIncome <= 28755:
+                    AMI = 45
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 28755  && annualAdjustedGrossIncome <= 31950:
+                    AMI = 50
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 31950  && annualAdjustedGrossIncome <= 35145:
+                    AMI = 55
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 35145  && annualAdjustedGrossIncome <= 38340:
+                    AMI = 60
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 38340  && annualAdjustedGrossIncome <= 51120:
+                    AMI = 80
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_80_Pct_AMI';
+                    break;
+                    
+                case annualAdjustedGrossIncome > 51120  && annualAdjustedGrossIncome <= 63900:
+                    AMI = 100
+                    _calculator.controller.filters.incomeBucket = 'Too_High';
+                    break;
+            
+                default:
+                    if(!isNaN(income)){
+                        AMI = 120;
+                        _calculator.controller.filters.incomeBucket = 'Too_High';
+                    }
+                    break;
+            }
+        break;
+
+        case '3BR':
+            switch (true) {
+                case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 14750:
+                    AMI = 20;
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+        
+                case annualAdjustedGrossIncome > 14750  && annualAdjustedGrossIncome <= 18438:
+                    AMI = 25
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 18438  && annualAdjustedGrossIncome <= 22125:
+                    AMI = 30
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 22125  && annualAdjustedGrossIncome <= 25813:
+                    AMI = 35
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 25813  && annualAdjustedGrossIncome <= 29500:
+                    AMI = 40
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 29500  && annualAdjustedGrossIncome <= 33188:
+                    AMI = 45
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 33188  && annualAdjustedGrossIncome <= 36875:
+                    AMI = 50
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 36875  && annualAdjustedGrossIncome <= 40563:
+                    AMI = 55
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 40563  && annualAdjustedGrossIncome <= 44250:
+                    AMI = 60
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 44250  && annualAdjustedGrossIncome <= 59000:
+                    AMI = 80
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_80_Pct_AMI';
+                    break;
+                    
+                case annualAdjustedGrossIncome > 59000  && annualAdjustedGrossIncome <= 73800:
+                    AMI = 100
+                    _calculator.controller.filters.incomeBucket = 'Too_High';
+                    break;
+            
+                default:
+                    if(!isNaN(income)){
+                        AMI = 120;
+                        _calculator.controller.filters.incomeBucket = 'Too_High';
+                    }
+                    break;
+            }
+        break;
+
+        case '4BR':
+            switch (true) {
+                case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 16460:
+                    AMI = 20;
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+        
+                case annualAdjustedGrossIncome > 16460  && annualAdjustedGrossIncome <= 20575:
+                    AMI = 25
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 20575  && annualAdjustedGrossIncome <= 24690:
+                    AMI = 30
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 24690  && annualAdjustedGrossIncome <= 28805:
+                    AMI = 35
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 28805  && annualAdjustedGrossIncome <= 32920:
+                    AMI = 40
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 32920  && annualAdjustedGrossIncome <= 37035:
+                    AMI = 45
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 37035  && annualAdjustedGrossIncome <= 41150:
+                    AMI = 50
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 41150  && annualAdjustedGrossIncome <= 45265:
+                    AMI = 55
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 45265  && annualAdjustedGrossIncome <= 49380:
+                    AMI = 60
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 49380  && annualAdjustedGrossIncome <= 65840:
+                    AMI = 80
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_80_Pct_AMI';
+                    break;
+                    
+                case annualAdjustedGrossIncome > 65840  && annualAdjustedGrossIncome <= 82300:
+                    AMI = 100
+                    _calculator.controller.filters.incomeBucket = 'Too_High';
+                    break;
+            
+                default:
+                    if(!isNaN(income)){
+                        AMI = 120;
+                        _calculator.controller.filters.incomeBucket = 'Too_High';
+                    }
+                    break;
+            }
+        break;
+
+        case '5BR':
+            switch (true) {
+                case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 18160:
+                    AMI = 20;
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+        
+                case annualAdjustedGrossIncome > 18160  && annualAdjustedGrossIncome <= 22700:
+                    AMI = 25
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 22700  && annualAdjustedGrossIncome <= 26740:
+                    AMI = 30
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_30_pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 26740  && annualAdjustedGrossIncome <= 31780:
+                    AMI = 35
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 31780  && annualAdjustedGrossIncome <= 36320:
+                    AMI = 40
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 36320  && annualAdjustedGrossIncome <= 40860:
+                    AMI = 45
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 40860  && annualAdjustedGrossIncome <= 45400:
+                    AMI = 50
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_50_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 45400  && annualAdjustedGrossIncome <= 49940:
+                    AMI = 55
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 49940  && annualAdjustedGrossIncome <= 54480:
+                    AMI = 60
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
+                    break;
+
+                case annualAdjustedGrossIncome > 54480  && annualAdjustedGrossIncome <= 72640:
+                    AMI = 80
+                    _calculator.controller.filters.incomeBucket = 'Affordable_at_80_Pct_AMI';
+                    break;
+                    
+                case annualAdjustedGrossIncome > 72640  && annualAdjustedGrossIncome <= 90800:
+                    AMI = 100
+                    _calculator.controller.filters.incomeBucket = 'Too_High';
+                    break;
+            
+                default:
+                    if(!isNaN(income)){
+                        AMI = 120;
+                        _calculator.controller.filters.incomeBucket = 'Too_High';
+                    }
+                    break;
+            }
+        break;
+    
+        default:
+            console.log('Error: Incorrect number of bedrooms selected');
+            break;
     }
+    
     (isNaN(_calculator.form[12].valueAsNumber)) ? _calculator.controller.filters.bedrooms = null : _calculator.controller.filters.bedrooms = _calculator.form[12].valueAsNumber;
     if(isNaN(income)){
         _calculator.controller.updateMap(_calculator.controller);
