@@ -227,8 +227,15 @@ export default class Calculator {
     let cancel = document.createElement('button');
     cancel.innerText = 'CANCEL';
     cancel.setAttribute('id', 'cancel-btn');
+    cancel.addEventListener('click', (ev)=>{
+        this.buttonListener(ev, this);
+    });
+    submit.addEventListener('click', (ev)=>{
+        this.buttonListener(ev, this);
+    });
     buttonGroup.appendChild(submit);
     buttonGroup.appendChild(cancel);
+    
 
     _calculator.form.appendChild(salaryHourly);
     _calculator.form.appendChild(salary);
@@ -242,15 +249,18 @@ export default class Calculator {
     _calculator.form.appendChild(bedrooms);
     _calculator.form.appendChild(buttonGroup);
     _calculator.form.addEventListener('submit', (ev) => {
-        this.submit(ev, _calculator);
+        this.submit(ev);
     });
     container.appendChild(_calculator.form);
   }
 
-  submit(ev, _calculator){
-    ev.preventDefault();
+  buttonListener(ev, _calculator){
     document.getElementById('initial-loader-overlay').className = 'active';
     (ev.target.id == 'cancel-btn') ? _calculator.cancelIncomeFilter(_calculator) : _calculator.computeIncomeRange(_calculator);
+  }
+
+  submit(ev){
+    ev.preventDefault();
   }
 
   updateForm(type, value, _calculator){
@@ -261,17 +271,17 @@ export default class Calculator {
     let bedroom3 = document.createElement('option');
     let bedroom4 = document.createElement('option');
     let bedroom5 = document.createElement('option');
-    bedroom0.value = '0BR';
+    bedroom0.value = 'F0BR';
     bedroom0.text = 'Studio';
-    bedroom1.value = '1BR';
+    bedroom1.value = 'F1BR';
     bedroom1.text = '1 - bedroom';
-    bedroom2.value = '2BR';
+    bedroom2.value = 'F2BR';
     bedroom2.text = '2 - bedroom';
-    bedroom3.value = '3BR';
+    bedroom3.value = 'F3BR';
     bedroom3.text = '3 - bedroom';
-    bedroom4.value = '4BR';
+    bedroom4.value = 'F4BR';
     bedroom4.text = '4 - bedroom';
-    bedroom5.value = '5BR';
+    bedroom5.value = 'F5BR';
     bedroom5.text = '5 - bedroom';
     switch(type){
         case 'household':
@@ -308,8 +318,10 @@ export default class Calculator {
   }
 
   cancelIncomeFilter(_calculator){
+    console.log('cancel');
     _calculator.controller.filters.incomeBucket = null;
     _calculator.controller.filters.bedrooms = null;
+    _calculator.form[14].length = 0;
     _calculator.form.reset();
     _calculator.controller.updateMap(_calculator.controller);
     document.querySelector('.calculator.active').className = 'calculator';
@@ -340,7 +352,7 @@ export default class Calculator {
     let monthlyAdjustedGrossIncome = (income - (480 * dependents) - seniorDeduction - childcare - medical)/12 + addIncome;
     console.log(isNaN(income));
     switch (bedrooms) {
-        case '0BR':
+        case 'F0BR':
             switch (true) {
                 case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 9940:
                     AMI = 20;
@@ -406,7 +418,7 @@ export default class Calculator {
             }
             break;
 
-        case '1BR':
+        case 'F1BR':
             switch (true) {
                 case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 10650:
                     AMI = 20;
@@ -472,7 +484,7 @@ export default class Calculator {
             }
         break;
 
-        case '2BR':
+        case 'F2BR':
             switch (true) {
                 case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 12780:
                     AMI = 20;
@@ -538,7 +550,7 @@ export default class Calculator {
             }
         break;
 
-        case '3BR':
+        case 'F3BR':
             switch (true) {
                 case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 14750:
                     AMI = 20;
@@ -604,7 +616,7 @@ export default class Calculator {
             }
         break;
 
-        case '4BR':
+        case 'F4BR':
             switch (true) {
                 case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 16460:
                     AMI = 20;
@@ -670,7 +682,7 @@ export default class Calculator {
             }
         break;
 
-        case '5BR':
+        case 'F5BR':
             switch (true) {
                 case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 18160:
                     AMI = 20;
@@ -740,9 +752,10 @@ export default class Calculator {
             console.log('Error: Incorrect number of bedrooms selected');
             break;
     }
-    
-    (isNaN(_calculator.form[12].valueAsNumber)) ? _calculator.controller.filters.bedrooms = null : _calculator.controller.filters.bedrooms = _calculator.form[12].valueAsNumber;
-    if(isNaN(income)){
+    console.log(bedrooms);
+    console.log(income);
+    (bedrooms == '') ? _calculator.controller.filters.bedrooms = null : _calculator.controller.filters.bedrooms = bedrooms;
+    if(isNaN(income) && bedrooms == ''){
         _calculator.controller.updateMap(_calculator.controller);
         document.querySelector('.calculator.active').className = 'calculator';
         document.querySelector('#calculator-btn').className = 'off';
