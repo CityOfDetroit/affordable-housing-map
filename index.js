@@ -35,7 +35,9 @@ import Controller from './components/controller.class';
       console.log('extra call');
     }
   });
-
+  document.getElementById('population').value = '';
+  document.getElementById('neighborhood').value = '';
+  document.getElementById('rooms').value = '';
   document.getElementById('close-panel-btn').addEventListener('click', function () {
     controller.panel.clearPanel();
     document.querySelector('.data-panel.active').className = 'data-panel';

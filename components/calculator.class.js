@@ -103,12 +103,16 @@ export default class Calculator {
     let addIncome = document.createElement('section');
     let addIncomeValue = document.createElement('input');
     let addIncomeLabel = document.createElement('label');
+    let addIncomeDescription = document.createElement('p');
     // Add attributes to elements
     addIncomeValue.type = 'number';
     addIncomeValue.setAttribute('id', 'add-income');
+    addIncomeValue.setAttribute('aria-describedby', 'add-income-description');
     addIncomeValue.value = 0;
     addIncomeLabel.setAttribute('for', 'add-income'); 
-    addIncomeLabel.innerText = 'Additional Monthly Income:'; 
+    addIncomeLabel.innerText = 'Additional Monthly Income: *'; 
+    addIncomeDescription.innerText = '* Include Social Security, retirement or pension, disability / unemployment, food assistance, child support, and any other source of income per month Monthly Income.';
+    addIncomeDescription.setAttribute('id', 'add-income-description');
     // Build DOM for add-income section
     addIncome.appendChild(addIncomeLabel);
     addIncome.appendChild(addIncomeValue);
@@ -241,6 +245,7 @@ export default class Calculator {
     _calculator.form.appendChild(salary);
     _calculator.form.appendChild(hourly);
     _calculator.form.appendChild(addIncome);
+    _calculator.form.appendChild(addIncomeDescription);
     _calculator.form.appendChild(dependents);
     _calculator.form.appendChild(household);
     _calculator.form.appendChild(childExp);
@@ -324,6 +329,7 @@ export default class Calculator {
     _calculator.form[14].length = 0;
     _calculator.form.reset();
     _calculator.controller.updateMap(_calculator.controller);
+    document.getElementById('rooms').value = '';
     document.querySelector('.calculator.active').className = 'calculator';
     document.querySelector('#calculator-btn').className = 'off';
     document.querySelector('#calculator-btn span').innerText = 'OFF';
@@ -754,12 +760,48 @@ export default class Calculator {
     }
     console.log(bedrooms);
     console.log(income);
-    (bedrooms == '') ? _calculator.controller.filters.bedrooms = null : _calculator.controller.filters.bedrooms = bedrooms;
+    if(bedrooms == ''){
+        _calculator.controller.filters.bedrooms = null;
+        document.getElementById('rooms').value = '';
+    }else{
+        _calculator.controller.filters.bedrooms = bedrooms;
+        let rooms = '';
+        switch (bedrooms) {
+            case 'F0BR':
+                rooms = 'Studio';
+                break;
+
+                case 'F1BR':
+                rooms = '1 - Bedroom';
+                break;
+
+                case 'F2BR':
+                rooms = '2 - Bedrooms';
+                break;
+
+                case 'F3BR':
+                rooms = '3 - Bedrooms';
+                break;
+
+                case 'F4BR':
+                rooms = '4 - Bedrooms';
+                break;
+
+                case 'F5BR':
+                rooms = '5 - Bedrooms';
+                break;
+        
+            default:
+                break;
+        }
+        document.getElementById('rooms').value = rooms;
+    }
     if(isNaN(income) && bedrooms == ''){
         _calculator.controller.updateMap(_calculator.controller);
         document.querySelector('.calculator.active').className = 'calculator';
         document.querySelector('#calculator-btn').className = 'off';
         document.querySelector('#calculator-btn span').innerText = 'OFF';
+        document.getElementById('rooms').value = '';
     }else{
         _calculator.controller.updateMap(_calculator.controller);
         document.querySelector('.calculator.active').className = 'calculator';

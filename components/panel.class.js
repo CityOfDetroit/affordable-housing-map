@@ -13,12 +13,68 @@ export default class Panel {
     }
 
     getPopulation(property){
-        let population = `
-        ${property.Family != 'null' ? `Family `:``}
-        ${property.Homeless != 'null' ? `Homeless `:``}
-        ${property.Veterans != 'null' ? `Veterans `:``}
-        ${property.Elderly != 'null' ? `Elderly`:``}
-        `;
+        let population = '';
+        if(property.Family != 'null'){
+            if(property.Homeless != 'null'){
+                if(property.Veterans != 'null'){
+                    if(property.Elderly != 'null'){
+                        population = `<p><strong>Population:</strong> Family, Homeless, Veterans and Elderly</p>`;
+                    }else{
+                        population = `<p><strong>Population:</strong> Family, Homeless and Veterans</p>`;
+                    }
+                }else{
+                    if(property.Elderly != 'null'){
+                        population = `<p><strong>Population:</strong> Family, Homeless and Elderly</p>`;
+                    }else{
+                        population = `<p><strong>Population:</strong> Family and Homeless</p>`;
+                    }
+                }
+            }else{
+                if(property.Veterans != 'null'){
+                    if(property.Elderly != 'null'){
+                        population = `<p><strong>Population:</strong> Family, Veterans and Elderly</p>`;
+                    }else{
+                        population = `<p><strong>Population:</strong> Family and Veterans</p>`;
+                    }
+                }else{
+                    if(property.Elderly != 'null'){
+                        population = `<p><strong>Population:</strong> Family and Elderly</p>`;
+                    }else{
+                        population = `<p><strong>Population:</strong> Family</p>`;
+                    }
+                }
+            }
+        }else{
+            if(property.Homeless != 'null'){
+                if(property.Veterans != 'null'){
+                    if(property.Elderly != 'null'){
+                        population = `<p><strong>Population:</strong> Homeless, Veterans and Elderly</p>`;
+                    }else{
+                        population = `<p><strong>Population:</strong> Homeless and Veterans</p>`;
+                    }
+                }else{
+                    if(property.Elderly != 'null'){
+                        population = `<p><strong>Population:</strong> Homeless and Elderly</p>`;
+                    }else{
+                        population = `<p><strong>Population:</strong> Homeless</p>`;
+                    }
+                }
+            }else{
+                if(property.Veterans != 'null'){
+                    if(property.Elderly != 'null'){
+                        population = `<p><strong>Population:</strong> Veterans and Elderly</p>`;
+                    }else{
+                        population = `<p><strong>Population:</strong> Veterans</p>`;
+                    }
+                }else{
+                    if(property.Elderly != 'null'){
+                        population = `<p><strong>Population:</strong> Elderly</p>`;
+                    }else{
+                        population = ``;
+                    }
+                }
+            }
+        }
         return population;
     }
 
@@ -29,8 +85,8 @@ export default class Panel {
             <span class="header">Property</span>
             <p><strong>Address:</strong> ${data.properties.Project_Address}</p>
             <p><strong>Neighborhood:</strong> ${data.properties.Neighborhood}</p>
-            <p><strong>Structure:</strong> ${data.properties.Structure}</p>
-            <p><strong>Population:</strong> ${this.getPopulation(data.properties)}</p>
+            ${data.properties.Structure != 'null' ? `<p><strong>Structure:</strong> ${data.properties.Structure}</p>`:``}
+            ${this.getPopulation(data.properties)}
             </section>
             <section class="group">
             <span class="header">Units</span>
@@ -46,9 +102,10 @@ export default class Panel {
             <section class="group">
             <span class="header">Management</span>
             ${data.properties.Property_Phone != 'null' ? `<p><strong>Property Phone:</strong> <a href="tel:${data.properties.Property_Phone}">${data.properties.Property_Phone}</a></p>`:``}
-            ${data.properties.Management_Website != '' ? `<p><strong>Company:</strong> <a href="http://${data.properties.Management_Website}" target="_blank">${data.properties.Management_Company}</a></p>`:`${data.properties.Management_Company != 'null' ? `<p><strong>Company:</strong> ${data.properties.Management_Company}</p>`:``}`}
-            ${data.properties.Manager_Contact != '' ? `<p><strong>Manager:</strong> ${data.properties.Manager_Contact}</p>`:``}
-            ${data.properties.Manager_Phone != '' ? `<p><strong>Manager's Phone:</strong> <a href="tel:${data.properties.Manager_Phone}">${data.properties.Manager_Phone}</a></p>`:``}
+            ${data.properties.Management_Company != 'null' ? `<p><strong>Company:</strong> ${data.properties.Management_Company}</p>`:``}
+            ${data.properties.Manager_Contact != 'null' ? `<p><strong>Manager:</strong> ${data.properties.Manager_Contact}</p>`:``}
+            ${data.properties.Manager_Phone != 'null' ? `<p><strong>Manager's Phone:</strong> <a href="tel:${data.properties.Manager_Phone}">${data.properties.Manager_Phone}</a></p>`:``}
+            ${data.properties.Management_Website != 'null' ? `<p><strong>Website:</strong> <a href="http://${data.properties.Management_Website}" target="_blank">Link</a></p>`:``}
             </section>
             <section class="group">
             <span class="header">Learn more</span>

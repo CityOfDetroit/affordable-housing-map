@@ -69,18 +69,15 @@
           <button id="close-filters-btn" class="close-btn">x</button>
           <h4>Filters</h4>
           <article>
-            <label for="neighborhood">Neighborhood:</label>
+            <label for="neighborhood">Zip code:</label>
             <input id="neighborhood" list="neighborhoods" class="interactive-filters">
             <datalist id="neighborhoods">
-              <option value="Southwest">
-              <option value="Corktown">
-              <option value="Downtown">
             </datalist>
           </article>
           <article>
             <label for="population">Population:</label>
             <select id="population" class="interactive-filters">
-              <option value="null" selected>--------</option>
+              <option value="null" selected></option>
               <option value="Elderly">Elderly</option>
               <option value="Family">Familiy</option>
               <option value="Special_Needs_or_Disabled">Special Need or Disabled</option>
@@ -88,17 +85,10 @@
               <option value="Veterans">Veterans</option>
             </select>
           </article>
-          <!-- <article>
+          <article>
             <label for="rooms">Bedrooms:</label>
-            <select id="rooms" class="interactive-filters">
-              <option value="" selected>-------</option>
-              <option value="1-rooms">1 Bedroom</option>
-              <option value="2-rooms">2 Bedrooms</option>
-              <option value="3-rooms">3 Bedrooms</option>
-              <option value="4-rooms">4 Bedrooms</option>
-              <option value="5-rooms">5 Bedrooms</option>
-            </select>
-          </article> -->
+            <input type="text" id="rooms" value="" disabled/>
+          </article>
           <article>
             <button id="calculator-btn" class="off">Income Filter | <span>OFF</span></button>
           </article>
@@ -107,6 +97,7 @@
           </article>
         </section>
         <section class="calculator">
+          <h4>Income Calculator</h4>
           <article id="calc-box"></article>
         </section>
         <button id="filters">Filters <i class="fas fa-sliders-h"></i></button>

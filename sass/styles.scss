@@ -374,6 +374,10 @@ section.application {
 		.calculator.active{
 			left: 0;
 			transition: all .2s ease-in-out;
+
+			h4{
+				border-bottom: solid #E48F22;
+			}
 		}
 
 		#geocoder{
