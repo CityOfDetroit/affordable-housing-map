@@ -301,8 +301,8 @@ export default class Calculator {
         break;
 
         default:
-            if(value.originalTarget.tagName == 'LABEL'){
-                if(value.originalTarget.htmlFor == 'salary'){
+            if(value.target.tagName == 'LABEL'){
+                if(value.target.htmlFor == 'salary'){
                     document.querySelector('.logic-section.salary').className = 'logic-section salary active';
                     document.querySelector('.logic-section.hourly').className = 'logic-section hourly';
                 }else{
@@ -310,7 +310,7 @@ export default class Calculator {
                     document.querySelector('.logic-section.salary').className = 'logic-section salary';
                 }
             }else{
-                if(value.originalTarget.id == 'salary'){
+                if(value.target.id == 'salary'){
                     document.querySelector('.logic-section.salary').className = 'logic-section salary active';
                     document.querySelector('.logic-section.hourly').className = 'logic-section hourly';
                 }else{  

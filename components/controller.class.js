@@ -107,36 +107,64 @@ export default class Controller {
     console.log(_controller.filters);
     if(_controller.filters.population == null){
       if(_controller.filters.bedrooms == null){
-        if(_controller.filters.incomeBucket == null){
-          where = '1%3D1';
-        }else{
-          where = `${_controller.filters.incomeBucket}='Y'`;
+        switch (_controller.filters.incomeBucket) {
+          case null:
+            where = '1%3D1';
+            break;
+          
+          case 'Too_High':
+            where = '1%3D0'
+            break;
+        
+          default:
+            where = `${_controller.filters.incomeBucket}='Y'`;
+            break;
         }
       }else{
-        if(_controller.filters.incomeBucket == null){
-          where = `${_controller.filters.bedrooms}<>null`;
-        }else{
-          where = `${_controller.filters.bedrooms}<>null AND ${_controller.filters.incomeBucket}='Y'`;
+        switch (_controller.filters.incomeBucket) {
+          case null:
+            where = `${_controller.filters.bedrooms}<>null`;
+            break;
+          
+          case 'Too_High':
+            where = '1%3D0'
+            break;
+        
+          default:
+            where = `${_controller.filters.bedrooms}<>null AND ${_controller.filters.incomeBucket}='Y'`;
+            break;
         }
       }
     }else{
       if(_controller.filters.bedrooms == null){
-        if(_controller.filters.incomeBucket == null){
-          where = `${_controller.filters.population}<>null`;
-        }else{
-          where = `${_controller.filters.population}<>null AND ${_controller.filters.incomeBucket}='Y'`;
+        switch (_controller.filters.incomeBucket) {
+          case null:
+            where = `${_controller.filters.population}<>null`;
+            break;
+          
+          case 'Too_High':
+            where = '1%3D0'
+            break;
+        
+          default:
+            where = `${_controller.filters.population}<>null AND ${_controller.filters.incomeBucket}='Y'`;
+            break;
         }
       }else{
-        if(_controller.filters.incomeBucket == null){
-          where = `${_controller.filters.population}<>null AND ${_controller.filters.bedrooms}<>null`;
-        }else{
-          where = `${_controller.filters.population}<>null AND ${_controller.filters.bedrooms}<>null AND ${_controller.filters.incomeBucket}='Y'`;
+        switch (_controller.filters.incomeBucket) {
+          case null:
+            where = `${_controller.filters.population}<>null AND ${_controller.filters.bedrooms}<>null`;
+            break;
+          
+          case 'Too_High':
+            where = '1%3D0'
+            break;
+        
+          default:
+            where = `${_controller.filters.population}<>null AND ${_controller.filters.bedrooms}<>null AND ${_controller.filters.incomeBucket}='Y'`;
+            break;
         }
       }
-    }
-    if(_controller.filters.neighborhood != null){
-      let simplePolygon = turf.simplify(_controller.filters.neighborhood,{tolerance: 0.005, highQuality: false});
-      polygon = arcGIS.convert(simplePolygon.geometry);
     }
     
     let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=${where}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;

@@ -18,27 +18,55 @@ export default class Panel {
             if(property.Homeless != 'null'){
                 if(property.Veterans != 'null'){
                     if(property.Elderly != 'null'){
-                        population = `<p><strong>Population:</strong> Family, Homeless, Veterans and Elderly</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Family, Homeless, Veterans, Elderly and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Family, Homeless, Veterans and Elderly</p>`;
+                        }
                     }else{
-                        population = `<p><strong>Population:</strong> Family, Homeless and Veterans</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Family, Homeless, Veterans and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Family, Homeless and Veterans</p>`;
+                        }
                     }
                 }else{
                     if(property.Elderly != 'null'){
-                        population = `<p><strong>Population:</strong> Family, Homeless and Elderly</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Family, Homeless, Elderly and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Family, Homeless and Elderly</p>`;
+                        }
                     }else{
-                        population = `<p><strong>Population:</strong> Family and Homeless</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Family, Homeless and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Family and Homeless</p>`;
+                        }
                     }
                 }
             }else{
                 if(property.Veterans != 'null'){
                     if(property.Elderly != 'null'){
-                        population = `<p><strong>Population:</strong> Family, Veterans and Elderly</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Family, Veterans, Elderly and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Family, Veterans and Elderly</p>`;
+                        }
                     }else{
-                        population = `<p><strong>Population:</strong> Family and Veterans</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Family, Veterans and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Family and Veterans</p>`;
+                        }
                     }
                 }else{
                     if(property.Elderly != 'null'){
-                        population = `<p><strong>Population:</strong> Family and Elderly</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Family, Elderly and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Family and Elderly</p>`;
+                        }
                     }else{
                         population = `<p><strong>Population:</strong> Family</p>`;
                     }
@@ -48,29 +76,61 @@ export default class Panel {
             if(property.Homeless != 'null'){
                 if(property.Veterans != 'null'){
                     if(property.Elderly != 'null'){
-                        population = `<p><strong>Population:</strong> Homeless, Veterans and Elderly</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Homeless, Veterans, Elderly and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Homeless, Veterans and Elderly</p>`;
+                        }
                     }else{
-                        population = `<p><strong>Population:</strong> Homeless and Veterans</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Homeless, Veterans and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Homeless and Veterans</p>`;
+                        }
                     }
                 }else{
                     if(property.Elderly != 'null'){
-                        population = `<p><strong>Population:</strong> Homeless and Elderly</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Homeless, Elderly and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Homeless and Elderly</p>`;
+                        }
                     }else{
-                        population = `<p><strong>Population:</strong> Homeless</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Homeless and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Homeless</p>`;
+                        }
                     }
                 }
             }else{
                 if(property.Veterans != 'null'){
                     if(property.Elderly != 'null'){
-                        population = `<p><strong>Population:</strong> Veterans and Elderly</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Veterans, Elderly and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Veterans and Elderly</p>`;
+                        }
                     }else{
-                        population = `<p><strong>Population:</strong> Veterans</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Veterans and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Veterans</p>`;
+                        }
                     }
                 }else{
                     if(property.Elderly != 'null'){
-                        population = `<p><strong>Population:</strong> Elderly</p>`;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> Elderly and 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = `<p><strong>Population:</strong> Elderly</p>`;
+                        }
                     }else{
-                        population = ``;
+                        if(property.Special_Needs_or_Disabled != 'null'){
+                            population = `<p><strong>Population:</strong> 'Special Needs or Disabled'</p>`;
+                        }else{
+                            population = ``;
+                        }
                     }
                 }
             }
