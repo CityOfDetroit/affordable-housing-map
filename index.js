@@ -8,15 +8,15 @@ import Controller from './components/controller.class';
     let features = this.queryRenderedFeatures(e.point, {
       layers: ['litch-locations-points']
     });
-    if (features.length) {
-      // this.setFilter('radio-patrols-hover', ['==', 'FID', features[0].properties.FID]);
-    }else{
-
+    if (!features.length) {
+      features = this.queryRenderedFeatures(e.point, {
+        layers: ['litch-locations-maybe-points']
+      });
     }
     this.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
   });
   controller.map.map.on('click', function (e, parent = this) {
-    const features = this.queryRenderedFeatures(e.point, {
+    let features = this.queryRenderedFeatures(e.point, {
       layers: ['litch-locations-points']
     });
     // console.log(e.point);
@@ -24,7 +24,16 @@ import Controller from './components/controller.class';
       console.log(features[0]);
       controller.updatePanel(features[0], controller);
       document.querySelector('.data-panel').className = 'data-panel active';
-    } 
+    }else{
+      features = this.queryRenderedFeatures(e.point, {
+        layers: ['litch-locations-maybe-points']
+      });
+      if (features.length) {
+        console.log(features[0]);
+        controller.updatePanel(features[0], controller);
+        document.querySelector('.data-panel').className = 'data-panel active';
+      }
+    }
   });
   controller.map.geocoder.on('result', function (ev) {
     // console.log(ev);
@@ -36,7 +45,7 @@ import Controller from './components/controller.class';
     }
   });
   document.getElementById('population').value = '';
-  document.getElementById('neighborhood').value = '';
+  document.getElementById('zipcode').value = '';
   document.getElementById('rooms').value = '';
   document.getElementById('close-panel-btn').addEventListener('click', function () {
     controller.panel.clearPanel();

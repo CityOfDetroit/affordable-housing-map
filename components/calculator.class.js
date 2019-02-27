@@ -802,11 +802,13 @@ export default class Calculator {
         document.querySelector('#calculator-btn').className = 'off';
         document.querySelector('#calculator-btn span').innerText = 'OFF';
         document.getElementById('rooms').value = '';
+        document.querySelector('.legend.active').className = 'legend';
     }else{
         _calculator.controller.updateMap(_calculator.controller);
         document.querySelector('.calculator.active').className = 'calculator';
         document.querySelector('#calculator-btn').className = 'on';
         document.querySelector('#calculator-btn span').innerText = 'ON';
+        document.querySelector('.legend').className = 'legend active';
     }
     // document.getElementById('results').innerHTML = `
     // <p><strong>Annual Adjusted Gross Income:</strong> ${annualAdjustedGrossIncome}</p>

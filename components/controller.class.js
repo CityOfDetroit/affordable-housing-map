@@ -10,12 +10,12 @@ export default class Controller {
     this.scoutVolunteers = null;
     this.filters = {
       'bedrooms': null,
-      'neighborhood': null,
+      'zipcode': null,
       'population': null,
       'ima': null,
       'incomeBucket': null
     };
-    this.neighborhoods = {};
+    this.zipcodes = {};
     this.calculator = new Calculator('calc-box',this);
     this.map = new Map({
       styleURL: 'mapbox://styles/mapbox',
@@ -38,6 +38,14 @@ export default class Controller {
           data: `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`
         },
         {
+          id: "litch-locations-maybe",
+          type: "geojson",
+          data: {
+            "type": "FeatureCollection",
+            "features": []
+          }
+        },
+        {
           id: "single-point",
           type: "geojson",
           data: {
@@ -57,6 +65,15 @@ export default class Controller {
           }
         },
         {
+          id: "litch-locations-maybe-points",
+          "source": "litch-locations-maybe",
+          "type": "circle",
+          "paint": {
+              "circle-radius": 8,
+              "circle-color": "#E48F22"
+          }
+        },
+        {
           id: "point",
           "source": "single-point",
           "type": "circle",
@@ -68,7 +85,7 @@ export default class Controller {
       ]
     });
     this.panel = new Panel(container);
-    this.populatNeighborhoods(this);
+    this.populatzipcodes(this);
   }
   
   initialForm(ev,_controller){
@@ -82,7 +99,7 @@ export default class Controller {
     }
   }
 
-  populatNeighborhoods(_controller){
+  populatzipcodes(_controller){
     let url = `https://gis.detroitmi.gov/arcgis/rest/services/DoIT/MetroZipCodes/MapServer/0/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson`;
     fetch(url)
     .then((resp) => resp.json()) // Transform the data into json
@@ -90,9 +107,9 @@ export default class Controller {
       console.log(data);
       let list = '';
       data.features.forEach(function(item) {
-        _controller.neighborhoods[item.properties.ZCTA5CE10] = item;
+        _controller.zipcodes[item.properties.ZCTA5CE10] = item;
         list += `<option value='${item.properties.ZCTA5CE10}'></option>`
-        document.getElementById('neighborhoods').innerHTML = list;
+        document.getElementById('zipcodes').innerHTML = list;
       });
     });
   }
@@ -103,6 +120,7 @@ export default class Controller {
 
   updateMap(_controller){
     let where = '';
+    let whereMaybe = '';
     let polygon = null;
     console.log(_controller.filters);
     if(_controller.filters.population == null){
@@ -110,28 +128,34 @@ export default class Controller {
         switch (_controller.filters.incomeBucket) {
           case null:
             where = '1%3D1';
+            whereMaybe = '1%3D0';
             break;
           
           case 'Too_High':
             where = '1%3D0'
+            whereMaybe = '1%3D0';
             break;
         
           default:
             where = `${_controller.filters.incomeBucket}='Y'`;
+            whereMaybe = `${_controller.filters.incomeBucket}='M'`;
             break;
         }
       }else{
         switch (_controller.filters.incomeBucket) {
           case null:
             where = `${_controller.filters.bedrooms}<>null`;
+            whereMaybe = '1%3D0';
             break;
           
           case 'Too_High':
             where = '1%3D0'
+            whereMaybe = '1%3D0';
             break;
         
           default:
             where = `${_controller.filters.bedrooms}<>null AND ${_controller.filters.incomeBucket}='Y'`;
+            whereMaybe = `${_controller.filters.bedrooms}<>null AND ${_controller.filters.incomeBucket}='M'`;
             break;
         }
       }
@@ -140,33 +164,44 @@ export default class Controller {
         switch (_controller.filters.incomeBucket) {
           case null:
             where = `${_controller.filters.population}<>null`;
+            whereMaybe = '1%3D0';
             break;
           
           case 'Too_High':
-            where = '1%3D0'
+            where = '1%3D0';
+            whereMaybe = '1%3D0';
             break;
         
           default:
             where = `${_controller.filters.population}<>null AND ${_controller.filters.incomeBucket}='Y'`;
+            whereMaybe = `${_controller.filters.population}<>null AND ${_controller.filters.incomeBucket}='M'`;
             break;
         }
       }else{
         switch (_controller.filters.incomeBucket) {
           case null:
             where = `${_controller.filters.population}<>null AND ${_controller.filters.bedrooms}<>null`;
+            whereMaybe = '1%3D0';
             break;
           
           case 'Too_High':
-            where = '1%3D0'
+            where = '1%3D0';
+            whereMaybe = '1%3D0';
             break;
         
           default:
             where = `${_controller.filters.population}<>null AND ${_controller.filters.bedrooms}<>null AND ${_controller.filters.incomeBucket}='Y'`;
+            whereMaybe = `${_controller.filters.population}<>null AND ${_controller.filters.bedrooms}<>null AND ${_controller.filters.incomeBucket}='M'`;
             break;
         }
       }
     }
-    
+    if(_controller.filters.zipcode != null){
+      let simplePolygon = turf.simplify(_controller.filters.zipcode.geometry, {tolerance: 0.005, highQuality: false});
+      polygon = arcGIS.convert(simplePolygon);
+    }
+    console.log(where);
+    console.log(whereMaybe);
     let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=${where}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
     console.log(_controller.filters);
     console.log(url);
@@ -175,7 +210,16 @@ export default class Controller {
     .then(function(data) {
       console.log(data);
       _controller.map.map.getSource('litch-locations').setData(data);
-      document.getElementById('initial-loader-overlay').className = '';
+
+      let urlMaybe = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=${whereMaybe}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
+      console.log(urlMaybe);
+      fetch(urlMaybe)
+      .then((resp) => resp.json()) // Transform the data into json
+      .then(function(data) {
+        console.log(data);
+        _controller.map.map.getSource('litch-locations-maybe').setData(data);
+        document.getElementById('initial-loader-overlay').className = '';
+      });
     });
   }
 
@@ -187,17 +231,17 @@ export default class Controller {
         (ev.target.value != 'null') ? _controller.filters.population = ev.target.value : _controller.filters.population = null;
         break;
 
-      case 'neighborhood':
-        (ev.target.value != '') ? _controller.filters.neighborhood = _controller.neighborhoods[ev.target.value] : _controller.filters.neighborhood = null;
+      case 'zipcode':
+        (ev.target.value != '') ? _controller.filters.zipcode = _controller.zipcodes[ev.target.value] : _controller.filters.zipcode = null;
         break;
     
       default:
         _controller.filters.population = null;
-        _controller.filters.neighborhood = null;
+        _controller.filters.zipcode = null;
         _controller.filters.bedrooms = null;
         _controller.filters.incomeBucket = null;
         document.getElementById('population').value = null;
-        document.getElementById('neighborhood').value = '';
+        document.getElementById('zipcode').value = '';
         document.getElementById('calculator-btn').className = 'off';
         document.querySelector('#calculator-btn span').innerHTML = 'OFF';
         break;

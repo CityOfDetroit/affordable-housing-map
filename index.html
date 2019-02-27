@@ -69,9 +69,9 @@
           <button id="close-filters-btn" class="close-btn">x</button>
           <h4>Filters</h4>
           <article>
-            <label for="neighborhood">Zip code:</label>
-            <input id="neighborhood" list="neighborhoods" class="interactive-filters">
-            <datalist id="neighborhoods">
+            <label for="zipcode">Zip code:</label>
+            <input id="zipcode" list="zipcodes" class="interactive-filters">
+            <datalist id="zipcodes">
             </datalist>
           </article>
           <article>
@@ -87,13 +87,25 @@
           </article>
           <article>
             <label for="rooms">Bedrooms:</label>
-            <input type="text" id="rooms" value="" disabled/>
+            <select id="rooms" class="interactive-filters">
+              <option value="null" selected></option>
+              <option value="F0BR">Studio</option>
+              <option value="F1BR">1 - Bedroom</option>
+              <option value="F2BR">2 - Bedrooms</option>
+              <option value="F3BR">3 - Bedrooms</option>
+              <option value="F4BR">4 - Bedrooms</option>
+              <option value="F5BR">5 - Bedrooms</option>
+            </select>
           </article>
           <article>
             <button id="calculator-btn" class="off">Income Filter | <span>OFF</span></button>
           </article>
           <article>
             <button id="filter-reset-btn"><i class="fas fa-broom"></i> Reset</button>
+          </article>
+          <article class="legend">
+            <p><span>x</span> Best match for your income</p>
+            <p><span>x</span> May have units affordable for your income</p>
           </article>
         </section>
         <section class="calculator">
