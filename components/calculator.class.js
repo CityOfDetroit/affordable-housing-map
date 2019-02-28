@@ -293,6 +293,7 @@ export default class Calculator {
             if((value.target.value >= 0 && value.target.value <= 2) || value.target.value == null){
                 _calculator.form[14].add(bedroom0, null);
                 _calculator.form[14].add(bedroom1, null);
+
             }
             (value.target.value >= 0 && value.target.value <= 4)  ? _calculator.form[14].add(bedroom2, null) : 0;
             (value.target.value >= 2 && value.target.value <= 6)  ? _calculator.form[14].add(bedroom3, null) : 0;
@@ -327,9 +328,18 @@ export default class Calculator {
     _calculator.controller.filters.incomeBucket = null;
     _calculator.controller.filters.bedrooms = null;
     _calculator.form[14].length = 0;
-    _calculator.form.reset();
+    _calculator.form[6].value = 0;
+    _calculator.form[7].value = 0;
+    _calculator.form[11].value = 0;
+    _calculator.form[12].value = 0;
+    _calculator.form[13].value = 0;
+    _calculator.form[3].value = 0;
+    _calculator.form[4].value = 0;
+    _calculator.form[5].value = 0;
     _calculator.controller.updateMap(_calculator.controller);
-    document.getElementById('rooms').value = '';
+    document.getElementById('rooms').value = 'null';
+    document.getElementById('rooms').disabled = false;
+    document.querySelector('.legend.active').className = 'legend';
     document.querySelector('.calculator.active').className = 'calculator';
     document.querySelector('#calculator-btn').className = 'off';
     document.querySelector('#calculator-btn span').innerText = 'OFF';
@@ -801,13 +811,15 @@ export default class Calculator {
         document.querySelector('.calculator.active').className = 'calculator';
         document.querySelector('#calculator-btn').className = 'off';
         document.querySelector('#calculator-btn span').innerText = 'OFF';
-        document.getElementById('rooms').value = '';
+        document.getElementById('rooms').disabled = false;
         document.querySelector('.legend.active').className = 'legend';
     }else{
         _calculator.controller.updateMap(_calculator.controller);
         document.querySelector('.calculator.active').className = 'calculator';
         document.querySelector('#calculator-btn').className = 'on';
         document.querySelector('#calculator-btn span').innerText = 'ON';
+        document.getElementById('rooms').value = bedrooms;
+        document.getElementById('rooms').disabled = true;
         document.querySelector('.legend').className = 'legend active';
     }
     // document.getElementById('results').innerHTML = `

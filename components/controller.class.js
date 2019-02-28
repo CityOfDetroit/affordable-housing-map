@@ -234,6 +234,10 @@ export default class Controller {
       case 'zipcode':
         (ev.target.value != '') ? _controller.filters.zipcode = _controller.zipcodes[ev.target.value] : _controller.filters.zipcode = null;
         break;
+
+      case 'rooms':
+        (ev.target.value != 'null') ? _controller.filters.bedrooms = ev.target.value : _controller.filters.bedrooms = null;
+        break;
     
       default:
         _controller.filters.population = null;
@@ -244,6 +248,7 @@ export default class Controller {
         document.getElementById('zipcode').value = '';
         document.getElementById('calculator-btn').className = 'off';
         document.querySelector('#calculator-btn span').innerHTML = 'OFF';
+        document.querySelector('.legend.active').className = 'legend';
         break;
     }
     _controller.updateMap(_controller);
