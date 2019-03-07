@@ -67,26 +67,29 @@
         <article id="geocoder"></article>
         <section class="filters">
           <button id="close-filters-btn" class="close-btn">x</button>
-          <h4>Filters</h4>
+          <h4>Search for housing</h4>
           <article>
-            <label for="zipcode">Zip code:</label>
+            <button id="zipcode-filter-btn" class="filter-btn">x</button>
+            <label for="zipcode">By Zip code:</label>
             <input id="zipcode" list="zipcodes" class="interactive-filters">
             <datalist id="zipcodes">
             </datalist>
           </article>
           <article>
-            <label for="population">Population:</label>
+            <button id="population-filter-btn" class="filter-btn">x</button>
+            <label for="population">For Special Populations:</label>
             <select id="population" class="interactive-filters">
               <option value="null" selected></option>
               <option value="Elderly">Elderly</option>
-              <option value="Family">Familiy</option>
+              <option value="Family">Family</option>
               <option value="Special_Needs_or_Disabled">Special Need or Disabled</option>
               <option value="Homeless">Homeless</option>
               <option value="Veterans">Veterans</option>
             </select>
           </article>
           <article>
-            <label for="rooms">Bedrooms:</label>
+            <button id="bedrooms-filter-btn" class="filter-btn">x</button>
+            <label for="rooms">By Number of Bedrooms:</label>
             <select id="rooms" class="interactive-filters">
               <option value="null" selected></option>
               <option value="F0BR">Studio</option>
@@ -98,10 +101,12 @@
             </select>
           </article>
           <article>
-            <button id="calculator-btn" class="off">Income Filter | <span>OFF</span></button>
+            <button id="income-filter-btn" class="filter-btn">x</button>
+            <button id="calculator-btn" class="off">By Income</button>
           </article>
           <article>
-            <button id="filter-reset-btn"><i class="fas fa-broom"></i> Reset</button>
+            <button class="filter-btn">x</button>
+            <button id="filter-reset-btn">Reset</button>
           </article>
           <article class="legend">
             <p><span>x</span> Best match for your income</p>

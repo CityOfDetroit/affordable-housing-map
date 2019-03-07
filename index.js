@@ -69,10 +69,19 @@ import Controller from './components/controller.class';
       controller.filterMap(ev, controller);
     });
   });
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (ev) {
+      controller.removeFilter(ev, controller);
+    });
+  });
   const startingBtns = document.querySelectorAll('#user-type-section button');
   startingBtns.forEach(function (btn) {
     btn.addEventListener('click', function (ev) {
       controller.initialForm(ev.target.attributes[2].nodeValue, controller);
     });
   });
+  window.addEventListener('resize',()=>{
+    controller.map.map.resize();
+  })
 })(window);

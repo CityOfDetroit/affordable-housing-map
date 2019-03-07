@@ -340,9 +340,9 @@ export default class Calculator {
     document.getElementById('rooms').value = 'null';
     document.getElementById('rooms').disabled = false;
     document.querySelector('.legend.active').className = 'legend';
-    document.querySelector('.calculator.active').className = 'calculator';
+    (document.querySelector('.calculator.active') == null) ? 0 : document.querySelector('.calculator.active').className = 'calculator';
     document.querySelector('#calculator-btn').className = 'off';
-    document.querySelector('#calculator-btn span').innerText = 'OFF';
+    document.getElementById('income-filter-btn').className = 'filter-btn';
   }
 
   computeIncomeRange(_calculator){
@@ -810,17 +810,17 @@ export default class Calculator {
         _calculator.controller.updateMap(_calculator.controller);
         document.querySelector('.calculator.active').className = 'calculator';
         document.querySelector('#calculator-btn').className = 'off';
-        document.querySelector('#calculator-btn span').innerText = 'OFF';
         document.getElementById('rooms').disabled = false;
         document.querySelector('.legend.active').className = 'legend';
+        document.getElementById('income-filter-btn').className = 'filter-btn';
     }else{
         _calculator.controller.updateMap(_calculator.controller);
         document.querySelector('.calculator.active').className = 'calculator';
         document.querySelector('#calculator-btn').className = 'on';
-        document.querySelector('#calculator-btn span').innerText = 'ON';
         document.getElementById('rooms').value = bedrooms;
         document.getElementById('rooms').disabled = true;
         document.querySelector('.legend').className = 'legend active';
+        document.getElementById('income-filter-btn').className = 'filter-btn active';
     }
     // document.getElementById('results').innerHTML = `
     // <p><strong>Annual Adjusted Gross Income:</strong> ${annualAdjustedGrossIncome}</p>

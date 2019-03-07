@@ -327,6 +327,28 @@ section.application {
 		overflow: hidden;
 		flex: 1;
 
+		button{
+			width: 8em;
+		}
+
+		.close-btn{
+			width: 2.5em;
+		}
+
+		.filter-btn{
+			width: auto;
+			padding: .8em 1.1em;
+			border-radius: 50%;
+			background: $color-4;
+			color: $white;
+			cursor: pointer;
+			visibility: hidden;
+		}
+
+		.filter-btn.active{
+			visibility: visible;
+		}
+
 		.calculator, .filters{
 			display: block;
 			position: absolute;

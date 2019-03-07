@@ -104,7 +104,7 @@ export default class Controller {
     fetch(url)
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) {
-      console.log(data);
+      // console.log(data);
       let list = '';
       data.features.forEach(function(item) {
         _controller.zipcodes[item.properties.ZCTA5CE10] = item;
@@ -116,6 +116,38 @@ export default class Controller {
 
   updatePanel(ev, _controller){
     this.panel.buildPanel(ev);
+  }
+
+  removeFilter(ev, _controller){
+    console.log(ev);
+    document.getElementById('initial-loader-overlay').className = 'active';
+    switch (ev.target.id) {
+      case 'zipcode-filter-btn':
+        _controller.filters.zipcode = null;
+        document.getElementById('zipcode').value = '';
+        document.getElementById('zipcode-filter-btn').className = 'filter-btn';
+        break;
+
+      case 'population-filter-btn':
+        _controller.filters.population = null;
+        document.getElementById('population').value = '';
+        document.getElementById('population-filter-btn').className = 'filter-btn';
+        break;
+
+      case 'bedrooms-filter-btn':
+        _controller.filters.bedrooms = null;
+        document.getElementById('rooms').value = '';
+        document.getElementById('bedrooms-filter-btn').className = 'filter-btn';
+        break;
+
+      case 'income-filter-btn':
+        _controller.calculator.cancelIncomeFilter(_controller.calculator);
+        break;
+    
+      default:
+        break;
+    }
+    _controller.updateMap(_controller);
   }
 
   updateMap(_controller){
@@ -228,15 +260,30 @@ export default class Controller {
     document.getElementById('initial-loader-overlay').className = 'active';
     switch (ev.target.id) {
       case 'population':
-        (ev.target.value != 'null') ? _controller.filters.population = ev.target.value : _controller.filters.population = null;
+        if(ev.target.value != 'null'){
+          document.getElementById('population-filter-btn').className = 'filter-btn active';
+          _controller.filters.population = ev.target.value; 
+        }else{
+          _controller.filters.population = null;
+        }
         break;
 
       case 'zipcode':
-        (ev.target.value != '') ? _controller.filters.zipcode = _controller.zipcodes[ev.target.value] : _controller.filters.zipcode = null;
+        if(ev.target.value != ''){
+          document.getElementById('zipcode-filter-btn').className = 'filter-btn active';
+          _controller.filters.zipcode = _controller.zipcodes[ev.target.value];
+        }else{
+          _controller.filters.zipcode = null;
+        }
         break;
 
       case 'rooms':
-        (ev.target.value != 'null') ? _controller.filters.bedrooms = ev.target.value : _controller.filters.bedrooms = null;
+        if(ev.target.value != 'null'){
+          document.getElementById('bedrooms-filter-btn').className = 'filter-btn active';
+          _controller.filters.bedrooms = ev.target.value;
+        }else{
+          _controller.filters.bedrooms = null;
+        } 
         break;
     
       default:
@@ -244,11 +291,15 @@ export default class Controller {
         _controller.filters.zipcode = null;
         _controller.filters.bedrooms = null;
         _controller.filters.incomeBucket = null;
+        document.getElementById('rooms').value = null;
         document.getElementById('population').value = null;
         document.getElementById('zipcode').value = '';
         document.getElementById('calculator-btn').className = 'off';
-        document.querySelector('#calculator-btn span').innerHTML = 'OFF';
-        document.querySelector('.legend.active').className = 'legend';
+        (document.querySelector('.legend.active') == null) ? 0 : document.querySelector('.legend.active').className = 'legend';
+        let activeFilters = document.querySelectorAll('.filter-btn.active');
+        activeFilters.forEach((btn)=>{
+          btn.className = 'filter-btn';
+        });
         break;
     }
     _controller.updateMap(_controller);
