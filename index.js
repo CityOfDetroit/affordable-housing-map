@@ -35,15 +35,15 @@ import Controller from './components/controller.class';
       }
     }
   });
-  controller.map.geocoder.on('result', function (ev) {
-    // console.log(ev);
-    if(controller.geocoderOff){
-      controller.geocoderOff = false;
-      controller.geoResults(ev, controller);
-    }else{
-      console.log('extra call');
-    }
-  });
+  // controller.map.geocoder.on('result', function (ev) {
+  //   // console.log(ev);
+  //   if(controller.geocoderOff){
+  //     controller.geocoderOff = false;
+  //     controller.geoResults(ev, controller);
+  //   }else{
+  //     console.log('extra call');
+  //   }
+  // });
   document.getElementById('population').value = '';
   document.getElementById('zipcode').value = '';
   document.getElementById('rooms').value = '';
