@@ -77,8 +77,8 @@
           </article>
           <article>
             <button id="population-filter-btn" class="filter-btn">x</button>
-            <label for="population">For Special Populations:</label>
-            <select id="population" class="interactive-filters">
+            <label for="population">For Special Populations<sup>*</sup>:</label>
+            <select id="population" class="interactive-filters" aria-describedby="population-description">
               <option value="null" selected></option>
               <option value="Elderly">Elderly</option>
               <option value="Family">Family</option>
@@ -86,6 +86,7 @@
               <option value="Homeless">Homeless</option>
               <option value="Veterans">Veterans</option>
             </select>
+            <p id="population-description"><sup>*</sup> Examples: elderly, veterans, families, etc.</p>
           </article>
           <article>
             <button id="bedrooms-filter-btn" class="filter-btn">x</button>
@@ -117,7 +118,7 @@
           <h4>Income Calculator</h4>
           <article id="calc-box"></article>
         </section>
-        <button id="filters">Filters <i class="fas fa-sliders-h"></i></button>
+        <button id="filters">Search for Housing <i class="fas fa-search"></i></button>
       </section>
     </section>
   </section>

@@ -26,7 +26,7 @@ export default class Controller {
         satellite: 'cj774gftq3bwr2so2y6nqzvz4'
       },
       center: [-83.10, 42.36],
-      zoom: 11,
+      zoom: 10,
       boundaries: {
         sw: [-83.3437,42.2102],
         ne: [-82.8754,42.5197]
@@ -52,6 +52,11 @@ export default class Controller {
               "type": "FeatureCollection",
               "features": []
           }
+        },
+        {
+          id: "city",
+          type: "geojson",
+          data: `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/City_of_Detroit_Boundaries/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&returnCentroid=false&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`
         }
       ],
       layers: [
@@ -80,6 +85,16 @@ export default class Controller {
           "paint": {
               "circle-radius": 10,
               "circle-color": "#007cbf"
+          }
+        },
+        {
+          "id": "city",
+          "type": "line",
+          "source": "city",
+          "layout": {},
+          "paint": {
+            "line-color": "#004544",
+            "line-width": 3
           }
         }
       ]

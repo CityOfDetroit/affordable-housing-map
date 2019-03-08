@@ -146,7 +146,7 @@ export default class Panel {
             <p><strong>Address:</strong> ${data.properties.Project_Address}</p>
             <p><strong>Neighborhood:</strong> ${data.properties.Neighborhood}</p>
             ${data.properties.Structure != 'null' ? `<p><strong>Structure:</strong> ${data.properties.Structure}</p>`:``}
-            ${data.properties.Public_Housing == 'TRUE' ? `<p><strong>DHC Public Housing:</strong> Yes`:`<p><strong>DHC Public Housing:</strong> No`}
+            ${data.properties.Public_Housing == 'TRUE' ? `<p><strong>Detroit Housing Commission Public Housing:</strong> Yes`:`<p><strong>DHC Public Housing:</strong> No`}
             ${this.getPopulation(data.properties)}
             </section>
             <section class="group">
