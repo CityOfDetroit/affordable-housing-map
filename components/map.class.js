@@ -40,6 +40,8 @@ export default class Map {
     this.map.on('load',()=>{
       if(init.geocoder)
         document.getElementById('geocoder').appendChild(this.geocoder.onAdd(this.map))
+      if(init.zoomControls)
+        this.map.addControl(new mapboxgl.NavigationControl());
     });
     this.map.on('style.load',()=>{
       this.loadMap();

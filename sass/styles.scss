@@ -327,10 +327,6 @@ section.application {
 		overflow: hidden;
 		flex: 1;
 
-		button{
-			width: 8em;
-		}
-
 		.close-btn{
 			width: 2.5em;
 		}
@@ -386,6 +382,10 @@ section.application {
 
 			article{
 				margin-bottom: 1em;
+			}
+
+			#calculator-btn, #filter-reset-btn{
+				width: 8em;
 			}
 
 			#calculator-btn.off{

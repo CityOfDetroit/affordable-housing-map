@@ -6,7 +6,6 @@ const turf = require('@turf/turf');
 const arcGIS = require('terraformer-arcgis-parser');
 export default class Controller {
   constructor(container) {
-    this.geocoderOff = true;
     this.scoutVolunteers = null;
     this.filters = {
       'bedrooms': null,
@@ -21,6 +20,7 @@ export default class Controller {
       styleURL: 'mapbox://styles/mapbox',
       mapContainer: 'map',
       geocoder: false,
+      zoomControls: true,
       baseLayers: {
         street: 'streets-v10',
         satellite: 'cj774gftq3bwr2so2y6nqzvz4'
@@ -310,6 +310,7 @@ export default class Controller {
         document.getElementById('population').value = null;
         document.getElementById('zipcode').value = '';
         document.getElementById('calculator-btn').className = 'off';
+        document.getElementById('by-income-description').innerText = '';
         (document.querySelector('.legend.active') == null) ? 0 : document.querySelector('.legend.active').className = 'legend';
         let activeFilters = document.querySelectorAll('.filter-btn.active');
         activeFilters.forEach((btn)=>{

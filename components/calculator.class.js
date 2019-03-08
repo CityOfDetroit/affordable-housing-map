@@ -65,7 +65,7 @@ export default class Calculator {
     annualSalary.setAttribute('id', 'annual-salary');
     annualSalary.value = 0;
     annualSalaryLabel.setAttribute('for', 'annual-salary'); 
-    annualSalaryLabel.innerText = 'Annual Salary:'; 
+    annualSalaryLabel.innerText = 'Annual household salary:'; 
     // Build DOM for salary section
     salary.appendChild(annualSalaryLabel);
     salary.appendChild(annualSalary);
@@ -339,10 +339,11 @@ export default class Calculator {
     _calculator.controller.updateMap(_calculator.controller);
     document.getElementById('rooms').value = 'null';
     document.getElementById('rooms').disabled = false;
-    document.querySelector('.legend.active').className = 'legend';
+    (document.querySelector('.legend.active') == null) ? 0 : document.querySelector('.legend.active').className = 'legend';
     (document.querySelector('.calculator.active') == null) ? 0 : document.querySelector('.calculator.active').className = 'calculator';
     document.querySelector('#calculator-btn').className = 'off';
     document.getElementById('income-filter-btn').className = 'filter-btn';
+    document.getElementById('by-income-description').innerText = '';
   }
 
   computeIncomeRange(_calculator){
@@ -813,6 +814,7 @@ export default class Calculator {
         document.getElementById('rooms').disabled = false;
         document.querySelector('.legend.active').className = 'legend';
         document.getElementById('income-filter-btn').className = 'filter-btn';
+        document.getElementById('by-income-description').innerText = '';
     }else{
         _calculator.controller.updateMap(_calculator.controller);
         document.querySelector('.calculator.active').className = 'calculator';
@@ -820,6 +822,7 @@ export default class Calculator {
         document.getElementById('rooms').value = bedrooms;
         document.getElementById('rooms').disabled = true;
         document.querySelector('.legend').className = 'legend active';
+        (_calculator.controller.filters.incomeBucket == 'Too_High') ? document.getElementById('by-income-description').innerText = 'Income is too high.' : document.getElementById('by-income-description').innerText = '';
         document.getElementById('income-filter-btn').className = 'filter-btn active';
     }
     // document.getElementById('results').innerHTML = `
