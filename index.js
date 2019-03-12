@@ -3,6 +3,8 @@ import Controller from './components/controller.class';
 (function start() {
   
   const controller = new Controller(document.querySelector('.content-section'));
+  const delay = 500; // delay between calls
+  let throttled = false; // are we currently throttled?
 
   controller.map.map.on('mousemove', function (e, parent = this) {
     let features = this.queryRenderedFeatures(e.point, {
@@ -16,22 +18,39 @@ import Controller from './components/controller.class';
     this.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
   });
   controller.map.map.on('click', function (e, parent = this) {
+    //console.log(e);
     let features = this.queryRenderedFeatures(e.point, {
       layers: ['litch-locations-points']
     });
-    // console.log(e.point);
+    //console.log(e.point);
     if (features.length) {
-      console.log(features[0]);
+      //console.log(features[0]);
       controller.updatePanel(features[0], controller);
+      controller.map.map.setFilter('litch-maybe-selected', ['==', 'OBJECTID', '']);
+      controller.map.map.setFilter('litch-selected', ['==', 'OBJECTID', features[0].properties.OBJECTID]);
       document.querySelector('.data-panel').className = 'data-panel active';
+      (document.querySelector('.filters.active') == null) ? 0 : document.querySelector('.filters.active').className = 'filters';
+      (document.querySelector('.calculator.active') == null) ? 0 : document.querySelector('.calculator.active').className = 'calculator';
     }else{
       features = this.queryRenderedFeatures(e.point, {
         layers: ['litch-locations-maybe-points']
       });
       if (features.length) {
-        console.log(features[0]);
+        //console.log(features[0]);
         controller.updatePanel(features[0], controller);
+        controller.map.map.setFilter('litch-selected', ['==', 'OBJECTID', '']);
+        controller.map.map.setFilter('litch-maybe-selected', ['==', 'OBJECTID', features[0].properties.OBJECTID]);
         document.querySelector('.data-panel').className = 'data-panel active';
+        (document.querySelector('.filters.active') == null) ? 0 : document.querySelector('.filters.active').className = 'filters';
+        (document.querySelector('.calculator.active') == null) ? 0 : document.querySelector('.calculator.active').className = 'calculator';
+      }else{
+        //console.log('no featured');
+        controller.map.map.setFilter('litch-selected', ['==', 'OBJECTID', '']);
+        controller.map.map.setFilter('litch-maybe-selected', ['==', 'OBJECTID', '']);
+        controller.panel.clearPanel();
+        (document.querySelector('.data-panel.active') == null) ? 0 : document.querySelector('.data-panel.active').className = 'data-panel';
+        (document.querySelector('.filters.active') == null) ? 0 : document.querySelector('.filters.active').className = 'filters';
+        (document.querySelector('.calculator.active') == null) ? 0 : document.querySelector('.calculator.active').className = 'calculator';
       }
     }
   });
@@ -60,9 +79,9 @@ import Controller from './components/controller.class';
   document.getElementById('filters').addEventListener('click', function () {
     document.querySelector('.filters').className = 'filters active';
   });
-  document.getElementById('filter-reset-btn').addEventListener('click', function (ev) {
-    controller.filterMap(ev, controller);
-  });
+  // document.getElementById('filter-reset-btn').addEventListener('click', function (ev) {
+  //   controller.filterMap(ev, controller);
+  // });
   const intFilters = document.querySelectorAll('.interactive-filters');
   intFilters.forEach(function (btn) {
     btn.addEventListener('change', function (ev) {
@@ -82,6 +101,15 @@ import Controller from './components/controller.class';
     });
   });
   window.addEventListener('resize',()=>{
-    controller.map.map.resize();
+    if (!throttled) {
+      // actual callback action
+      controller.map.map.resize();
+      // we're throttled!
+      throttled = true;
+      // set a timeout to un-throttle
+      setTimeout(()=>{
+        throttled = false;
+      }, delay);
+    }  
   })
 })(window);

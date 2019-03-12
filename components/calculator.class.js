@@ -301,11 +301,10 @@ export default class Calculator {
             if((value.target.value >= 0 && value.target.value <= 2) || value.target.value == null){
                 _calculator.form[14].add(bedroom0, null);
                 _calculator.form[14].add(bedroom1, null);
-
             }
-            (value.target.value >= 0 && value.target.value <= 4)  ? _calculator.form[14].add(bedroom2, null) : 0;
-            (value.target.value >= 2 && value.target.value <= 6)  ? _calculator.form[14].add(bedroom3, null) : 0;
-            (value.target.value >= 3 && value.target.value <= 8)  ? _calculator.form[14].add(bedroom4, null) : 0;
+            (value.target.value >= 2 && value.target.value <= 4)  ? _calculator.form[14].add(bedroom2, null) : 0;
+            (value.target.value >= 3 && value.target.value <= 6)  ? _calculator.form[14].add(bedroom3, null) : 0;
+            (value.target.value >= 4 && value.target.value <= 8)  ? _calculator.form[14].add(bedroom4, null) : 0;
             (value.target.value >= 5 && value.target.value <= 10) ? _calculator.form[14].add(bedroom5, null) : 0;
         break;
 
@@ -332,7 +331,7 @@ export default class Calculator {
   }
 
   cancelIncomeFilter(_calculator){
-    console.log('cancel');
+    //console.log('cancel');
     _calculator.controller.filters.incomeBucket = null;
     _calculator.controller.filters.bedrooms = null;
     _calculator.form[14].length = 0;
@@ -346,7 +345,6 @@ export default class Calculator {
     _calculator.form[5].value = 0;
     _calculator.controller.updateMap(_calculator.controller);
     document.getElementById('rooms').value = 'null';
-    document.getElementById('rooms').disabled = false;
     (document.querySelector('.legend.active') == null) ? 0 : document.querySelector('.legend.active').className = 'legend';
     (document.querySelector('.calculator.active') == null) ? 0 : document.querySelector('.calculator.active').className = 'calculator';
     document.querySelector('#calculator-btn').className = 'off';
@@ -355,7 +353,7 @@ export default class Calculator {
   }
 
   computeIncomeRange(_calculator){
-    console.log(_calculator.controller);
+    //console.log(_calculator.controller);
     let AMI = 0;
     let income = 0;
     let addIncome = _calculator.form[6].valueAsNumber;
@@ -375,7 +373,7 @@ export default class Calculator {
     (_calculator.form[9].checked) ? seniorDeduction = 0 : seniorDeduction = 400;
     let annualAdjustedGrossIncome = (income + (12 * addIncome) - (480 * dependents) - seniorDeduction - childcare - medical);
     let monthlyAdjustedGrossIncome = (income - (480 * dependents) - seniorDeduction - childcare - medical)/12 + addIncome;
-    console.log(isNaN(income));
+    //console.log(isNaN(income));
     switch (bedrooms) {
         case 'F0BR':
             switch (true) {
@@ -424,7 +422,7 @@ export default class Calculator {
                     _calculator.controller.filters.incomeBucket = 'Affordable_at_60_Pct_AMI';
                     break;
 
-                case annualAdjustedGrossIncome > 29820  && annualAdjustedGrossIncome <= 39760:
+                case annualAdjustedGrossIncome > 29820  && annualAdjustedGrossIncome <= 40953:
                     AMI = 80
                     _calculator.controller.filters.incomeBucket = 'Affordable_at_80_Pct_AMI';
                     break;
@@ -777,8 +775,8 @@ export default class Calculator {
             console.log('Error: Incorrect number of bedrooms selected');
             break;
     }
-    console.log(bedrooms);
-    console.log(income);
+    //console.log(bedrooms);
+    //console.log(income);
     if(bedrooms == ''){
         _calculator.controller.filters.bedrooms = null;
         document.getElementById('rooms').value = '';
@@ -819,7 +817,6 @@ export default class Calculator {
         _calculator.controller.updateMap(_calculator.controller);
         document.querySelector('.calculator.active').className = 'calculator';
         document.querySelector('#calculator-btn').className = 'off';
-        document.getElementById('rooms').disabled = false;
         document.querySelector('.legend.active').className = 'legend';
         document.getElementById('income-filter-btn').className = 'filter-btn';
         document.getElementById('by-income-description').innerText = '';
@@ -828,7 +825,6 @@ export default class Calculator {
         document.querySelector('.calculator.active').className = 'calculator';
         document.querySelector('#calculator-btn').className = 'on';
         document.getElementById('rooms').value = bedrooms;
-        document.getElementById('rooms').disabled = true;
         document.querySelector('.legend').className = 'legend active';
         (_calculator.controller.filters.incomeBucket == 'Too_High') ? document.getElementById('by-income-description').innerText = 'Income is too high.' : document.getElementById('by-income-description').innerText = '';
         document.getElementById('income-filter-btn').className = 'filter-btn active';

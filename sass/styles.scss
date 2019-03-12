@@ -1,7 +1,7 @@
 @import "calculator.scss";
 @import "radio.scss";
 @import "loader.scss";
-$base-duration: 500ms;
+$base-duration: 300ms;
 $cubic: cubic-bezier(.64,.09,.08,1);
 // Colors
 $color-1: #004544;
@@ -214,6 +214,7 @@ ul {
 // ======================= header end =====================
 // ======================== main ==========================
 section.application {
+	background-color: $color-1;
 	position: relative;
 	display: flex;
 	align-items: stretch;
@@ -229,11 +230,13 @@ section.application {
 		width: 35em;
 		padding: 1em;
 		transition: all .2s ease-in-out;
-		margin-right: 1em;
+		margin-right: .25em;
 		overflow-y: auto;
 
-		h4{
+		h5{
 			border-bottom: solid #E48F22;
+			padding-right: 4em;
+    	margin: 1em 0;
 		}
 
 		important{
@@ -323,7 +326,7 @@ section.application {
 		display: block;
 		position: relative;
 		overflow: hidden;
-		flex: 1;
+		width: 100vw;
 
 		#population-description{
 			margin-top: -.25em;
@@ -336,7 +339,7 @@ section.application {
 
 		.filter-btn{
 			width: auto;
-			padding: .8em 1.1em;
+			padding: .7em 1.1em;
 			border-radius: 50%;
 			background: $color-4;
 			color: $white;
@@ -368,19 +371,18 @@ section.application {
 			left: 0;
 			transition: all .2s ease-in-out;
 
-			h4{
+			h5{
 				border-bottom: solid $color-3;
 				color: $color-1;
-				padding: 0 0 .5em 0;
-				margin-bottom: 1em;
+				margin-top: 1em;
 			}
 
 			#population-description{
-				padding-left: 2.1em;
+				padding-left: 3.5em;
 			}
 
 			input, select{
-				width: 10em;
+				width: 6em;
 			}
 
 			article{
@@ -415,7 +417,7 @@ section.application {
 					span{
 						background: $color-1;
 						color: $color-1;
-						padding: 0.2em .5em;
+						padding: .05em .45em;
 						border-radius: 50%;
 						margin-right: .5em;
 					}
@@ -424,7 +426,7 @@ section.application {
 					span{
 						background: $color-3;
 						color: $color-3;
-						padding: 0.2em .5em;
+						padding: .05em .45em;
 						border-radius: 50%;
 						margin-right: .5em;
 					}
@@ -439,8 +441,9 @@ section.application {
 			left: 0;
 			transition: all .2s ease-in-out;
 
-			h4{
+			h5{
 				border-bottom: solid #E48F22;
+				margin: 0;
 			}
 		}
 

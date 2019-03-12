@@ -79,11 +79,31 @@ export default class Controller {
           }
         },
         {
+          id: "litch-selected",
+          "source": "litch-locations",
+          "type": "circle",
+          "paint": {
+              "circle-radius": 8,
+              "circle-color": "#007cbf"
+          },
+          "filter": ["==", "OBJECTID", ""]
+        },
+        {
+          id: "litch-maybe-selected",
+          "source": "litch-locations-maybe",
+          "type": "circle",
+          "paint": {
+              "circle-radius": 8,
+              "circle-color": "#007cbf"
+          },
+          "filter": ["==", "OBJECTID", ""]
+        },
+        {
           id: "point",
           "source": "single-point",
           "type": "circle",
           "paint": {
-              "circle-radius": 10,
+              "circle-radius": 8,
               "circle-color": "#007cbf"
           }
         },
@@ -108,6 +128,7 @@ export default class Controller {
       case 'v-sign-up':
         document.querySelector('#user-type-section').className = 'hidden';
         document.querySelector('section.application').className = 'application';
+        _controller.map.map.resize();
         break;
       default:
 
@@ -134,7 +155,7 @@ export default class Controller {
   }
 
   removeFilter(ev, _controller){
-    console.log(ev);
+    //console.log(ev);
     document.getElementById('initial-loader-overlay').className = 'active';
     switch (ev.target.id) {
       case 'zipcode-filter-btn':
@@ -169,7 +190,7 @@ export default class Controller {
     let where = '';
     let whereMaybe = '';
     let polygon = null;
-    console.log(_controller.filters);
+    //console.log(_controller.filters);
     if(_controller.filters.population == null){
       if(_controller.filters.bedrooms == null){
         switch (_controller.filters.incomeBucket) {
@@ -247,23 +268,23 @@ export default class Controller {
       let simplePolygon = turf.simplify(_controller.filters.zipcode.geometry, {tolerance: 0.005, highQuality: false});
       polygon = arcGIS.convert(simplePolygon);
     }
-    console.log(where);
-    console.log(whereMaybe);
+    //console.log(where);
+    //console.log(whereMaybe);
     let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=${where}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
-    console.log(_controller.filters);
-    console.log(url);
+    //console.log(_controller.filters);
+    //console.log(url);
     fetch(url)
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) {
-      console.log(data);
+      //console.log(data);
       _controller.map.map.getSource('litch-locations').setData(data);
 
       let urlMaybe = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=${whereMaybe}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
-      console.log(urlMaybe);
+      //console.log(urlMaybe);
       fetch(urlMaybe)
       .then((resp) => resp.json()) // Transform the data into json
       .then(function(data) {
-        console.log(data);
+        //console.log(data);
         _controller.map.map.getSource('litch-locations-maybe').setData(data);
         document.getElementById('initial-loader-overlay').className = '';
       });
@@ -271,7 +292,7 @@ export default class Controller {
   }
 
   filterMap(ev, _controller){
-    console.log(ev);
+    //console.log(ev);
     document.getElementById('initial-loader-overlay').className = 'active';
     switch (ev.target.id) {
       case 'population':
@@ -296,6 +317,11 @@ export default class Controller {
         if(ev.target.value != 'null'){
           document.getElementById('bedrooms-filter-btn').className = 'filter-btn active';
           _controller.filters.bedrooms = ev.target.value;
+          _controller.filters.incomeBucket = null;
+          (document.querySelector('.legend.active') == null) ? 0 : document.querySelector('.legend.active').className = 'legend';
+          document.querySelector('#calculator-btn').className = 'off';
+          document.getElementById('income-filter-btn').className = 'filter-btn';
+          document.getElementById('by-income-description').innerText = '';
         }else{
           _controller.filters.bedrooms = null;
         } 
@@ -337,7 +363,7 @@ export default class Controller {
     fetch(url)
     .then((resp) => resp.json())
     .then(function (data) {
-      console.log(data);
+      //console.log(data);
       if (data.features.length) {
         const patrol = data.features[0].properties.name.split(' ').join('+');
         document.getElementById('sheet-link').href = `https://app.smartsheet.com/b/form/f004f42fcd4345b89a35049a29ff408a?Patrol+ID=${data.features[0].properties.FID}&Patrol+Name=${patrol}`;

@@ -140,7 +140,7 @@ export default class Panel {
 
     buildMarkUp(data){
         let html = `
-            <h4>${data.properties.Project_Name}</h4>
+            <h5>${data.properties.Project_Name}</h5>
             <section class="group">
             <span class="header">Property</span>
             <p><strong>Address:</strong> ${data.properties.Project_Address}</p>
