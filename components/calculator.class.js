@@ -63,6 +63,7 @@ export default class Calculator {
     salary.className = 'logic-section salary active';
     annualSalary.type = 'number';
     annualSalary.setAttribute('id', 'annual-salary');
+    annualSalary.setAttribute('min', 0);
     annualSalary.value = 0;
     annualSalaryLabel.setAttribute('for', 'annual-salary'); 
     annualSalaryLabel.innerText = 'Annual household salary:'; 
@@ -81,12 +82,14 @@ export default class Calculator {
     // Add attributes to elements
     hourly.className = 'logic-section hourly';
     hourlyWage.type = 'number';
+    hourlyWage.setAttribute('min', 0);
     hourlyWage.setAttribute('id', 'hourly-wage');
     hourlyWage.setAttribute('step', '.01');
     hourlyWage.value = 0;
     hourlyWageLabel.setAttribute('for', 'hourly-wage'); 
     hourlyWageLabel.innerText = 'Hourly Wage:'; 
     hoursPerWeek.type = 'number';
+    hoursPerWeek.setAttribute('min', 0);
     hoursPerWeek.setAttribute('id', 'hours-per-week');
     hoursPerWeek.value = 0;
     hoursPerWeekLabel.setAttribute('for', 'hours-per-week'); 
@@ -109,9 +112,10 @@ export default class Calculator {
     addIncomeValue.setAttribute('id', 'add-income');
     addIncomeValue.setAttribute('aria-describedby', 'add-income-description');
     addIncomeValue.value = 0;
+    addIncomeValue.setAttribute('min', 0);
     addIncomeLabel.setAttribute('for', 'add-income'); 
-    addIncomeLabel.innerText = 'Additional Monthly Income: *'; 
-    addIncomeDescription.innerText = '* Include Social Security, retirement or pension, disability / unemployment, food assistance, child support, and any other source of income per month Monthly Income.';
+    addIncomeLabel.innerText = 'Additional Monthly Income:'; 
+    addIncomeDescription.innerText = '(Include Social Security, retirement or pension, disability / unemployment, food assistance, child support, and any other source of income per month)';
     addIncomeDescription.setAttribute('id', 'add-income-description');
     // Build DOM for add-income section
     addIncome.appendChild(addIncomeLabel);
@@ -123,6 +127,7 @@ export default class Calculator {
     let dependentsLabel = document.createElement('label');
     // Add attributes to elements
     dependentsValue.type = 'number';
+    dependentsValue.setAttribute('min', 0);
     dependentsValue.setAttribute('id', 'dependents');
     dependentsValue.value = 0;
     dependentsLabel.setAttribute('for', 'dependents'); 
@@ -172,6 +177,7 @@ export default class Calculator {
     let childExpLabel = document.createElement('label');
     // Add attributes to elements
     childExpValue.type = 'number';
+    childExpValue.setAttribute('min', 0);
     childExpValue.setAttribute('id', 'child-exp');
     childExpValue.value = 0;
     childExpLabel.setAttribute('for', 'child-exp'); 
@@ -186,6 +192,7 @@ export default class Calculator {
     let medicalExpLabel = document.createElement('label');
     // Add attributes to elements
     medicalExpValue.type = 'number';
+    medicalExpValue.setAttribute('min', 0);
     medicalExpValue.setAttribute('id', 'medical-exp');
     medicalExpValue.value = 0;
     medicalExpLabel.setAttribute('for', 'medical-exp'); 
@@ -200,6 +207,7 @@ export default class Calculator {
     let peopleHouseholdLabel = document.createElement('label');
     // Add attributes to elements
     peopleHouseholdValue.type = 'number';
+    peopleHouseholdValue.setAttribute('min', 0);
     peopleHouseholdValue.setAttribute('id', 'people-household');
     peopleHouseholdValue.value = 0;
     peopleHouseholdLabel.setAttribute('for', 'people-household'); 

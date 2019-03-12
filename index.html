@@ -59,14 +59,14 @@
     </section>
     <section class="application hidden">
       <section class="data-panel">
-        <button class="close-btn" id="close-panel-btn">x</button>
+        <button class="close-btn" id="close-panel-btn"><i class="fas fa-angle-left"></i> Back</button>
         <section class="content-section"></section>
       </section>
       <section class="map-panel">
         <article id="map"></article>
         <article id="geocoder"></article>
         <section class="filters">
-          <button id="close-filters-btn" class="close-btn">x</button>
+          <button id="close-filters-btn" class="close-btn"><i class="fas fa-angle-left"></i> Back</button>
           <h4>Search for housing</h4>
           <article>
             <button id="zipcode-filter-btn" class="filter-btn">x</button>
@@ -77,7 +77,7 @@
           </article>
           <article>
             <button id="population-filter-btn" class="filter-btn">x</button>
-            <label for="population">For Special Populations<sup>*</sup>:</label>
+            <label for="population">For Special Populations:</label>
             <select id="population" class="interactive-filters" aria-describedby="population-description">
               <option value="null" selected></option>
               <option value="Elderly">Elderly</option>
@@ -86,7 +86,7 @@
               <option value="Homeless">Homeless</option>
               <option value="Veterans">Veterans</option>
             </select>
-            <p id="population-description"><sup>*</sup> Examples: elderly, veterans, families, etc.</p>
+            <p id="population-description">(Examples: elderly, veterans, families, etc.)</p>
           </article>
           <article>
             <button id="bedrooms-filter-btn" class="filter-btn">x</button>

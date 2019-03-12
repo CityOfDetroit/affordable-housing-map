@@ -291,11 +291,9 @@ section.application {
 		position: absolute;
 		top: 1em;
 		right: 1em;
-		width: 2.5em;
-		height: 2.5em;
+		width: auto;
 		font-size: 1.25em;
-		border-radius: 50%;
-		padding: 0 .5em .2em .5em;
+		padding: .25em .5em;
 	}
   .loading-box{
     text-align: center;
@@ -327,8 +325,13 @@ section.application {
 		overflow: hidden;
 		flex: 1;
 
-		.close-btn{
-			width: 2.5em;
+		#population-description{
+			margin-top: -.25em;
+			font-size: 85%;
+		}
+		#add-income-description{
+			margin-top: -1em;
+			font-size: 85%;
 		}
 
 		.filter-btn{
