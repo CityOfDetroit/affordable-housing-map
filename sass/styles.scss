@@ -326,7 +326,7 @@ section.application {
 		display: block;
 		position: relative;
 		overflow: hidden;
-		width: 100vw;
+		flex: 1;
 
 		#population-description{
 			margin-top: -.25em;
@@ -382,7 +382,11 @@ section.application {
 			}
 
 			input, select{
-				width: 6em;
+				width: 30%;
+			}
+
+			label{
+				width: calc(68% - 50px);
 			}
 
 			article{
