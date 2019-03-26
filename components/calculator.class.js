@@ -64,9 +64,10 @@ export default class Calculator {
     annualSalary.type = 'number';
     annualSalary.setAttribute('id', 'annual-salary');
     annualSalary.setAttribute('min', 0);
+    annualSalary.setAttribute('required', true);
     annualSalary.value = 0;
     annualSalaryLabel.setAttribute('for', 'annual-salary'); 
-    annualSalaryLabel.innerText = 'Annual household salary:'; 
+    annualSalaryLabel.innerHTML = '<sup class="required">*</sup>Annual household salary:'; 
     // Build DOM for salary section
     salary.appendChild(annualSalaryLabel);
     salary.appendChild(annualSalary);
@@ -87,13 +88,13 @@ export default class Calculator {
     hourlyWage.setAttribute('step', '.01');
     hourlyWage.value = 0;
     hourlyWageLabel.setAttribute('for', 'hourly-wage'); 
-    hourlyWageLabel.innerText = 'Hourly Wage:'; 
+    hourlyWageLabel.innerHTML = '<sup class="required">*</sup>Hourly Wage:'; 
     hoursPerWeek.type = 'number';
     hoursPerWeek.setAttribute('min', 0);
     hoursPerWeek.setAttribute('id', 'hours-per-week');
     hoursPerWeek.value = 0;
     hoursPerWeekLabel.setAttribute('for', 'hours-per-week'); 
-    hoursPerWeekLabel.innerText = 'Hours Worked per week:'; 
+    hoursPerWeekLabel.innerHTML = '<sup class="required">*</sup>Hours Worked per week:'; 
     // Build DOM for hourly section
     hourlyWageBox.appendChild(hourlyWageLabel);
     hourlyWageBox.appendChild(hourlyWage);
@@ -209,9 +210,10 @@ export default class Calculator {
     peopleHouseholdValue.type = 'number';
     peopleHouseholdValue.setAttribute('min', 0);
     peopleHouseholdValue.setAttribute('id', 'people-household');
+    peopleHouseholdValue.setAttribute('required', true);
     peopleHouseholdValue.value = 0;
     peopleHouseholdLabel.setAttribute('for', 'people-household'); 
-    peopleHouseholdLabel.innerText = 'How many people are in your household?'; 
+    peopleHouseholdLabel.innerHTML = `<sup class="required">*</sup>How many people are in your household?`; 
     peopleHouseholdValue.addEventListener('change', (ev)=>{
         this.updateForm('household', ev, _calculator);
     });
@@ -226,8 +228,9 @@ export default class Calculator {
 
     // Add attributes to elements
     bedroomsValue.setAttribute('id', 'bedrooms');
+    bedroomsValue.setAttribute('required', true);
     bedroomsLabel.setAttribute('for', 'bedrooms'); 
-    bedroomsLabel.innerText = 'Number of bedrooms:'; 
+    bedroomsLabel.innerHTML = '<sup class="required">*</sup>Number of bedrooms:'; 
     // Build DOM for bedrooms section
     bedrooms.appendChild(bedroomsLabel);
     bedrooms.appendChild(bedroomsValue);
@@ -236,6 +239,7 @@ export default class Calculator {
     let submit = document.createElement('button');
     submit.innerText = 'CALCULATE';
     submit.setAttribute('id', 'submit-btn');
+    submit.setAttribute('type', 'submit');
     let cancel = document.createElement('button');
     cancel.innerText = 'CANCEL';
     cancel.setAttribute('id', 'cancel-btn');
@@ -268,12 +272,14 @@ export default class Calculator {
   }
 
   buttonListener(ev, _calculator){
-    document.getElementById('initial-loader-overlay').className = 'active';
-    (ev.target.id == 'cancel-btn') ? _calculator.cancelIncomeFilter(_calculator) : _calculator.computeIncomeRange(_calculator);
+    (ev.target.id == 'cancel-btn') ? _calculator.cancelIncomeFilter(_calculator) : _calculator.checkEmtyValues(_calculator);
   }
 
   submit(ev){
     ev.preventDefault();
+    if(ev.type == 'submit'){
+        this.checkEmtyValues(this);
+    }
   }
 
   updateForm(type, value, _calculator){
@@ -311,17 +317,29 @@ export default class Calculator {
         default:
             if(value.target.tagName == 'LABEL'){
                 if(value.target.htmlFor == 'salary'){
+                    _calculator.form[3].setAttribute('required', true);
+                    _calculator.form[4].setAttribute('required', false);
+                    _calculator.form[5].setAttribute('required', false);
                     document.querySelector('.logic-section.salary').className = 'logic-section salary active';
                     document.querySelector('.logic-section.hourly').className = 'logic-section hourly';
                 }else{
+                    _calculator.form[3].setAttribute('required', false);
+                    _calculator.form[4].setAttribute('required', true);
+                    _calculator.form[5].setAttribute('required', true);
                     document.querySelector('.logic-section.hourly').className = 'logic-section hourly active';
                     document.querySelector('.logic-section.salary').className = 'logic-section salary';
                 }
             }else{
                 if(value.target.id == 'salary'){
+                    _calculator.form[3].setAttribute('required', true);
+                    _calculator.form[4].setAttribute('required', false);
+                    _calculator.form[5].setAttribute('required', false);
                     document.querySelector('.logic-section.salary').className = 'logic-section salary active';
                     document.querySelector('.logic-section.hourly').className = 'logic-section hourly';
                 }else{  
+                    _calculator.form[3].setAttribute('required', false);
+                    _calculator.form[4].setAttribute('required', true);
+                    _calculator.form[5].setAttribute('required', true);
                     document.querySelector('.logic-section.hourly').className = 'logic-section hourly active';
                     document.querySelector('.logic-section.salary').className = 'logic-section salary';
                 }
@@ -350,6 +368,25 @@ export default class Calculator {
     document.querySelector('#calculator-btn').className = 'off';
     document.getElementById('income-filter-btn').className = 'filter-btn';
     document.getElementById('by-income-description').innerText = '';
+  }
+
+  checkEmtyValues(_calculator){
+    if(_calculator.form[1].checked){
+        if(_calculator.form[3].valueAsNumber > 0){
+            if(_calculator.form[13].valueAsNumber > 0 && _calculator.form[14].value != null){
+                document.getElementById('initial-loader-overlay').className = 'active';
+                _calculator.computeIncomeRange(_calculator);
+            }
+        }
+    }else{
+        if(_calculator.form[4].valueAsNumber > 0 && _calculator.form[5].valueAsNumber > 0){
+            if(_calculator.form[13].valueAsNumber > 0 && _calculator.form[14].value != null){
+                document.getElementById('initial-loader-overlay').className = 'active';
+                _calculator.computeIncomeRange(_calculator);
+            }
+        }
+    }
+    
   }
 
   computeIncomeRange(_calculator){
@@ -822,7 +859,7 @@ export default class Calculator {
         document.getElementById('by-income-description').innerText = '';
     }else{
         _calculator.controller.updateMap(_calculator.controller);
-        document.querySelector('.calculator.active').className = 'calculator';
+        document.querySelector('.calculator').className = 'calculator active';
         document.querySelector('#calculator-btn').className = 'on';
         document.getElementById('rooms').value = bedrooms;
         document.querySelector('.legend').className = 'legend active';

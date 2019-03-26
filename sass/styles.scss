@@ -211,6 +211,11 @@ ul {
 		transition: all .2s ease-in-out;
 	}
 }
+@media all and (min-width: 700px) {
+	#filters{
+		font-size: 1.5em;
+	}
+}
 // ======================= header end =====================
 // ======================== main ==========================
 section.application {
@@ -394,7 +399,7 @@ section.application {
 			}
 
 			#calculator-btn, #filter-reset-btn{
-				width: 8em;
+				width: 12em;
 			}
 
 			#calculator-btn.off{
@@ -449,6 +454,10 @@ section.application {
 				border-bottom: solid #E48F22;
 				margin: 0;
 			}
+
+			.required{
+				color: $color-4;
+			}
 		}
 
 		#geocoder{
@@ -464,10 +473,12 @@ section.application {
 		}
 
 		#filters{
+			background-color: $color-4;
+			color: $white;
 			position: absolute;
-			bottom: 2em;
-			right: 2em;
-			font-size: 1em;
+			top: .5em;
+			right: 3em;
+			font-size: 1.25em;
 		}
 	}
 }
