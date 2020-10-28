@@ -2,7 +2,6 @@ import * as esri from 'esri-leaflet';
 import * as L from 'leaflet';
 import moment from 'moment';
 import Panel from './Panel';
-import Geocoder from './Geocoder';
 import './App.scss';
 import '../../node_modules/leaflet/dist/leaflet.css';
 
@@ -12,39 +11,68 @@ export default class App {
         this.year = moment().year();
         this.point = null;
         this.map = null;
-        this.layers = {};
+        this.layersData = {
+            all: null,
+            bestMatche: null,
+            maybe: null
+        };
+        this.filters = {
+            bedrooms: null,
+            zipcode: null,
+            population: null,
+            ima: null,
+            incomeBucket: null
+        };
         this.panel = new Panel(this);
-        this.geocoder = new Geocoder('geocoder', this);
         this.initialLoad(this);
     }
 
     initialLoad(_app){
-        _app.map = L.map('map').setView([42.36, -83.1], 12);
+        _app.map = L.map('map', {
+            renderer: L.canvas()
+        }).setView([42.36, -83.1], 12);
+        
         esri.basemapLayer('Gray', {
             detectRetina: true
         }).addTo(_app.map);
-        _app.layers['housing'] = esri.featureLayer({
-            url: 'https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0',
-            pointToLayer: function (geojson, latlng) {
-                return L.circleMarker(latlng, {
-                    fillColor: '#194ed7',
-                    fillOpacity: 1,
-                    stroke: false,
-                    radius: 5
-                });
-            }
-        }).addTo(_app.map);
 
-        _app.layers['housing'].on('load', function (e) {
-            document.getElementById('initial-loader-overlay').className = '';
+      
+        let housing = new Promise((resolve, reject) => {
+            let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
+            return fetch(url)
+            .then((resp) => resp.json()) // Transform the data into json
+            .then(function(data) {
+            //console.log(data);
+            resolve({"id": "housing", "data": data});
+            });
         });
+        Promise.all([housing]).then(values => {
+            _app.layersData.all = values[0].data;
+            L.geoJSON(_app.layersData.all, {
+                pointToLayer: function (geojson, latlng) {
+                    return L.circleMarker(latlng, {
+                        fillColor: '#004445',
+                        fillOpacity: 1,
+                        stroke: false,
+                        radius: 5
+                    });
+                }
+            }).on('click',function (layer) {
+                console.log(layer);
+                _app.panel.data = layer.propagatedFrom.feature;
+                _app.panel.createPanel(_app.panel, 'property');
+                _app.queryLayer(_app, layer.latlng);
+            }).addTo(_app.map);
 
-        _app.map.on('click', function (e) {
-            _app.queryLayer(_app, 'housing',e.latlng);
+            document.getElementById('initial-loader-overlay').className = '';
+        }).catch(reason => {
+            console.log(reason);
         });
     }
 
-    queryLayer(_app, layer, latlng){
+
+
+    queryLayer(_app, latlng){
         let needAdress = false;
         let myIcon = L.icon({
             iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
@@ -63,44 +91,41 @@ export default class App {
             tempLocation = latlng;
         }
         let userPoint = L.layerGroup().addTo(_app.map);
-        _app.layers[layer].query().intersects(latlng).run(function (error, featureCollection, response) {
-            if (error) {
-              console.log(error);
-              return;
-            }
-            if(_app.point){
-                _app.point.clearLayers();
-                _app.point = userPoint.addLayer(L.marker(tempLocation,{icon: myIcon}));
-            }else{ 
-                _app.point = userPoint.addLayer(L.marker(tempLocation,{icon: myIcon}));
-            }
-            _app.map.flyTo(tempLocation, 15);
-            _app.panel.currentProvider = featureCollection.features[0].properties.contractor;
-            fetch(`https://apis.detroitmi.gov/waste_schedule/details/${featureCollection.features[0].properties.FID}/year/${_app.year}/month/${_app.month}/`)
-            .then((res) => {
-                res.json().then(data => {
-                    _app.panel.location.lat = tempLocation.lat;
-                    _app.panel.location.lng = tempLocation.lng;
-                    _app.panel.data = data;
-                    if(needAdress){
-                        fetch(`https://gis.detroitmi.gov/arcgis/rest/services/DoIT/StreetCenterlineLatLng/GeocodeServer/reverseGeocode?location=${_app.panel.location.lng}%2C+${_app.panel.location.lat}&distance=&outSR=&f=pjson`)
-                        .then((res) => {
-                            res.json().then(data => {
-                                _app.panel.address = data.address.Street;
-                                _app.panel.createPanel(_app.panel);
-                            });
-                        }).catch((error) => {
-                            console.log(error);
-                        });
-                    }else{
+        if(_app.point){
+            _app.point.clearLayers();
+            _app.point = userPoint.addLayer(L.marker(tempLocation,{icon: myIcon}));
+        }else{ 
+            _app.point = userPoint.addLayer(L.marker(tempLocation,{icon: myIcon}));
+        }
+        _app.map.flyTo(tempLocation, 15);
+        if(_app.panel.data.type == null){
+            esri.query({ url:'https://gis.detroitmi.gov/arcgis/rest/services/OpenData/CertificateOfCompliance/FeatureServer/0'}).where(`parcel_id = '${_app.panel.data.parcel}'`).run(function (error, featureCollection) {
+                if (error) {
+                  console.log(error);
+                  return;
+                }
+                if(featureCollection.features.length){
+                    _app.panel.data.date = moment(featureCollection.features[0].properties.record_status_date).format('MMM Do, YYYY');
+                    _app.panel.data.type = featureCollection.features[0].properties.task;
+                    _app.panel.createPanel(_app.panel);
+                }else{
+                    esri.query({ url:'https://gis.detroitmi.gov/arcgis/rest/services/OpenData/RentalStatuses/FeatureServer/0'}).where(`parcel_id = '${_app.panel.data.parcel}'`).run(function (error, featureCollection) {
+                        if (error) {
+                        console.log(error);
+                        return;
+                        }
+
+                        if(featureCollection.features.length){
+                            _app.panel.data.date = moment(featureCollection.features[0].properties.record_status_date).format('MMM Do, YYYY');
+                            _app.panel.data.type = featureCollection.features[0].properties.task;
+                        }else{
+                            _app.panel.data.type = null;
+                        }
                         _app.panel.createPanel(_app.panel);
-                    }
-                });
-            })
-            .catch((error) => {
-                console.log(error);
+                    });
+                }
             });
-        });
+        }
     }
 
     checkParcelValid(parcel){
