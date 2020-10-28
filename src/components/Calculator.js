@@ -1,4 +1,5 @@
 'use strict';
+import './Calculator.scss';
 export default class Calculator {
   constructor(container, controller) {
     this.form = null;

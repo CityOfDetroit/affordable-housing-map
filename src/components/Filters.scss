@@ -1,0 +1,86 @@
+@import './colors.scss';
+#filter-box{
+    left: 0;
+    transition: all .2s ease-in-out;
+
+    #population-description{
+        padding-left: 3.5em;
+    }
+
+    input, select{
+        width: 30%;
+    }
+
+    label{
+        width: calc(68% - 50px);
+    }
+
+    article{
+        margin-bottom: 1em;
+    }
+
+    #calculator-btn, #filter-reset-btn{
+        width: 12em;
+    }
+
+    #calculator-btn.off{
+        background-color: transparent;
+        border: solid;
+    }
+
+    #calculator-btn.on{
+        background-color: $color-2;
+        border: none;
+    }
+
+    #filter-reset-btn{
+        background-color: $color-4;
+        color: $white;
+    }
+
+    .legend.active{
+        display: block;
+        padding: .5em 1em;
+        border: solid .25em $color-1;
+
+        p:first-child{
+            span{
+                background: $color-1;
+                color: $color-1;
+                padding: .05em .45em;
+                border-radius: 50%;
+                margin-right: .5em;
+            }
+        }
+        p:nth-child(2){
+            span{
+                background: $color-3;
+                color: $color-3;
+                padding: .05em .45em;
+                border-radius: 50%;
+                margin-right: .5em;
+            }
+        }
+    }
+    .legend{
+        display: none;
+    }
+    
+    .filter-btn{
+        width: auto;
+        padding: .7em 1.1em;
+        border-radius: 50%;
+        background: $color-4;
+        color: $white;
+        cursor: pointer;
+        visibility: hidden;
+    }
+
+    .filter-btn.active{
+        visibility: visible;
+    }
+
+    button{
+        cursor: pointer;
+    }
+}

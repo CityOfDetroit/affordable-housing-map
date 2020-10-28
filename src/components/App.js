@@ -7,8 +7,7 @@ import '../../node_modules/leaflet/dist/leaflet.css';
 
 export default class App {
     constructor() {
-        this.month = moment().month() + 1;
-        this.year = moment().year();
+        this.zips = {};
         this.point = null;
         this.map = null;
         this.layersData = {
@@ -28,6 +27,17 @@ export default class App {
     }
 
     initialLoad(_app){
+        let zipURL = `https://gis.detroitmi.gov/arcgis/rest/services/DoIT/MetroZipCodes/MapServer/0/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson`;
+        fetch(zipURL)
+        .then((resp) => resp.json()) // Transform the data into json
+        .then(function(data) {
+            data.features.forEach(function(item) {
+                _app.zips[item.properties.ZCTA5CE10] = item;
+            });
+        });
+        document.getElementById('filters').addEventListener('click', (e)=>{
+            _app.panel.createPanel(_app.panel, 'filter');
+        });
         _app.map = L.map('map', {
             renderer: L.canvas()
         }).setView([42.36, -83.1], 12);
@@ -128,7 +138,7 @@ export default class App {
         }
     }
 
-    checkParcelValid(parcel){
-        return /\d/.test(parcel);
+    applyFilters(ev, _app){
+        console.log(ev);
     }
 }

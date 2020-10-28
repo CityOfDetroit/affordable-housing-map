@@ -1,10 +1,12 @@
 import moment from 'moment';
 import Calculator from './Calculator';
+import Filters from './Filters';
 import './Panel.scss';
 export default class Panel {
     constructor(app) {
         this.app = app;
         this.calculator = null;
+        this.filters = null;
         this.data = null;
         this.panels = [];
     }
@@ -195,60 +197,20 @@ export default class Panel {
 
     buildFilters(_panel){
         let markup = `
-        <h5>Search for housing</h5>
-        <article>
-        <button id="zipcode-filter-btn" class="filter-btn">x</button>
-        <label for="zipcode">By Zip code:</label>
-        <input id="zipcode" list="zipcodes" class="interactive-filters">
-        <datalist id="zipcodes">
-        </datalist>
+        <h2>Search for housing</h2>
+        <article id="filter-box">
         </article>
-        <article>
-        <button id="population-filter-btn" class="filter-btn">x</button>
-        <label for="population">For Special Populations:</label>
-        <select id="population" class="interactive-filters" aria-describedby="population-description">
-            <option value="null" selected></option>
-            <option value="Elderly">Elderly</option>
-            <option value="Family">Family</option>
-            <option value="Special_Needs_or_Disabled">Special Need or Disabled</option>
-            <option value="Homeless">Homeless</option>
-            <option value="Veterans">Veterans</option>
-        </select>
-        <p id="population-description">(Examples: elderly, veterans, families, etc.)</p>
-        </article>
-        <article>
-        <button id="bedrooms-filter-btn" class="filter-btn">x</button>
-        <label for="rooms">By Number of Bedrooms:</label>
-        <select id="rooms" class="interactive-filters">
-            <option value="null" selected></option>
-            <option value="F0BR">Studio</option>
-            <option value="F1BR">1 - Bedroom</option>
-            <option value="F2BR">2 - Bedrooms</option>
-            <option value="F3BR">3 - Bedrooms</option>
-            <option value="F4BR">4 - Bedrooms</option>
-            <option value="F5BR">5 - Bedrooms</option>
-        </select>
-        </article>
-        <article>
-        <button id="income-filter-btn" class="filter-btn">x</button>
-        <button id="calculator-btn" class="off" aria-describedby="by-income-description">Search by Income</button>
-        <span id="by-income-description"></span>
-        </article>
-        <article class="legend">
-        <p><span>x</span> Best match for your income</p>
-        <p><span>x</span> May have units affordable for your income</p>
-        </article>`;
+        `;
         return markup;
     }
 
     buildCalculator(_panel){
         let markup = `
         <section class="calculator">
-          <h5>Income Calculator</h5>
+          <h2>Income Calculator</h2>
           <article id="calc-box"></article>
         </section>
         `;
-        _panel.calculator = new Calculator('calc-box', _panel.app);
         return markup;
     }
 
@@ -272,10 +234,12 @@ export default class Panel {
 
             case 'filter':
                 tempPanel.innerHTML = `${_panel.buildFilters(_panel)}`;
+                _panel.filters = new Filters('filter-box', _panel.app);
                 break;
 
             case 'calculator':
                 tempPanel.innerHTML = `${_panel.buildCalculator(_panel)}`;
+                _panel.calculator = new Calculator('calc-box', _panel.app);
                 break;
         
             default:
