@@ -9,12 +9,12 @@ import '../../node_modules/leaflet/dist/leaflet.css';
 
 export default class App {
     constructor() {
+        this.lock = false;
         this.zips = {};
         this.point = null;
         this.map = null;
         this.layersData = {
             all: null,
-            bestMatche: null,
             maybe: null
         };
         this.filters = {
@@ -172,38 +172,77 @@ export default class App {
         }
     }
 
+    removeFilters(ev, _app){
+        if(_app.lock != true){
+            console.log(ev);
+            console.log('calling remove filters');
+            document.getElementById('initial-loader-overlay').className = 'active';
+            switch (ev.target.id) {
+            case 'zipcode-filter-btn':
+                _app.filters.zipcode = null;
+                document.getElementById('zipcode').value = '';
+                document.getElementById('zipcode-filter-btn').className = 'filter-btn';
+                break;
+        
+            case 'population-filter-btn':
+                _app.filters.population = null;
+                document.getElementById('population').value = null;
+                document.getElementById('population-filter-btn').className = 'filter-btn';
+                break;
+        
+            case 'bedrooms-filter-btn':
+                _app.filters.bedrooms = null;
+                document.getElementById('rooms').value = null;
+                document.getElementById('bedrooms-filter-btn').className = 'filter-btn';
+                break;
+        
+            case 'income-filter-btn':
+                _app.calculator.cancelIncomeFilter(_app.calculator);
+                break;
+            
+            default:
+                break;
+            }
+            _app.updateMap(_app);
+        }
+    }
+
     applyFilters(ev, _app){
-        _app.layers['housing'].remove();
-        _app.layers['maybe'].remove();
+        _app.lock = true;
+        console.log(_app.layers);
         console.log(ev.target.id);
         console.log(ev.target.value);
+        document.getElementById('initial-loader-overlay').className = 'active';
+        _app.map.removeLayer( _app.layers['housing']);
+        _app.map.removeLayer( _app.layers['maybe']);
         switch (ev.target.id) {
             case 'population':
-              if(ev.target.value != 'null'){
+            if(ev.target.value != null){
                 _app.filters.population = ev.target.value; 
-              }else{
+            }else{
                 _app.filters.population = null;
-              }
-              break;
-      
+            }
+            break;
+    
             case 'zipcode':
-              if(ev.target.value != ''){
+            if(ev.target.value != ''){
                 _app.filters.zipcode = ev.target.value;
-              }else{
+            }else{
                 _app.filters.zipcode = null;
-              }
-              break;
-      
+            }
+            break;
+    
             case 'rooms':
-              if(ev.target.value != 'null'){
+            if(ev.target.value != null){
                 _app.filters.bedrooms = ev.target.value;
                 _app.filters.incomeBucket = null;
-              }else{
+            }else{
                 _app.filters.bedrooms = null;
-              } 
-              break;
-          
+            } 
+            break;
+        
             default:
+                console.log('doing default');
             //   _app.filters.population = null;
             //   _app.filters.zipcode = null;
             //   _app.filters.bedrooms = null;
@@ -218,16 +257,17 @@ export default class App {
             //   activeFilters.forEach((btn)=>{
             //     btn.className = 'filter-btn';
             //   });
-              break;
+            break;
         }
         _app.updateMap(_app);
     }
 
     updateMap(_app){
+        console.log('calling update map');
         let where = '';
         let whereMaybe = '';
         let polygon = null;
-        //console.log(_app.filters);
+        console.log(_app.filters);
         if(_app.filters.population == null){
           if(_app.filters.bedrooms == null){
             switch (_app.filters.incomeBucket) {
@@ -307,23 +347,33 @@ export default class App {
         }
         //console.log(where);
         //console.log(whereMaybe);
-        let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=${where}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
-        //console.log(_app.filters);
-        //console.log(url);
-        fetch(url)
-        .then((resp) => resp.json()) // Transform the data into json
-        .then(function(data) {
-          console.log(data);
-          _app.layersData.all = data;
-          let urlMaybe = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=${whereMaybe}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
-          //console.log(urlMaybe);
-          fetch(urlMaybe)
-          .then((resp) => resp.json()) // Transform the data into json
-          .then(function(data) {
-            console.log(data);
-            _app.layersData.maybe = data;
+        let housing = new Promise((resolve, reject) => {
+            let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=${where}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
+            return fetch(url)
+            .then((resp) => resp.json()) // Transform the data into json
+            .then(function(data) {
+            //console.log(data);
+            resolve({"id": "housing", "data": data});
+            });
+        });
+
+        let maybe = new Promise((resolve, reject) => {
+            let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=${whereMaybe}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
+            return fetch(url)
+            .then((resp) => resp.json()) // Transform the data into json
+            .then(function(data) {
+            //console.log(data);
+            resolve({"id": "maybe", "data": data});
+            });
+        });
+        Promise.all([housing, maybe]).then(values => {
+            console.log(values);
+            _app.layersData.all = values[0].data;
+            _app.layersData.maybe = values[1].data;
             _app.createLayers(_app);
-          });
+            _app.lock = false;
+        }).catch(reason => {
+            console.log(reason);
         });
     }
 }

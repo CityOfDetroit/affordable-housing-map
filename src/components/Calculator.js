@@ -244,11 +244,12 @@ export default class Calculator {
     let cancel = document.createElement('button');
     cancel.innerText = 'CANCEL';
     cancel.setAttribute('id', 'cancel-btn');
+    cancel.setAttribute('type', 'reset');
     cancel.addEventListener('click', (ev)=>{
-        this.buttonListener(ev, this);
+        _calculator.cancelIncomeFilter(_calculator);
     });
     submit.addEventListener('click', (ev)=>{
-        this.buttonListener(ev, this);
+        _calculator.checkEmtyValues(_calculator);
     });
     buttonGroup.appendChild(submit);
     buttonGroup.appendChild(cancel);
@@ -363,12 +364,8 @@ export default class Calculator {
     _calculator.form[4].value = 0;
     _calculator.form[5].value = 0;
     _calculator.controller.updateMap(_calculator.controller);
-    document.getElementById('rooms').value = 'null';
-    (document.querySelector('.legend.active') == null) ? 0 : document.querySelector('.legend.active').className = 'legend';
-    (document.querySelector('.calculator.active') == null) ? 0 : document.querySelector('.calculator.active').className = 'calculator';
-    document.querySelector('#calculator-btn').className = 'off';
-    document.getElementById('income-filter-btn').className = 'filter-btn';
-    document.getElementById('by-income-description').innerText = '';
+    _calculator.controller.panel.panels.pop();
+    _calculator.controller.panel.createPanel(_calculator.controller.panel, 'filter');
   }
 
   checkEmtyValues(_calculator){
@@ -847,23 +844,16 @@ export default class Calculator {
             default:
                 break;
         }
-        document.getElementById('rooms').value = rooms;
     }
     if(isNaN(income) && bedrooms == ''){
         _calculator.controller.updateMap(_calculator.controller);
-        document.querySelector('.calculator.active').className = 'calculator';
-        document.querySelector('#calculator-btn').className = 'off';
-        document.querySelector('.legend.active').className = 'legend';
-        document.getElementById('income-filter-btn').className = 'filter-btn';
-        document.getElementById('by-income-description').innerText = '';
+        _calculator.controller.panel.panels.pop();
+        _calculator.controller.panel.createPanel(_calculator.controller.panel, 'filter');
     }else{
         _calculator.controller.updateMap(_calculator.controller);
-        document.querySelector('.calculator').className = 'calculator active';
-        document.querySelector('#calculator-btn').className = 'on';
-        document.getElementById('rooms').value = bedrooms;
-        document.querySelector('.legend').className = 'legend active';
-        (_calculator.controller.filters.incomeBucket == 'Too_High') ? document.getElementById('by-income-description').innerText = 'Income is too high.' : document.getElementById('by-income-description').innerText = '';
-        document.getElementById('income-filter-btn').className = 'filter-btn active';
+        _calculator.controller.panel.panels.pop();
+        _calculator.controller.panel.createPanel(_calculator.controller.panel, 'filter');
+        // (_calculator.controller.filters.incomeBucket == 'Too_High') ? document.getElementById('by-income-description').innerText = 'Income is too high.' : document.getElementById('by-income-description').innerText = '';
     }
   }
 }

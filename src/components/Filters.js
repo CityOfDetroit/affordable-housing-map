@@ -6,9 +6,24 @@ export default class Filters {
     this.app = app;
     this.init(document.getElementById(container), this);
   }
+
+  checkLock(_filterPanel){
+    if(_filterPanel.lock == true){
+        return true;
+    }else{
+        return false;
+    }
+  }
+
+  changeLock(_filterPanel){
+    if(_filterPanel.lock == true){
+        _filterPanel.lock = false;
+    }else{
+        _filterPanel.lock = true;
+    }
+  }
   
   init(container, _filterPanel){
-    console.log(container);
     _filterPanel.form = document.createElement('form');
     // Create zipcodes section elemets
     let zipCodes = document.createElement('article');
@@ -19,6 +34,7 @@ export default class Filters {
     zipCodesInput.type = 'text';
     zipCodesInput.setAttribute('id', 'zipcode');
     zipCodesInput.setAttribute('list','zipcodes');
+    zipCodesInput.setAttribute('placeholder','Enter zip code');
     zipCodesInputLabel.innerText = 'By Zip code:';
     zipCodesInputLabel.setAttribute('for', 'zipcode');
     zipCodesList.setAttribute('id', 'zipcodes');
@@ -32,11 +48,20 @@ export default class Filters {
     if(_filterPanel.app.filters.zipcode == null){
         zipCodesBtn.className = 'filter-btn';
     }else{
+        zipCodesInput.value = _filterPanel.app.filters.zipcode;
         zipCodesBtn.className = 'filter-btn active';
     }
     zipCodesInput.addEventListener('change', (ev)=>{
         ev.preventDefault();
-        _filterPanel.app.applyFilters(ev, _filterPanel.app);
+        if(ev.target.value != null){
+            _filterPanel.app.applyFilters(ev, _filterPanel.app);
+            _filterPanel.app.panel.createPanel(_filterPanel.app.panel, 'filter');
+        }
+    });
+    zipCodesBtn.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        _filterPanel.app.removeFilters(ev, _filterPanel.app);
+        _filterPanel.app.panel.createPanel(_filterPanel.app.panel, 'filter');
     });
     zipCodes.appendChild(zipCodesBtn);
     zipCodes.appendChild(zipCodesInputLabel);
@@ -76,7 +101,9 @@ export default class Filters {
     populationBtn.id = 'population-filter-btn';
     if(_filterPanel.app.filters.population == null){
         populationBtn.className = 'filter-btn';
+        populationSelect.value = '';
     }else{
+        populationSelect.value = _filterPanel.app.filters.population;
         populationBtn.className = 'filter-btn active';
     }
     populationDesc.innerText = '(Examples: elderly, veterans, families, etc.)';
@@ -84,6 +111,12 @@ export default class Filters {
     populationSelect.addEventListener('change', (ev)=>{
         ev.preventDefault();
         _filterPanel.app.applyFilters(ev, _filterPanel.app);
+        _filterPanel.app.panel.createPanel(_filterPanel.app.panel, 'filter');
+    });
+    populationBtn.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        _filterPanel.app.removeFilters(ev, _filterPanel.app);
+        _filterPanel.app.panel.createPanel(_filterPanel.app.panel, 'filter');
     });
     population.appendChild(populationBtn);
     population.appendChild(populationSelectLabel);
@@ -123,11 +156,18 @@ export default class Filters {
     if(_filterPanel.app.filters.bedrooms == null){
         bedroomsBtn.className = 'filter-btn';
     }else{
+        bedroomsSelect.value = _filterPanel.app.filters.bedrooms;
         bedroomsBtn.className = 'filter-btn active';
     }
     bedroomsSelect.addEventListener('change', (ev)=>{
         ev.preventDefault();
         _filterPanel.app.applyFilters(ev, _filterPanel.app);
+        _filterPanel.app.panel.createPanel(_filterPanel.app.panel, 'filter');
+    });
+    bedroomsBtn.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        _filterPanel.app.removeFilters(ev, _filterPanel.app);
+        _filterPanel.app.panel.createPanel(_filterPanel.app.panel, 'filter');
     });
     bedrooms.appendChild(bedroomsBtn);
     bedrooms.appendChild(bedroomsSelectLabel);
@@ -148,6 +188,10 @@ export default class Filters {
         calcBtn.innerText = 'By Income';
         calcBtn.className = 'on';
     }
+    incomeBtn.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        _filterPanel.app.removeFilters(ev, _filterPanel.app);
+    });
     calcBtn.addEventListener('click', (ev)=>{
         ev.preventDefault();
         if(ev.target.className == 'off'){
@@ -179,16 +223,5 @@ export default class Filters {
         console.log(ev);
     });
     container.appendChild(_filterPanel.form);
-  }
-
-  buttonListener(ev, _filterPanel){
-    (ev.target.id == 'cancel-btn') ? _filterPanel.cancelIncomeFilter(_filterPanel) : _filterPanel.checkEmtyValues(_filterPanel);
-  }
-
-  submit(ev){
-    ev.preventDefault();
-    if(ev.type == 'submit'){
-        this.checkEmtyValues(this);
-    }
   }
 }

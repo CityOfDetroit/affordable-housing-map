@@ -29,31 +29,31 @@ export default class Panel {
 
     getPopulation(property){
         let population = '';
-        if(property.Family != 'null'){
-            if(property.Homeless != 'null'){
-                if(property.Veterans != 'null'){
-                    if(property.Elderly != 'null'){
-                        if(property.Special_Needs_or_Disabled != 'null'){
+        if(property.Family != null){
+            if(property.Homeless != null){
+                if(property.Veterans != null){
+                    if(property.Elderly != null){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Family, Homeless, Veterans, Elderly and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Family, Homeless, Veterans and Elderly</p>`;
                         }
                     }else{
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Family, Homeless, Veterans and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Family, Homeless and Veterans</p>`;
                         }
                     }
                 }else{
-                    if(property.Elderly != 'null'){
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                    if(property.Elderly != null){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Family, Homeless, Elderly and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Family, Homeless and Elderly</p>`;
                         }
                     }else{
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Family, Homeless and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Family and Homeless</p>`;
@@ -61,23 +61,23 @@ export default class Panel {
                     }
                 }
             }else{
-                if(property.Veterans != 'null'){
-                    if(property.Elderly != 'null'){
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                if(property.Veterans != null){
+                    if(property.Elderly != null){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Family, Veterans, Elderly and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Family, Veterans and Elderly</p>`;
                         }
                     }else{
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Family, Veterans and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Family and Veterans</p>`;
                         }
                     }
                 }else{
-                    if(property.Elderly != 'null'){
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                    if(property.Elderly != null){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Family, Elderly and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Family and Elderly</p>`;
@@ -88,30 +88,30 @@ export default class Panel {
                 }
             }
         }else{
-            if(property.Homeless != 'null'){
-                if(property.Veterans != 'null'){
-                    if(property.Elderly != 'null'){
-                        if(property.Special_Needs_or_Disabled != 'null'){
+            if(property.Homeless != null){
+                if(property.Veterans != null){
+                    if(property.Elderly != null){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Homeless, Veterans, Elderly and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Homeless, Veterans and Elderly</p>`;
                         }
                     }else{
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Homeless, Veterans and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Homeless and Veterans</p>`;
                         }
                     }
                 }else{
-                    if(property.Elderly != 'null'){
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                    if(property.Elderly != null){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Homeless, Elderly and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Homeless and Elderly</p>`;
                         }
                     }else{
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Homeless and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Homeless</p>`;
@@ -119,29 +119,29 @@ export default class Panel {
                     }
                 }
             }else{
-                if(property.Veterans != 'null'){
-                    if(property.Elderly != 'null'){
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                if(property.Veterans != null){
+                    if(property.Elderly != null){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Veterans, Elderly and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Veterans and Elderly</p>`;
                         }
                     }else{
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Veterans and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Veterans</p>`;
                         }
                     }
                 }else{
-                    if(property.Elderly != 'null'){
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                    if(property.Elderly != null){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> Elderly and 'Special Needs or Disabled'</p>`;
                         }else{
                             population = `<p><strong>Population:</strong> Elderly</p>`;
                         }
                     }else{
-                        if(property.Special_Needs_or_Disabled != 'null'){
+                        if(property.Special_Needs_or_Disabled != null){
                             population = `<p><strong>Population:</strong> 'Special Needs or Disabled'</p>`;
                         }else{
                             population = ``;
@@ -160,7 +160,7 @@ export default class Panel {
         <span class="header">Property</span>
         <p><strong>Address:</strong> ${_panel.data.properties.Project_Address}</p>
         <p><strong>Neighborhood:</strong> ${_panel.data.properties.Neighborhood}</p>
-        ${_panel.data.properties.Structure != 'null' ? `<p><strong>Structure:</strong> ${_panel.data.properties.Structure}</p>`:``}
+        ${_panel.data.properties.Structure != null ? `<p><strong>Structure:</strong> ${_panel.data.properties.Structure}</p>`:``}
         ${_panel.data.properties.Public_Housing == 'TRUE' ? `<p><strong>Detroit Housing Commission Public Housing:</strong> Yes`:`<p><strong>DHC Public Housing:</strong> No`}
         ${this.getPopulation(_panel.data.properties)}
         </section>
@@ -168,20 +168,20 @@ export default class Panel {
         <span class="header">Units</span>
         <p><strong>Rent-restricted:</strong> ${_panel.data.properties.Affordable_Units}</p>
         <p><strong>Total:</strong> ${_panel.data.properties.Total_Units}</p>
-        ${_panel.data.properties.F0BR != 'null' ? `<p><strong>Studio:</strong> ${_panel.data.properties.F0BR}</p>`:``}
-        ${_panel.data.properties.F1BR != 'null' ? `<p><strong>1-Bedroom:</strong> ${_panel.data.properties.F1BR}</p>`:``}
-        ${_panel.data.properties.F2BR != 'null' ? `<p><strong>2-Bedroom:</strong> ${_panel.data.properties.F2BR}</p>`:``}
-        ${_panel.data.properties.F3BR != 'null' ? `<p><strong>3-Bedroom:</strong> ${_panel.data.properties.F3BR}</p>`:``}
-        ${_panel.data.properties.F4BR != 'null' ? `<p><strong>4-Bedroom:</strong> ${_panel.data.properties.F4BR}</p>`:``}
-        ${_panel.data.properties.F5BR != 'null' ? `<p><strong>5-Bedroom:</strong> ${_panel.data.properties.F5BR}</p>`:``}
+        ${_panel.data.properties.F0BR != null ? `<p><strong>Studio:</strong> ${_panel.data.properties.F0BR}</p>`:``}
+        ${_panel.data.properties.F1BR != null ? `<p><strong>1-Bedroom:</strong> ${_panel.data.properties.F1BR}</p>`:``}
+        ${_panel.data.properties.F2BR != null ? `<p><strong>2-Bedroom:</strong> ${_panel.data.properties.F2BR}</p>`:``}
+        ${_panel.data.properties.F3BR != null ? `<p><strong>3-Bedroom:</strong> ${_panel.data.properties.F3BR}</p>`:``}
+        ${_panel.data.properties.F4BR != null ? `<p><strong>4-Bedroom:</strong> ${_panel.data.properties.F4BR}</p>`:``}
+        ${_panel.data.properties.F5BR != null ? `<p><strong>5-Bedroom:</strong> ${_panel.data.properties.F5BR}</p>`:``}
         </section>
         <section class="group">
         <span class="header">Management</span>
-        ${_panel.data.properties.Property_Phone != 'null' ? `<p><strong>Property Phone:</strong> <a href="tel:${_panel.data.properties.Property_Phone}">${_panel.data.properties.Property_Phone}</a></p>`:``}
-        ${_panel.data.properties.Management_Company != 'null' ? `<p><strong>Company:</strong> ${_panel.data.properties.Management_Company}</p>`:``}
-        ${_panel.data.properties.Manager_Contact != 'null' ? `<p><strong>Manager:</strong> ${_panel.data.properties.Manager_Contact}</p>`:``}
-        ${_panel.data.properties.Manager_Phone != 'null' ? `<p><strong>Manager's Phone:</strong> <a href="tel:${_panel.data.properties.Manager_Phone}">${_panel.data.properties.Manager_Phone}</a></p>`:``}
-        ${_panel.data.properties.Management_Website != 'null' ? `<p><strong>Website:</strong> <a href="http://${_panel.data.properties.Management_Website}" target="_blank">Link</a></p>`:``}
+        ${_panel.data.properties.Property_Phone != null ? `<p><strong>Property Phone:</strong> <a href="tel:${_panel.data.properties.Property_Phone}">${_panel.data.properties.Property_Phone}</a></p>`:``}
+        ${_panel.data.properties.Management_Company != null ? `<p><strong>Company:</strong> ${_panel.data.properties.Management_Company}</p>`:``}
+        ${_panel.data.properties.Manager_Contact != null ? `<p><strong>Manager:</strong> ${_panel.data.properties.Manager_Contact}</p>`:``}
+        ${_panel.data.properties.Manager_Phone != null ? `<p><strong>Manager's Phone:</strong> <a href="tel:${_panel.data.properties.Manager_Phone}">${_panel.data.properties.Manager_Phone}</a></p>`:``}
+        ${_panel.data.properties.Management_Website != null ? `<p><strong>Website:</strong> <a href="http://${_panel.data.properties.Management_Website}" target="_blank">Link</a></p>`:``}
         </section>
         <section class="group">
         <span class="header">Learn more</span>
