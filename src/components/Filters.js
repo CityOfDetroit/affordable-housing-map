@@ -181,16 +181,19 @@ export default class Filters {
     incomeBtn.innerText = 'x';
     incomeBtn.id = 'income-filter-btn';
     incomeBtn.className = 'filter-btn';
-    if(_filterPanel.app.filters.ima == null){
+    if(_filterPanel.app.filters.incomeBucket == null){
         calcBtn.innerText = 'Search by Income';
         calcBtn.className = 'off';
+        incomeBtn.className = 'filter-btn';
     }else{
         calcBtn.innerText = 'By Income';
         calcBtn.className = 'on';
+        incomeBtn.className = 'filter-btn active';
     }
     incomeBtn.addEventListener('click', (ev)=>{
         ev.preventDefault();
         _filterPanel.app.removeFilters(ev, _filterPanel.app);
+        _filterPanel.app.panel.createPanel(_filterPanel.app.panel, 'filter');
     });
     calcBtn.addEventListener('click', (ev)=>{
         ev.preventDefault();
@@ -208,7 +211,7 @@ export default class Filters {
     let maybe = document.createElement('p');
     best.innerHTML = '<span>x</span> Best match for your income';
     maybe.innerHTML = '<span>x</span> May have units affordable for your income';
-    if(_filterPanel.app.filters.ima == null){
+    if(_filterPanel.app.filters.incomeBucket == null){
         legend.className = 'legend';
     }else{
         legend.className = 'legend active';

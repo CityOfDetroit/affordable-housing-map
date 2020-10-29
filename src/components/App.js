@@ -79,7 +79,12 @@ export default class App {
     }
 
     createLayers(_app){
-        _app.layers['housing'] = L.geoJSON(_app.layersData.all, {
+        _app.map.eachLayer(function (layer) {
+            if(layer.feature != undefined){
+                _app.map.removeLayer(layer);
+            };
+        });
+        L.geoJSON(_app.layersData.all, {
             pointToLayer: function (geojson, latlng) {
                 return L.circleMarker(latlng, {
                     fillColor: '#004445',
@@ -95,7 +100,7 @@ export default class App {
             _app.queryLayer(_app, layer.latlng);
         }).addTo(_app.map);
 
-        _app.layers['maybe'] = L.geoJSON(_app.layersData.maybe, {
+        L.geoJSON(_app.layersData.maybe, {
             pointToLayer: function (geojson, latlng) {
                 return L.circleMarker(latlng, {
                     fillColor: '#feb70d',
@@ -180,24 +185,19 @@ export default class App {
             switch (ev.target.id) {
             case 'zipcode-filter-btn':
                 _app.filters.zipcode = null;
-                document.getElementById('zipcode').value = '';
-                document.getElementById('zipcode-filter-btn').className = 'filter-btn';
                 break;
         
             case 'population-filter-btn':
                 _app.filters.population = null;
-                document.getElementById('population').value = null;
-                document.getElementById('population-filter-btn').className = 'filter-btn';
                 break;
         
             case 'bedrooms-filter-btn':
                 _app.filters.bedrooms = null;
-                document.getElementById('rooms').value = null;
-                document.getElementById('bedrooms-filter-btn').className = 'filter-btn';
                 break;
         
             case 'income-filter-btn':
-                _app.calculator.cancelIncomeFilter(_app.calculator);
+                _app.filters.incomeBucket = null;
+                _app.filters.ima = null;
                 break;
             
             default:
@@ -213,8 +213,6 @@ export default class App {
         console.log(ev.target.id);
         console.log(ev.target.value);
         document.getElementById('initial-loader-overlay').className = 'active';
-        _app.map.removeLayer( _app.layers['housing']);
-        _app.map.removeLayer( _app.layers['maybe']);
         switch (ev.target.id) {
             case 'population':
             if(ev.target.value != null){
