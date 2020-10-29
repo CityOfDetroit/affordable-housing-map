@@ -30,6 +30,9 @@ export default class App {
     }
 
     initialLoad(_app){
+        document.getElementById('close-welcome').addEventListener('click', ()=>{
+            document.getElementById('welcome-panel').className = '';
+        });
         let zipURL = `https://gis.detroitmi.gov/arcgis/rest/services/DoIT/MetroZipCodes/MapServer/0/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=geojson`;
         fetch(zipURL)
         .then((resp) => resp.json()) // Transform the data into json
