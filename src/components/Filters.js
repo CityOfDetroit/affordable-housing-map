@@ -34,6 +34,10 @@ export default class Filters {
     }else{
         zipCodesBtn.className = 'filter-btn active';
     }
+    zipCodesInput.addEventListener('change', (ev)=>{
+        ev.preventDefault();
+        _filterPanel.app.applyFilters(ev, _filterPanel.app);
+    });
     zipCodes.appendChild(zipCodesBtn);
     zipCodes.appendChild(zipCodesInputLabel);
     zipCodes.appendChild(zipCodesInput);
@@ -77,6 +81,10 @@ export default class Filters {
     }
     populationDesc.innerText = '(Examples: elderly, veterans, families, etc.)';
     populationDesc.id = 'population-description';
+    populationSelect.addEventListener('change', (ev)=>{
+        ev.preventDefault();
+        _filterPanel.app.applyFilters(ev, _filterPanel.app);
+    });
     population.appendChild(populationBtn);
     population.appendChild(populationSelectLabel);
     population.appendChild(populationSelect);
@@ -117,6 +125,10 @@ export default class Filters {
     }else{
         bedroomsBtn.className = 'filter-btn active';
     }
+    bedroomsSelect.addEventListener('change', (ev)=>{
+        ev.preventDefault();
+        _filterPanel.app.applyFilters(ev, _filterPanel.app);
+    });
     bedrooms.appendChild(bedroomsBtn);
     bedrooms.appendChild(bedroomsSelectLabel);
     bedrooms.appendChild(bedroomsSelect);

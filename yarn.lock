@@ -1181,6 +1181,16 @@
     "@turf/invariant" "^5.1.5"
     d3-voronoi "1.1.2"
 
+"@types/geojson@^1.0.0":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-1.0.6.tgz#3e02972728c69248c2af08d60a48cbb8680fffdf"
+  integrity sha512-Xqg/lIZMrUd0VRmSRbCAewtwGZiAk3mEUDvV4op1tGl+LvyPcb/MIOSxTl9z+9+J+R4/vpjiCAT4xeKzH9ji1w==
+
+"@types/geojson@^7946.0.0 || ^1.0.0":
+  version "7946.0.7"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.7.tgz#c8fa532b60a0042219cdf173ca21a975ef0666ad"
+  integrity sha512-wE2v81i4C4Ol09RtsWFAqg3BUitWbHSpSlIo+bNdsCJijO9sjme+zm+73ZMCa/qMC8UEERxzGbvmr1cffo2SiQ==
+
 "@types/q@^1.5.1":
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
@@ -2455,6 +2465,21 @@ svgo@^1.0.0:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
+
+terraformer-arcgis-parser@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/terraformer-arcgis-parser/-/terraformer-arcgis-parser-1.1.0.tgz#6048d5072615d855ca53739b329435869e5f9eb8"
+  integrity sha512-bvxEtpiS22Lz1ciaXP/MMLTlJkrHWLBV/y7VBeTLHtZnz/Ngq4wF3RqrpjzP6ojJjxvcdDlvs+UFs3wicoT1Vg==
+  dependencies:
+    "@types/geojson" "^1.0.0"
+    terraformer "~1.0.4"
+
+terraformer@~1.0.4:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/terraformer/-/terraformer-1.0.12.tgz#39e08f9c753606421acce02e122440c72dfa12d3"
+  integrity sha512-MokUp0+MFal4CmJDVL6VAO1bKegeXcBM2RnPVfqcFIp2IIv8EbPAjG0j/vEy/vuKB8NVMMSF2vfpVS/QLe4DBg==
+  optionalDependencies:
+    "@types/geojson" "^7946.0.0 || ^1.0.0"
 
 timsort@^0.3.0:
   version "0.3.0"
