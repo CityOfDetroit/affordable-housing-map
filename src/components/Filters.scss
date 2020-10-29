@@ -47,7 +47,8 @@
             span{
                 background: $color-1;
                 color: $color-1;
-                padding: .05em .45em;
+                width: 2em;
+                height: 2em;
                 border-radius: 50%;
                 margin-right: .5em;
             }
@@ -56,7 +57,8 @@
             span{
                 background: $color-3;
                 color: $color-3;
-                padding: .05em .45em;
+                width: 2em;
+                height: 2em;
                 border-radius: 50%;
                 margin-right: .5em;
             }
@@ -78,9 +80,22 @@
 
     .filter-btn.active{
         visibility: visible;
+        border: none;
     }
 
     button{
         cursor: pointer;
     }
+}
+@media all and (min-width: 401px) {
+
+	button{
+		border: none;
+		background-color: $color-2;
+		padding: 1em;
+		font-weight: bold;
+		color: $color-1;
+		cursor: pointer;
+		transition: all .2s ease-in-out;
+	}
 }

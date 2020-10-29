@@ -6,6 +6,8 @@ This web map displays the controlled affordable housing properties in the City o
 This project was created using:
  - [Leaflet](https://leafletjs.com/) for WebGL map rendering.
  - [Esri-Leaflet](https://github.com/Esri/esri-leaflet) for Esri connections.
+ - [Arcgis Parser](https://github.com/Esri/terraformer-arcgis-parser) for geometry conversion to Esri.
+ - [Turf](https://turfjs.org/) for geospacial analysis.
  - [Parcel](https://parceljs.org/) as a web application bundler.
  - [Yarn](https://yarnpkg.com/en/) for 3rd party library use and management.
 
