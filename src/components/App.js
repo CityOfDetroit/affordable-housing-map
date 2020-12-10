@@ -54,7 +54,7 @@ export default class App {
 
       
         let housing = new Promise((resolve, reject) => {
-            let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
+            let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/ArcGIS/rest/services/201116_Aff_Housing_Website_Update_FINAL/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
             return fetch(url)
             .then((resp) => resp.json()) // Transform the data into json
             .then(function(data) {
@@ -64,7 +64,7 @@ export default class App {
         });
 
         let maybe = new Promise((resolve, reject) => {
-            let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=1%3D0&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
+            let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/ArcGIS/rest/services/201116_Aff_Housing_Website_Update_FINAL/FeatureServer/0/query?where=1%3D0&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
             return fetch(url)
             .then((resp) => resp.json()) // Transform the data into json
             .then(function(data) {
@@ -97,7 +97,7 @@ export default class App {
                 });
             }
         }).on('click',function (layer) {
-            console.log(layer);
+            // console.log(layer);
             _app.panel.data = layer.propagatedFrom.feature;
             _app.panel.createPanel(_app.panel, 'property');
             _app.queryLayer(_app, layer.latlng);
@@ -113,7 +113,7 @@ export default class App {
                 });
             }
         }).on('click',function (layer) {
-            console.log(layer);
+            // console.log(layer);
             _app.panel.data = layer.propagatedFrom.feature;
             _app.panel.createPanel(_app.panel, 'property');
             _app.queryLayer(_app, layer.latlng);
@@ -182,8 +182,8 @@ export default class App {
 
     removeFilters(ev, _app){
         if(_app.lock != true){
-            console.log(ev);
-            console.log('calling remove filters');
+            // console.log(ev);
+            // console.log('calling remove filters');
             document.getElementById('initial-loader-overlay').className = 'active';
             switch (ev.target.id) {
             case 'zipcode-filter-btn':
@@ -212,9 +212,9 @@ export default class App {
 
     applyFilters(ev, _app){
         _app.lock = true;
-        console.log(_app.layers);
-        console.log(ev.target.id);
-        console.log(ev.target.value);
+        // console.log(_app.layers);
+        // console.log(ev.target.id);
+        // console.log(ev.target.value);
         document.getElementById('initial-loader-overlay').className = 'active';
         switch (ev.target.id) {
             case 'population':
@@ -243,7 +243,7 @@ export default class App {
             break;
         
             default:
-                console.log('doing default');
+                // console.log('doing default');
             //   _app.filters.population = null;
             //   _app.filters.zipcode = null;
             //   _app.filters.bedrooms = null;
@@ -264,11 +264,11 @@ export default class App {
     }
 
     updateMap(_app){
-        console.log('calling update map');
+        // console.log('calling update map');
         let where = '';
         let whereMaybe = '';
         let polygon = null;
-        console.log(_app.filters);
+        // console.log(_app.filters);
         if(_app.filters.population == null){
           if(_app.filters.bedrooms == null){
             switch (_app.filters.incomeBucket) {
@@ -349,7 +349,7 @@ export default class App {
         //console.log(where);
         //console.log(whereMaybe);
         let housing = new Promise((resolve, reject) => {
-            let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=${where}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
+            let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/ArcGIS/rest/services/201116_Aff_Housing_Website_Update_FINAL/FeatureServer/0/query?where=${where}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
             return fetch(url)
             .then((resp) => resp.json()) // Transform the data into json
             .then(function(data) {
@@ -359,7 +359,7 @@ export default class App {
         });
 
         let maybe = new Promise((resolve, reject) => {
-            let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/HRD_Website_Data(Website_View)/FeatureServer/0/query?where=${whereMaybe}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
+            let url = `https://services2.arcgis.com/qvkbeam7Wirps6zC/ArcGIS/rest/services/201116_Aff_Housing_Website_Update_FINAL/FeatureServer/0/query?where=${whereMaybe}&objectIds=&time=&geometry=${(polygon != null) ? `${encodeURI(JSON.stringify(polygon))}`:``}&geometryType=esriGeometryPolygon&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=geojson&token=`;
             return fetch(url)
             .then((resp) => resp.json()) // Transform the data into json
             .then(function(data) {
@@ -368,7 +368,7 @@ export default class App {
             });
         });
         Promise.all([housing, maybe]).then(values => {
-            console.log(values);
+            // console.log(values);
             _app.layersData.all = values[0].data;
             _app.layersData.maybe = values[1].data;
             _app.createLayers(_app);
