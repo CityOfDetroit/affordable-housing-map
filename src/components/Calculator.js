@@ -292,17 +292,17 @@ export default class Calculator {
     let bedroom3 = document.createElement('option');
     let bedroom4 = document.createElement('option');
     let bedroom5 = document.createElement('option');
-    bedroom0.value = 'F0BR';
+    bedroom0.value = 'Number_0BR';
     bedroom0.text = 'Studio';
-    bedroom1.value = 'F1BR';
+    bedroom1.value = 'Number_1BR';
     bedroom1.text = '1 - bedroom';
-    bedroom2.value = 'F2BR';
+    bedroom2.value = 'Number_2BR';
     bedroom2.text = '2 - bedroom';
-    bedroom3.value = 'F3BR';
+    bedroom3.value = 'Number_3BR';
     bedroom3.text = '3 - bedroom';
-    bedroom4.value = 'F4BR';
+    bedroom4.value = 'Number_4BR';
     bedroom4.text = '4 - bedroom';
-    bedroom5.value = 'F5BR';
+    bedroom5.value = 'Number_5BR';
     bedroom5.text = '5 - bedroom';
     switch(type){
         case 'household':
@@ -410,7 +410,7 @@ export default class Calculator {
     let monthlyAdjustedGrossIncome = (income - (480 * dependents) - seniorDeduction - childcare - medical)/12 + addIncome;
     //console.log(isNaN(income));
     switch (bedrooms) {
-        case 'F0BR':
+        case 'Number_0BR':
             switch (true) {
                 case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 9940:
                     AMI = 20;
@@ -476,7 +476,7 @@ export default class Calculator {
             }
             break;
 
-        case 'F1BR':
+        case 'Number_1BR':
             switch (true) {
                 case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 10650:
                     AMI = 20;
@@ -542,7 +542,7 @@ export default class Calculator {
             }
         break;
 
-        case 'F2BR':
+        case 'Number_2BR':
             switch (true) {
                 case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 12780:
                     AMI = 20;
@@ -608,7 +608,7 @@ export default class Calculator {
             }
         break;
 
-        case 'F3BR':
+        case 'Number_3BR':
             switch (true) {
                 case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 14750:
                     AMI = 20;
@@ -674,7 +674,7 @@ export default class Calculator {
             }
         break;
 
-        case 'F4BR':
+        case 'Number_4BR':
             switch (true) {
                 case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 16460:
                     AMI = 20;
@@ -740,7 +740,7 @@ export default class Calculator {
             }
         break;
 
-        case 'F5BR':
+        case 'Number_5BR':
             switch (true) {
                 case annualAdjustedGrossIncome >= 0 && annualAdjustedGrossIncome <= 18160:
                     AMI = 20;
@@ -817,27 +817,27 @@ export default class Calculator {
         _calculator.controller.filters.bedrooms = bedrooms;
         let rooms = '';
         switch (bedrooms) {
-            case 'F0BR':
+            case 'Number_0BR':
                 rooms = 'Studio';
                 break;
 
-                case 'F1BR':
+                case 'Number_1BR':
                 rooms = '1 - Bedroom';
                 break;
 
-                case 'F2BR':
+                case 'Number_2BR':
                 rooms = '2 - Bedrooms';
                 break;
 
-                case 'F3BR':
+                case 'Number_3BR':
                 rooms = '3 - Bedrooms';
                 break;
 
-                case 'F4BR':
+                case 'Number_4BR':
                 rooms = '4 - Bedrooms';
                 break;
 
-                case 'F5BR':
+                case 'Number_5BR':
                 rooms = '5 - Bedrooms';
                 break;
         

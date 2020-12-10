@@ -127,12 +127,12 @@ export default class Filters {
     // Create bedrooms section elemets
     let bedroomsTypes = {
         first: 'Select # of Bedrooms',
-        F0BR: 'Studio',
-        F1BR: '1 - Bedroom',
-        F2BR: '2 - Bedroom',
-        F3BR: '3 - Bedroom',
-        F4BR: '4 - Bedroom',
-        F5BR: '5 - Bedroom',
+        Number_0BR: 'Studio',
+        Number_1BR: '1 - Bedroom',
+        Number_2BR: '2 - Bedroom',
+        Number_3BR: '3 - Bedroom',
+        Number_4BR: '4 - Bedroom',
+        Number_5BR: '5 - Bedroom',
     }
     let bedrooms = document.createElement('article');
     let bedroomsSelect = document.createElement('select');

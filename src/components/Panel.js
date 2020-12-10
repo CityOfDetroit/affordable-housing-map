@@ -24,7 +24,7 @@ export default class Panel {
             
         }
         _panel.panels.pop();
-        console.log(_panel.panels);
+        // console.log(_panel.panels);
     }
 
     getPopulation(property){
@@ -168,12 +168,12 @@ export default class Panel {
         <span class="header">Units</span>
         <p><strong>Rent-restricted:</strong> ${_panel.data.properties.Affordable_Units}</p>
         <p><strong>Total:</strong> ${_panel.data.properties.Total_Units}</p>
-        ${_panel.data.properties.F0BR != null ? `<p><strong>Studio:</strong> ${_panel.data.properties.F0BR}</p>`:``}
-        ${_panel.data.properties.F1BR != null ? `<p><strong>1-Bedroom:</strong> ${_panel.data.properties.F1BR}</p>`:``}
-        ${_panel.data.properties.F2BR != null ? `<p><strong>2-Bedroom:</strong> ${_panel.data.properties.F2BR}</p>`:``}
-        ${_panel.data.properties.F3BR != null ? `<p><strong>3-Bedroom:</strong> ${_panel.data.properties.F3BR}</p>`:``}
-        ${_panel.data.properties.F4BR != null ? `<p><strong>4-Bedroom:</strong> ${_panel.data.properties.F4BR}</p>`:``}
-        ${_panel.data.properties.F5BR != null ? `<p><strong>5-Bedroom:</strong> ${_panel.data.properties.F5BR}</p>`:``}
+        ${_panel.data.properties.Number_0BR != null ? `<p><strong>Studio:</strong> ${_panel.data.properties.Number_0BR}</p>`:``}
+        ${_panel.data.properties.Number_1BR != null ? `<p><strong>1-Bedroom:</strong> ${_panel.data.properties.Number_1BR}</p>`:``}
+        ${_panel.data.properties.Number_2BR != null ? `<p><strong>2-Bedroom:</strong> ${_panel.data.properties.Number_2BR}</p>`:``}
+        ${_panel.data.properties.Number_3BR != null ? `<p><strong>3-Bedroom:</strong> ${_panel.data.properties.Number_3BR}</p>`:``}
+        ${_panel.data.properties.Number_4BR != null ? `<p><strong>4-Bedroom:</strong> ${_panel.data.properties.Number_4BR}</p>`:``}
+        ${_panel.data.properties.Number_5BR != null ? `<p><strong>5-Bedroom:</strong> ${_panel.data.properties.Number_5BR}</p>`:``}
         </section>
         <section class="group">
         <span class="header">Management</span>
@@ -226,7 +226,7 @@ export default class Panel {
         if(!_panel.panels.includes(panelType)){
             _panel.panels.push(panelType);
         }
-        console.log(_panel.panels);
+        // console.log(_panel.panels);
         switch (_panel.panels[(_panel.panels.length - 1)]) {
             case 'property':
                 tempPanel.innerHTML = `${_panel.buildPropertyInfo(_panel)}`;
