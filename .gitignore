@@ -66,3 +66,7 @@ local/
 # temp files
 dist/
 .cache
+
+#IntelliJ files
+*.idea
+*.iml
